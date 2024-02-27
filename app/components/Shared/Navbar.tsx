@@ -1,6 +1,7 @@
 import { Button } from "../ui/button";
 import { ToggleLanguage } from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -25,8 +26,12 @@ const Navbar = () => {
         </nav>
       </div>
       <div className="space-x-4 flex items-center">
-        <Button>Sign In</Button>
-        <Button>Sign Up</Button>
+        <Link href="/auth/login">
+          <Button variant={"outline"}>Sign In</Button>
+        </Link>
+        <Link href="/auth/register">
+          <Button>Sign Up</Button>
+        </Link>
       </div>
       <div className="space-x-4 flex items-center">
         <ToggleLanguage />

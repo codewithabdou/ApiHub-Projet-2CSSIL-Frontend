@@ -1,4 +1,4 @@
-import Navbar from "./components/Shared/Navbar";
+import Navbar from "@app/components/Shared/Navbar";
 import { useTranslations } from "next-intl";
 
 export default function Home() {
