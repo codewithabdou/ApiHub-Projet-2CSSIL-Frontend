@@ -10,7 +10,6 @@ async function login(role: string) {
 
 async function logout() {
   cookies().delete("user");
-
   redirect("/");
 }
 
