@@ -8,7 +8,7 @@ const Navbar = () => {
     <header className="flex items-center justify-between px-8">
       <div className="flex items-center space-x-8">
         <a href="/" className="text-2xl font-bold text-primary">
-          API Hub
+          API Hubblo
         </a>
         <nav>
           <ul className="flex space-x-8">
