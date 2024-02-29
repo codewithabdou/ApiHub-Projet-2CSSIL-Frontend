@@ -32,6 +32,7 @@ const Navbar = () => {
           <Button>Sign Up</Button>
         </Link>
       </div>
+      feature 2
       <ThemeToggle />
     </header>
   );
