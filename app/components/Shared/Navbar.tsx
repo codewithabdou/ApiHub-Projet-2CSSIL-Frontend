@@ -32,6 +32,7 @@ const Navbar = () => {
           <Button>Sign Up</Button>
         </Link>
       </div>
+      <p>Feature navbar auth</p>
       <ThemeToggle />
     </header>
   );
