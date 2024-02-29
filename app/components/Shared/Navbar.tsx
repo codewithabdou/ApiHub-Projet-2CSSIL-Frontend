@@ -1,5 +1,4 @@
 import { Button } from "../ui/button";
-import { ToggleLanguage } from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 import Link from "next/link";
 
@@ -33,10 +32,7 @@ const Navbar = () => {
           <Button>Sign Up</Button>
         </Link>
       </div>
-      <div className="space-x-4 flex items-center">
-        <ToggleLanguage />
-        <ThemeToggle />
-      </div>
+      <ThemeToggle />
     </header>
   );
 };

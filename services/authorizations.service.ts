@@ -1,36 +1,42 @@
 import { routesAuthorization } from "@config";
 import User from "@typings/entities/User";
 
-// Group authorization-related logic for clarity
 const authorization = {
-  shouldRedirectToUserRolePath(
-    extractedPath: string,
-    user: User | null
-  ): boolean {
-    return (
-      (extractedPath.startsWith("/auth") || extractedPath === "/") &&
-      user !== null
+  /**
+   * Checks if the given pathname corresponds to a protected route.
+   * @param pathname - The pathname to check.
+   * @returns True if the pathname is a protected route, otherwise false.
+   */
+  isProtectedRoute(pathname: string): boolean {
+    // Construct a regex pattern for protected routes based on the keys in routesAuthorization.
+    const protectedRoutesPattern = new RegExp(
+      `^\\/(?:${Object.keys(routesAuthorization).join("|")})($|\\/)`
     );
+    // Test if the pathname matches the protected routes pattern.
+    return protectedRoutesPattern.test(pathname);
   },
 
-  shouldHandleAuthRequest(extractedPath: string, user: User | null): boolean {
-    return extractedPath.startsWith("/auth") && user === null;
-  },
-
-  shouldHandleRoleSpecificRequest(
-    extractedPath: string,
-    user: User | null
-  ): boolean {
+  /**
+   * Checks if the given user is authorized to access the specified pathname.
+   * @param user - The user object, or null if the user is not logged in.
+   * @param pathname - The pathname to check authorization for.
+   * @returns True if the user is authorized, otherwise false.
+   */
+  isUserAuthorized(user: User | null, pathname: string): boolean {
+    // Get the list of authorized routes for the user's role from routesAuthorization.
     const authorizedRoutes = routesAuthorization[user?.role || ""];
-    return (
-      authorizedRoutes &&
-      authorizedRoutes.some((route) => extractedPath.startsWith(route))
-    );
+    // Check if the pathname is included in the authorized routes.
+    return authorizedRoutes?.includes(pathname) ?? false;
   },
 
-  shouldRedirectToNotFound(extractedPath: string, user: User | null): boolean {
-    const authorizedRoutes = routesAuthorization[user?.role || ""];
-    return !authorizedRoutes || !authorizedRoutes.includes(extractedPath);
+  /**
+   * Checks if the given pathname corresponds to an authentication route.
+   * @param pathname - The pathname to check.
+   * @returns True if the pathname is an authentication route, otherwise false.
+   */
+  isAuthRoute(pathname: string): boolean {
+    // Use a regex pattern to check if the pathname matches the authentication route pattern.
+    return /^\/auth\/(login|register)($|\/)/.test(pathname);
   },
 };
 

@@ -1,70 +1,55 @@
-import createIntlMiddleware from "next-intl/middleware";
-import { locales, localePrefix } from "./navigation";
 import { NextRequest, NextResponse } from "next/server";
-import { getExtractedPath } from "@helpers";
+import User from "@typings/entities/User";
+import { getLoggedInUser } from "@services/authentication.service";
 import authorization from "@services/authorizations.service";
 
-import User from "@typings/entities/User";
-import { cookies } from "next/headers";
-
-export const config = {
-  matcher: [
-    "/",
-    "/auth/:path*",
-    "/admin/:path*",
-    "/hub/:path*",
-    "/provider/:path*",
-    "/not-found/:path*", // 404 page
-    "/(fr|en|ar)/:path*",
-  ],
-};
-
+/**
+ * Middleware function to handle route authorization.
+ * @param request - The incoming NextRequest.
+ * @returns A Promise of NextResponse.
+ */
 export default async function middleware(
   request: NextRequest
 ): Promise<NextResponse> {
+  // Extract pathname and clone URL for modifications.
   const { pathname } = request.nextUrl;
   const url = request.nextUrl.clone();
-  const extractedPath = getExtractedPath(pathname);
-  console.log(extractedPath);
-  const user = getUser(); //TODO :  Replace with a real user fetching mechanism
 
-  if (authorization.shouldRedirectToUserRolePath(extractedPath, user)) {
-    url.pathname = `/${user?.role}`;
-    return NextResponse.redirect(url);
+  // Get the currently logged-in user.
+  const user: User | null = await getLoggedInUser();
+
+  // Check if the current route is a protected route.
+  if (authorization.isProtectedRoute(pathname)) {
+    // If the user is not logged in or is not authorized, redirect to not found.
+    if (!user || !authorization.isUserAuthorized(user, pathname)) {
+      return redirectToNotFound(url);
+    }
+  } else if (authorization.isAuthRoute(pathname)) {
+    // If it's an authentication route and the user is logged in, redirect based on user's role.
+    if (user) {
+      url.pathname = `/${user.role}`;
+      return NextResponse.redirect(url);
+    }
+  } else {
+    // If the route is neither protected nor an authentication route, proceed to the next handler.
+    return NextResponse.next();
   }
 
-  if (
-    authorization.shouldHandleAuthRequest(extractedPath, user) ||
-    authorization.shouldHandleRoleSpecificRequest(extractedPath, user) ||
-    extractedPath.startsWith("/not-found") ||
-    (extractedPath === "/" && user === null)
-  ) {
-    // Handle internationalization authorization directly
-    return intlAuthorize(request);
-  }
-
-  if (authorization.shouldRedirectToNotFound(extractedPath, user)) {
-    url.pathname = "/not-found";
-    return NextResponse.redirect(url);
-  }
-
-  // Default: handle internationalization authorization
-  return intlAuthorize(request);
+  // Proceed to the next handler for other cases.
+  return NextResponse.next();
 }
 
-const intlAuthorize = (request: NextRequest): NextResponse =>
-  createIntlMiddleware({
-    defaultLocale: "en",
-    localePrefix,
-    locales,
-  })(request);
-
-function getUser(): User | null {
-  // Replace with a real user fetching mechanism
-  if (!cookies().get("user")) return null;
-  return {
-    role: cookies().get("user")?.value as string,
-    name: "abdou",
-    email: "",
-  };
+/**
+ * Redirects to the "/not-found" route.
+ * @param url - The URL object to modify for the redirection.
+ * @returns A NextResponse for redirecting to the "/not-found" route.
+ */
+function redirectToNotFound(url: URL): NextResponse {
+  url.pathname = "/not-found";
+  return NextResponse.redirect(url);
 }
+
+// Configuration for the middleware, specifying the path matcher.
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};

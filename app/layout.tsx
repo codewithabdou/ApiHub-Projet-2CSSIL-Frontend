@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@styles/globals.css";
-import { ThemeProvider } from "../components/Shared/theme-provider";
-import { Toaster } from "../components/ui/sonner";
+import { ThemeProvider } from "./components/Shared/theme-provider";
+import { Toaster } from "./components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,13 +13,11 @@ export const metadata: Metadata = {
 
 export default function LocaleLayout({
   children,
-  params: { locale },
 }: {
   children: React.ReactNode;
-  params: { locale: string };
 }) {
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang="en">
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
