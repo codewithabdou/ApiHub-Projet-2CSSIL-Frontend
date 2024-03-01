@@ -3,14 +3,14 @@ import { Footer, Testemonies, OurApis, Banner } from "./components/home";
 
 export default function Home() {
   return (
-    <>
+    <div>
       <Navbar />
-      <main className="">
+      <main>
         <Banner />
         <OurApis />
         <Testemonies />
         <Footer />
       </main>
-    </>
+    </div>
   );
 }

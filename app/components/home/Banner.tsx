@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 const Banner = () => {
   return (
     <div
-      className=" w-full relative bg-primary bg-opacity-80 px-4 py-8 gap-8 md:max-h-96 justify-around  flex md:px-[10%] flex-col md:flex-row "
+      className=" w-full mt-20 relative bg-primary bg-opacity-80 px-4 py-8 gap-8 md:max-h-96 justify-around  flex md:px-[10%] flex-col md:flex-row "
       style={{
         backgroundImage: `url(${IMAGES.BANNER[0].bannerbg})`,
         backgroundSize: "cover",
