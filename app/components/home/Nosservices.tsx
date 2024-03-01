@@ -32,7 +32,7 @@ const Nosservices = () => {
     <a href="#">
         <h5 className="mb-2 text-2xl font-semibold tracking-tight text-primary dark:text-white">Utiliser des  APIs</h5>
     </a>
-    <p className="mb-3 text-gray-500 ">Intégrez aisément des fonctionnalités  à vos applications en exploitant notre  large bibliotheque d’APIs.</p>
+    <p className="mb-3 text-gray-500 max-w-[26ch] ">Intégrez aisément des fonctionnalités  à vos applications en exploitant notre  large bibliotheque d’APIs.</p>
   
 </div>
 
@@ -42,7 +42,7 @@ const Nosservices = () => {
     <a href="#">
         <h5 className="mb-2 text-2xl font-semibold tracking-tight text-primary dark:text-white">Consulter des API</h5>
     </a>
-    <p className="mb-3  text-gray-500 ">Explorez et évaluez les différentes API disponibles pour trouver celles qui répondent le mieux à vos besoins.</p>
+    <p className="mb-3  text-gray-500 max-w-[26ch] ">Explorez et évaluez les différentes API disponibles pour trouver celles qui répondent le mieux à vos besoins.</p>
   
 </div>
 
@@ -51,7 +51,7 @@ const Nosservices = () => {
     <a href="#">
         <h5 className="mb-2 text-2xl font-semibold tracking-tight text-primary dark:text-white">Vendre vos APIs</h5>
     </a>
-    <p className="mb-3 text-gray-500 ">Monétisez vos solutions logicielles ou de données en les vendant sur notre plateforme.</p>
+    <p className="mb-3 text-gray-500 max-w-[26ch] ">Monétisez vos solutions logicielles ou de données en les vendant sur notre plateforme.</p>
   
 </div>
 
