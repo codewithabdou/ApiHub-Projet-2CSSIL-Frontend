@@ -19,7 +19,7 @@ const Nosservices = () => {
       </div>
 
 
-      <div className="xl:w-[80%] p-4  w-[95%]  h-1/2 md:h-[350px] h-[350px] bg-white rounded-[20px] shadow-md shadow-[#979797] flex justify-center items-center border-[1px]">
+      <div className="xl:w-[80%] p-4  w-[95%]  h-1/2 md:h-[400px]  bg-white rounded-[20px] shadow-md shadow-[#979797] flex justify-center items-center border-[1px]">
 
     
 
@@ -27,7 +27,7 @@ const Nosservices = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-      <div className="max-w-sm md:max-w-xs max-h-lg p-4  bg-white border border-gray-200 rounded-xl shadow-sm shadow-[#979797] ">
+      <div className="max-w-md md:max-w-xs max-h-lg p-4  bg-white border border-gray-200 rounded-xl shadow-sm shadow-[#979797] ">
     <Image   className='float-right ' src={IMAGES.Nosservices[0].RestAPI} width={60} height={70} alt="Banner" />
     <a href="#">
         <h5 className="mb-2 text-2xl font-semibold tracking-tight text-primary dark:text-white">Utiliser des  APIs</h5>
@@ -37,7 +37,7 @@ const Nosservices = () => {
 </div>
 
 
-<div className="max-w-sm md:max-w-xs max-h-lg p-4  bg-white border border-gray-200 rounded-xl shadow-sm shadow-[#979797]">
+<div className="max-w-md md:max-w-xs max-h-lg p-4  bg-white border border-gray-200 rounded-xl shadow-sm shadow-[#979797]">
     <Image   className='float-right ' src={IMAGES.Nosservices[0].GoogleDocs} width={60} height={70} alt="Banner" />
     <a href="#">
         <h5 className="mb-2 text-2xl font-semibold tracking-tight text-primary dark:text-white">Consulter des API</h5>
@@ -46,7 +46,7 @@ const Nosservices = () => {
   
 </div>
 
-<div className="max-w-sm md:max-w-xs max-h-lg p-4  bg-white border border-gray-200 rounded-xl shadow-sm shadow-[#979797]">
+<div className="max-w-md md:max-w-xs max-h-lg p-4  bg-white border border-gray-200 rounded-xl shadow-sm shadow-[#979797]">
     <Image   className='float-right ' src={IMAGES.Nosservices[0].StackofMoney} width={60} height={70} alt="Banner" />
     <a href="#">
         <h5 className="mb-2 text-2xl font-semibold tracking-tight text-primary dark:text-white">Vendre vos APIs</h5>
@@ -64,3 +64,5 @@ const Nosservices = () => {
 }
 
 export default Nosservices;
+
+
