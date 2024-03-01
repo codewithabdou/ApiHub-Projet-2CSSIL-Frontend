@@ -17,5 +17,20 @@ const IMAGES = {
       IMAGE: "/images/LinkedIn.png",
     },
   ],
+  BANNER:[
+    {
+      banner:"/images/Banner.png",
+      bannerbg:"/images/BannerBg.png"
+    }
+    
+  ],
+  Nosservices:[
+    {
+      RestAPI:"/images/RestAPI.png",
+      StackofMoney:"/images/StackofMoney.png",
+      GoogleDocs:"/images/GoogleDocs.png"
+    }
+  
+  ]
 };
 export default IMAGES;
