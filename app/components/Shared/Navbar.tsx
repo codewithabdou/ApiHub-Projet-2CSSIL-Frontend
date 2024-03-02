@@ -124,7 +124,7 @@ const Navbar = () => {
                 className={`flex  px-8   flex-col text-xl justify-around gap-4  font-semibold`}
               >
                 {navLinks.map((link) => (
-                  <Link onClick={toggleMenu} href={link.Link}>
+                  <Link key={link.Link} onClick={toggleMenu} href={link.Link}>
                     <p className={` primary-gradient `}>{link.name}</p>
                   </Link>
                 ))}

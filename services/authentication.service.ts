@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import User from "@typings/entities/User";
+import { Type } from "lucide-react";
 
 async function login(role: string) {
   cookies().set("user", role);
@@ -12,6 +13,20 @@ async function login(role: string) {
 async function logout() {
   cookies().set("user", "");
   redirect("/");
+}
+
+async function register(formData: FormData) {
+  const formdatajson = JSON.stringify(Object.fromEntries(formData));
+  const response = await fetch("http://127.0.0.1:5000/auth/register", {
+    method: "POST",
+    body: formdatajson,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  console.log(data);
+  redirect("/auth/login");
 }
 
 async function getLoggedInUser(): Promise<User | null> {
@@ -26,4 +41,4 @@ async function getLoggedInUser(): Promise<User | null> {
   };
 }
 
-export { login, logout, getLoggedInUser };
+export { login, logout, getLoggedInUser, register };
