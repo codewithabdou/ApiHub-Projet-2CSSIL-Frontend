@@ -1,15 +1,19 @@
 "use client";
 
 import { Button } from "@app/components/ui/button";
-import { useTransition } from "react";
 import { logout } from "@services/authentication.service";
+import { useRouter } from "next/navigation";
 
 const ApiHub = () => {
-  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  async function handleLogout() {
+    await logout();
+    router.push("/");
+  }
   return (
     <div>
       <h1>ApiHub</h1>
-      <Button onClick={() => startTransition(() => logout())}>Logout</Button>
+      <Button onClick={handleLogout}>Logout</Button>
     </div>
   );
 };

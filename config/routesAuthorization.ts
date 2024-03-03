@@ -1,5 +1,5 @@
 const routesAuthorization: Record<string, string[]> = {
-  hub: ["/hub", "/"],
+  user: ["/user", "/"],
   admin: ["/admin", "/"],
   provider: ["/provider", "/"],
 };

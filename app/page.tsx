@@ -1,5 +1,11 @@
 import Navbar from "@app/components/Shared/Navbar";
-import { Footer, Testemonies, OurApis, Banner } from "./components/home";
+import {
+  Footer,
+  Testemonies,
+  OurApis,
+  Banner,
+  Nosservices,
+} from "./components/home";
 
 export default function Home() {
   return (
@@ -7,6 +13,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Banner />
+        <Nosservices />
         <OurApis />
         <Testemonies />
         <Footer />

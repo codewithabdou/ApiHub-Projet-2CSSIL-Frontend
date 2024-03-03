@@ -67,7 +67,7 @@ const Navbar = () => {
             <div className={`flex    items-center gap-10`}>
               <div className={`flex    items-center gap-10 font-medium`}>
                 {navLinks.map((link) => (
-                  <Link href={link.Link}>
+                  <Link key={link.name} href={link.Link}>
                     <p className={` primary-gradient `}>{link.name}</p>
                   </Link>
                 ))}
@@ -124,7 +124,7 @@ const Navbar = () => {
                 className={`flex  px-8   flex-col text-xl justify-around gap-4  font-semibold`}
               >
                 {navLinks.map((link) => (
-                  <Link key={link.Link} onClick={toggleMenu} href={link.Link}>
+                  <Link key={link.name} onClick={toggleMenu} href={link.Link}>
                     <p className={` primary-gradient `}>{link.name}</p>
                   </Link>
                 ))}

@@ -1,32 +1,94 @@
 "use server";
 
+import { API_INFO } from "@config";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import User from "@typings/entities/User";
-import { Type } from "lucide-react";
+import {
+  loginRequest,
+  registerRequest,
+  errorAuthResponse,
+  successLoginResponse,
+  successRegisterResponse,
+} from "@typings/auth/authForms";
 
-async function login(role: string) {
-  cookies().set("user", role);
-  redirect(`/${role}`);
+async function login(
+  formData: loginRequest
+): Promise<errorAuthResponse | successLoginResponse> {
+  try {
+    const formdatajson = JSON.stringify(formData);
+    const response = await fetch(
+      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.LOGIN}`,
+      {
+        method: "POST",
+        body: formdatajson,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+
+    if (!data?.Authorization) {
+      return data as errorAuthResponse;
+    } else {
+      cookies().set("user", data.Authorization);
+      const user = await getLoggedInUser();
+
+      if (user) {
+        return {
+          status: "success",
+          message: user.role,
+        } as successLoginResponse;
+      } else {
+        return {
+          status: "server error",
+          message: "user not found or not active",
+        } as errorAuthResponse;
+      }
+    }
+  } catch (error: any) {
+    return {
+      status: "server error",
+      message: error.message || "An unexpected server error occurred",
+    } as errorAuthResponse;
+  }
 }
 
 async function logout() {
   cookies().set("user", "");
-  redirect("/");
 }
 
-async function register(formData: FormData) {
-  const formdatajson = JSON.stringify(Object.fromEntries(formData));
-  const response = await fetch("http://127.0.0.1:5000/auth/register", {
-    method: "POST",
-    body: formdatajson,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const data = await response.json();
-  console.log(data);
-  redirect("/auth/login");
+async function register(
+  formData: registerRequest
+): Promise<errorAuthResponse | successRegisterResponse> {
+  const formdatajson = JSON.stringify(formData);
+
+  try {
+    const response = await fetch(
+      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.REGISTER}`,
+      {
+        method: "POST",
+        body: formdatajson,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const data = await response.json();
+
+    if (data.status !== "success") {
+      return data as errorAuthResponse;
+    } else {
+      return data as successRegisterResponse;
+    }
+  } catch (error: any) {
+    return {
+      status: "server error",
+      message: error.message || "An unexpected server error occurred",
+    } as errorAuthResponse;
+  }
 }
 
 async function getLoggedInUser(): Promise<User | null> {
@@ -34,11 +96,28 @@ async function getLoggedInUser(): Promise<User | null> {
 
   if (!userCookie?.length) return null;
 
+  const response = await fetch(
+    `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ME}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: userCookie,
+      },
+    }
+  );
+
+  const data = await response.json();
+
+  if (data?.data?.status !== "active") {
+    cookies().set("user", "");
+    return null;
+  }
+
   return {
-    role: userCookie as string,
-    name: "abdou",
-    email: "",
-  };
+    role: data.data.role,
+    email: data.data.status,
+  } as User;
 }
 
 export { login, logout, getLoggedInUser, register };
