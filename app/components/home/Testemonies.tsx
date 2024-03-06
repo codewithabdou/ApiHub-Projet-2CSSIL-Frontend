@@ -16,7 +16,7 @@ function Testemonies() {
         </h1>
         <div className="w-full h-[7px] bg-secondary mt-[-7px]"></div>
       </div>
-      <div className="xl:w-[80%] w-[95%] md:h-[250px] h-[350px] bg-white rounded-[20px] shadow-md shadow-[#979797] flex justify-center items-center border-[1px]">
+      <div className="xl:w-[80%] w-[95%] md:h-[250px] h-[350px] bg-white rounded-[20px] shadow-md  flex justify-center items-center border-[1px]">
         <Carousel className="xl:w-[90%] md:w-[80%]  w-[70%] h-[90%] flex justify-center items-center ">
           <CarouselContent className=" md:w-[100%] ">
             {TESTIMONIALS.map((e, key) => (

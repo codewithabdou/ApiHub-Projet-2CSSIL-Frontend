@@ -56,8 +56,8 @@ export default function LoginForm() {
       });
     } else {
       router.push(`/${result.message}`);
+      form.reset();
     }
-    form.reset();
     setIsLoading(false);
   }
 

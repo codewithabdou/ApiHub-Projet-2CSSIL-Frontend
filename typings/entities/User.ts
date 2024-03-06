@@ -1,6 +1,6 @@
 type User = {
   role: string;
-  // name: string;
+  name?: string;
   email: string;
 };
 
