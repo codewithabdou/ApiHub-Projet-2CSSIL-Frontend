@@ -36,15 +36,7 @@ import {
   TableHeader,
   TableRow,
 } from "@app/components/ui/table";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@app/components/ui/pagination";
+
 import User from "@typings/entities/User";
 import getUsers from "@services/api/getUsers";
 import paginationType from "@typings/api/pagination";
@@ -71,6 +63,7 @@ export default function AdminUsersPage() {
   });
 
   useEffect(() => {
+    setError(null);
     setIsFetching(true);
     getUsers(page)
       .then((response) => {

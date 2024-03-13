@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { RiMenuFoldLine } from "react-icons/ri";
 import { ImCancelCircle } from "react-icons/im";
-import { Button } from "../ui/button";
-import ThemeToggle from "./ThemeToggle";
+import { Button } from "../../ui/button";
+import ThemeToggle from "../Theme/ThemeToggle";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);

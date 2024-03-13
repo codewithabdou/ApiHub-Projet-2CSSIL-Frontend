@@ -18,7 +18,7 @@ const getUsers = async (
     };
   try {
     const res = await fetch(
-      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_USERS}/?per_page=10&page=${page}`,
+      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_USERS}/?page=${page}&roles=user`,
       {
         method: "GET",
         headers: {

@@ -17,7 +17,7 @@ const SideNav = () => {
 
   return (
     <div className="md:w-60 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
-      <div className="flex flex-col justify-between space-y-6 w-full pb-8">
+      <div className="flex flex-col justify-between space-y-6 w-full">
         <div className="flex flex-col space-y-6 w-full">
           <Link
             href="/admin"
