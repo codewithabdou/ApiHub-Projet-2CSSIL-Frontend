@@ -47,7 +47,6 @@ import {
 } from "@app/components/ui/pagination";
 import User from "@typings/entities/User";
 import getUsers from "@services/api/getUsers";
-import { useSearchParams } from "next/navigation";
 import paginationType from "@typings/api/pagination";
 import { ThreeDots } from "react-loader-spinner";
 import {
@@ -58,14 +57,12 @@ import Image from "next/image";
 import { IMAGES } from "@config";
 import deactivateUser from "@services/api/deactivateUser";
 import activateUser from "@services/api/activateUser";
-import { Suspense } from "react";
 
 export default function AdminUsersPage() {
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page") ?? "1";
   const [isFetching, setIsFetching] = React.useState(true);
   const [error, setError] = React.useState<ErrorGetUsersResponse | null>(null);
   const [data, setData] = React.useState<User[]>([]);
+  const [page, setPage] = React.useState("1");
   const [pagination, setPagination] = React.useState<paginationType>({
     page: Number(page),
     per_page: 10,
@@ -232,171 +229,145 @@ export default function AdminUsersPage() {
 
   if (error) {
     return (
-      <Suspense
-        fallback={
-          <div className="flex flex-col  justify-center py-[10%] items-center">
-            <ThreeDots
-              visible={true}
-              height="80"
-              width="80"
-              color="#000"
-              radius="9"
-              ariaLabel="three-dots-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-            />
-          </div>
-        }
-      >
-        <div className="flex flex-col gap-6 justify-center py-[10%] items-center">
-          <Image
-            src={IMAGES.SEARCH_ERROR}
-            alt="Search error"
-            width={300}
-            height={300}
-          />
-          <Button>
-            <a href={"/admin/users?page=1"}>{error.message}</a>
-          </Button>
-        </div>
-      </Suspense>
+      <div className="flex flex-col gap-6 justify-center py-[10%] items-center">
+        <Image
+          src={IMAGES.SEARCH_ERROR}
+          alt="Search error"
+          width={300}
+          height={300}
+        />
+        <Button
+          onClick={() => {
+            setPage("1");
+          }}
+        >
+          {error.message}
+        </Button>
+      </div>
     );
   }
 
   return (
-    <Suspense
-      fallback={
-        <div className="flex flex-col  justify-center py-[10%] items-center">
-          <ThreeDots
-            visible={true}
-            height="80"
-            width="80"
-            color="#000"
-            radius="9"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-          />
-        </div>
-      }
-    >
-      <div className="w-full space-y-4  bg-white p-4">
-        <div className="flex items-center gap-2 py-4">
-          <Input
-            placeholder="Filter emails..."
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto">
-                Columns <RxChevronDown className="ml-2" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        <Pagination className="flex items-center justify-end">
-          <PaginationContent>
-            {pagination.page - 1 > 0 && (
-              <PaginationItem>
-                <PaginationPrevious href={`?page=${pagination?.page - 1}`} />
-              </PaginationItem>
-            )}
-
-            {pagination?.pages &&
-              Array.from({ length: pagination.pages }).map((_, index) => {
+    <div className="w-full space-y-4  bg-white p-4">
+      <div className="flex items-center gap-2 py-4">
+        <Input
+          placeholder="Filter emails..."
+          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("email")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Columns <RxChevronDown className="ml-2" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
                 return (
-                  <PaginationItem key={index}>
-                    <PaginationLink href={`?page=${index + 1}`}>
-                      {index + 1}
-                    </PaginationLink>
-                  </PaginationItem>
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
                 );
               })}
-
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            {pagination.page + 1 <= pagination.pages && (
-              <PaginationItem>
-                <PaginationNext href={`?page=${pagination?.page + 1}`} />
-              </PaginationItem>
-            )}
-          </PaginationContent>
-        </Pagination>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-    </Suspense>
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="space-x-2 flex justify-end">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setPage((prev) => (Number(prev) - 1).toString())}
+          disabled={pagination.page - 1 <= 0}
+        >
+          Previous
+        </Button>
+        {Array.from({ length: pagination.pages }, (_, i) => i + 1).map(
+          (item, index) => {
+            return (
+              <Button
+                key={index}
+                variant="outline"
+                size="sm"
+                onClick={() => setPage(item.toString())}
+                disabled={pagination.page === item}
+              >
+                {item}
+              </Button>
+            );
+          }
+        )}
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setPage((prev) => (Number(prev) + 1).toString())}
+          disabled={pagination.page + 1 > pagination.pages}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
   );
 }
