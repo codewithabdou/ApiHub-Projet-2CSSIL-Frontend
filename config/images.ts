@@ -17,20 +17,19 @@ const IMAGES = {
       IMAGE: "/images/LinkedIn.png",
     },
   ],
-  BANNER:[
+  BANNER: [
     {
-      banner:"/images/Banner.png",
-      bannerbg:"/images/BannerBg.png"
-    }
-    
+      banner: "/images/Banner.png",
+      bannerbg: "/images/BannerBg.png",
+    },
   ],
-  Nosservices:[
+  Nosservices: [
     {
-      RestAPI:"/images/RestAPI.png",
-      StackofMoney:"/images/StackofMoney.png",
-      GoogleDocs:"/images/GoogleDocs.png"
-    }
-  
-  ]
+      RestAPI: "/images/RestAPI.png",
+      StackofMoney: "/images/StackofMoney.png",
+      GoogleDocs: "/images/GoogleDocs.png",
+    },
+  ],
+  SEARCH_ERROR: "/images/search_error.svg",
 };
 export default IMAGES;

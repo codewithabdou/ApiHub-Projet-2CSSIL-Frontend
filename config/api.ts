@@ -4,6 +4,11 @@ const API_INFO = {
     LOGIN: "/auth/login",
     REGISTER: "/auth/register",
     ME: "/auth/me",
+    ADMIN: {
+      GET_USERS: "/users",
+      ACTIVATE_USER: ["/users", "/activate"],
+      DEACTIVATE_USER: ["/users", "/suspend"],
+    },
   },
 };
 
