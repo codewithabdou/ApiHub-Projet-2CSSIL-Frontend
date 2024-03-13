@@ -1,3 +1,4 @@
+import CreateCategoryForm from "@app/components/Admin/CreateCategoryForm";
 import {
   Banner,
   Nosservices,
@@ -6,14 +7,13 @@ import {
   Footer,
 } from "@app/components/home";
 
+
 // this is a test page to test the components you are working on
 const TestPage = () => {
   return (
     <div>
       <Banner />
-      <Nosservices />
-      <OurApis />
-      <Testemonies />
+        <CreateCategoryForm />
       <Footer />
     </div>
   );
