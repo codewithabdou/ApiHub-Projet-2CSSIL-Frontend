@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useTransition } from "react";
+import React, { useEffect } from "react";
 
 import {
   ColumnDef,
@@ -58,8 +58,9 @@ import Image from "next/image";
 import { IMAGES } from "@config";
 import deactivateUser from "@services/api/deactivateUser";
 import activateUser from "@services/api/activateUser";
+import { Suspense } from "react";
 
-export default function DataTableDemo() {
+export default function AdminUsersPage() {
   const searchParams = useSearchParams();
   const page = searchParams.get("page") ?? "1";
   const [isFetching, setIsFetching] = React.useState(true);
@@ -231,137 +232,171 @@ export default function DataTableDemo() {
 
   if (error) {
     return (
-      <div className="flex flex-col gap-6 justify-center py-[10%] items-center">
-        <Image
-          src={IMAGES.SEARCH_ERROR}
-          alt="Search error"
-          width={300}
-          height={300}
-        />
-        <Button>
-          <a href={"/admin/users?page=1"}>{error.message}</a>
-        </Button>
-      </div>
+      <Suspense
+        fallback={
+          <div className="flex flex-col  justify-center py-[10%] items-center">
+            <ThreeDots
+              visible={true}
+              height="80"
+              width="80"
+              color="#000"
+              radius="9"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+            />
+          </div>
+        }
+      >
+        <div className="flex flex-col gap-6 justify-center py-[10%] items-center">
+          <Image
+            src={IMAGES.SEARCH_ERROR}
+            alt="Search error"
+            width={300}
+            height={300}
+          />
+          <Button>
+            <a href={"/admin/users?page=1"}>{error.message}</a>
+          </Button>
+        </div>
+      </Suspense>
     );
   }
 
   return (
-    <div className="w-full space-y-4  bg-white p-4">
-      <div className="flex items-center gap-2 py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <RxChevronDown className="ml-2" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+    <Suspense
+      fallback={
+        <div className="flex flex-col  justify-center py-[10%] items-center">
+          <ThreeDots
+            visible={true}
+            height="80"
+            width="80"
+            color="#000"
+            radius="9"
+            ariaLabel="three-dots-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        </div>
+      }
+    >
+      <div className="w-full space-y-4  bg-white p-4">
+        <div className="flex items-center gap-2 py-4">
+          <Input
+            placeholder="Filter emails..."
+            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("email")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto">
+                Columns <RxChevronDown className="ml-2" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
                   return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
                   );
                 })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        <Pagination className="flex items-center justify-end">
+          <PaginationContent>
+            {pagination.page - 1 > 0 && (
+              <PaginationItem>
+                <PaginationPrevious href={`?page=${pagination?.page - 1}`} />
+              </PaginationItem>
             )}
-          </TableBody>
-        </Table>
+
+            {pagination?.pages &&
+              Array.from({ length: pagination.pages }).map((_, index) => {
+                return (
+                  <PaginationItem key={index}>
+                    <PaginationLink href={`?page=${index + 1}`}>
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              })}
+
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            {pagination.page + 1 <= pagination.pages && (
+              <PaginationItem>
+                <PaginationNext href={`?page=${pagination?.page + 1}`} />
+              </PaginationItem>
+            )}
+          </PaginationContent>
+        </Pagination>
       </div>
-      <Pagination className="flex items-center justify-end">
-        <PaginationContent>
-          {pagination.page - 1 > 0 && (
-            <PaginationItem>
-              <PaginationPrevious href={`?page=${pagination?.page - 1}`} />
-            </PaginationItem>
-          )}
-
-          {pagination?.pages &&
-            Array.from({ length: pagination.pages }).map((_, index) => {
-              return (
-                <PaginationItem key={index}>
-                  <PaginationLink href={`?page=${index + 1}`}>
-                    {index + 1}
-                  </PaginationLink>
-                </PaginationItem>
-              );
-            })}
-
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          {pagination.page + 1 <= pagination.pages && (
-            <PaginationItem>
-              <PaginationNext href={`?page=${pagination?.page + 1}`} />
-            </PaginationItem>
-          )}
-        </PaginationContent>
-      </Pagination>
-    </div>
+    </Suspense>
   );
 }
