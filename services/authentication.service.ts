@@ -1,5 +1,4 @@
 "use server";
-
 import { API_INFO } from "@config";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -115,10 +114,7 @@ async function getLoggedInUser(): Promise<User | null> {
     return null;
   }
 
-  return {
-    role: data.data.role,
-    email: data.data.status,
-  } as User;
+  return data.data as User;
 }
 
 export { login, logout, getLoggedInUser, register };

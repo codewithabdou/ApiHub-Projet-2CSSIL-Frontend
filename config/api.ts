@@ -5,6 +5,11 @@ const API_INFO = {
     REGISTER: "/auth/register",
     ME: "/auth/me",
     CREATESUPPLIER:"/users/suppliers",
+    ADMIN: {
+      GET_USERS: "/users",
+      ACTIVATE_USER: ["/users", "/activate"],
+      DEACTIVATE_USER: ["/users", "/suspend"],
+    },
   },
 };
 
