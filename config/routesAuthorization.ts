@@ -4,7 +4,7 @@ const routesAuthorization: Record<string, string[]> = {
     "/admin",
     "/",
     "/admin/users",
-    "/admin/providers",
+    "/admin/suppliers",
     "/admin/profil",
     "/admin/statistics",
     "/admin/settings",

@@ -14,28 +14,27 @@ const getUsers = async (page: string) => {
       status: "error",
       message: "User not found or not active",
     };
-  try {
-    const res = await fetch(
-      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_USERS}/?page=${page}&roles=user`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: userCookie,
-        },
-        next: {
-          tags: ["UsersListManagement"],
-        },
-      }
-    );
-    const data: SuccessGetUsersResponse = await res.json();
-    return data;
-  } catch (error) {
+  const res = await fetch(
+    `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_USERS}/?page=${page}&roles=user`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: userCookie,
+      },
+      next: {
+        tags: ["UsersListManagement"],
+      },
+    }
+  );
+  const data = await res.json();
+  if (data.status !== "success") {
     return {
       status: "error",
-      message: "An error occurred while fetching users",
+      message: data.error,
     } as ErrorGetUsersResponse;
   }
+  return data as SuccessGetUsersResponse;
 };
 
 export default getUsers;

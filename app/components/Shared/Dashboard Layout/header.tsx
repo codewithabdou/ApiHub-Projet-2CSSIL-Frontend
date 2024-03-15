@@ -16,7 +16,6 @@ const Header = () => {
   useEffect(() => {
     getLoggedInUser().then((user) => {
       setUser(user);
-      console.log(user);
     });
   }, []);
   const scrolled = useScroll(5);

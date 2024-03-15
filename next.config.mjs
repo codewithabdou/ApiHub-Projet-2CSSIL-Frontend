@@ -5,7 +5,16 @@
  */
 const nextConfig = {
   images: {
-    domains: ["api.dicebear.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.dicebear.com",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
+    ],
     dangerouslyAllowSVG: true,
   },
 };

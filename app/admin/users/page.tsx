@@ -2,12 +2,15 @@ import React from "react";
 import AdminUsersDataTable from "@app/components/Admin/Users management/data-table";
 import getUsers from "@services/api/getUsers";
 import type User from "@typings/entities/User";
-import { SuccessGetUsersResponse } from "@typings/api/getUsers";
+import {
+  ErrorGetUsersResponse,
+  SuccessGetUsersResponse,
+} from "@typings/api/getUsers";
 import Pagination from "@typings/api/pagination";
 import Image from "next/image";
 import { IMAGES } from "@config";
+import Link from "next/link";
 import { Button } from "@app/components/ui/button";
-import  Link  from "next/link";
 
 const page = async ({
   searchParams,
@@ -28,15 +31,19 @@ const page = async ({
     users = usersData.data;
     pagination = usersData.pagination;
   } else {
+    const errorData = data as ErrorGetUsersResponse;
     return (
-      <div className="flex flex-col gap-6 justify-center py-[10%] items-center">
+      <div className="flex flex-col gap-6 justify-center items-center">
         <Image
           src={IMAGES.SEARCH_ERROR}
           alt="Search error"
           width={300}
           height={300}
         />
-        <Link href={`?page=1`}>
+        <p className="text-center text-sm bg-red-200 rounded-md max-w-[40ch] text-red-600 p-2">
+          {errorData.message}
+        </p>
+        <Link href={`/admin/users`}>
           <Button>Go to first page</Button>
         </Link>
       </div>
