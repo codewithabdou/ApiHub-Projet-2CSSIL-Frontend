@@ -6,9 +6,7 @@ import {
 } from "@typings/api/getUsers";
 import { cookies } from "next/headers";
 
-const getUsers = async (
-  page: string
-): Promise<SuccessGetUsersResponse | ErrorGetUsersResponse> => {
+const getUsers = async (page: string) => {
   const userCookie = cookies().get("user")?.value;
 
   if (!userCookie?.length)
@@ -25,6 +23,9 @@ const getUsers = async (
           "Content-Type": "application/json",
           Authorization: userCookie,
         },
+        next: {
+          tags: ["UsersListManagement"],
+        },
       }
     );
     const data: SuccessGetUsersResponse = await res.json();
@@ -33,7 +34,7 @@ const getUsers = async (
     return {
       status: "error",
       message: "An error occurred while fetching users",
-    };
+    } as ErrorGetUsersResponse;
   }
 };
 

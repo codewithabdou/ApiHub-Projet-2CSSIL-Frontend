@@ -11,28 +11,13 @@ import {
 } from "@app/components/ui/dropdown-menu";
 import activateUser from "@services/api/activateUser";
 import deactivateUser from "@services/api/deactivateUser";
-import getUsers from "@services/api/getUsers";
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  ErrorGetUsersResponse,
-  SuccessGetUsersResponse,
-} from "@typings/api/getUsers";
-import Pagination from "@typings/api/pagination";
+
 import User from "@typings/entities/User";
 import { HiMiniEllipsisHorizontal } from "react-icons/hi2";
 import { RxCaretSort } from "react-icons/rx";
 
-const AdminUsersColumns = ({
-  page,
-  setData,
-  setPagination,
-  setError,
-}: {
-  page: string;
-  setData: React.Dispatch<React.SetStateAction<User[]>>;
-  setPagination: React.Dispatch<React.SetStateAction<Pagination>>;
-  setError: React.Dispatch<React.SetStateAction<ErrorGetUsersResponse | null>>;
-}): ColumnDef<User>[] => {
+const AdminUsersColumns = (): ColumnDef<User>[] => {
   const columns: ColumnDef<User>[] = [
     {
       accessorKey: "status",
@@ -89,16 +74,6 @@ const AdminUsersColumns = ({
                 <DropdownMenuItem
                   onClick={async () => {
                     await deactivateUser(user.id.toString());
-                    getUsers(page).then((response) => {
-                      if (response.status === "success") {
-                        const successData = response as SuccessGetUsersResponse;
-                        setData(successData.data);
-                        setPagination(successData.pagination);
-                      } else {
-                        const errorData = response as ErrorGetUsersResponse;
-                        setError(errorData);
-                      }
-                    });
                   }}
                 >
                   Deactivate
@@ -107,16 +82,6 @@ const AdminUsersColumns = ({
                 <DropdownMenuItem
                   onClick={async () => {
                     await activateUser(user.id.toString());
-                    getUsers(page).then((response) => {
-                      if (response.status === "success") {
-                        const successData = response as SuccessGetUsersResponse;
-                        setData(successData.data);
-                        setPagination(successData.pagination);
-                      } else {
-                        const errorData = response as ErrorGetUsersResponse;
-                        setError(errorData);
-                      }
-                    });
                   }}
                 >
                   Activate

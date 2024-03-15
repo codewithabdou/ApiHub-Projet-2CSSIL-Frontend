@@ -1,47 +1,40 @@
 import { Button } from "@app/components/ui/button";
 import Pagination from "@typings/api/pagination";
+import Link from "next/link";
 import React from "react";
 
-const AdminUsersPagination = ({
-  pagination,
-  setPage,
-}: {
-  pagination: Pagination;
-  setPage: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+const AdminUsersPagination = ({ pagination }: { pagination: Pagination }) => {
   return (
     <div className="space-x-2 flex justify-end">
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => setPage((prev: string) => (Number(prev) - 1).toString())}
-        disabled={pagination.page - 1 <= 0}
-      >
-        Previous
-      </Button>
+      <Link href={`?page=${pagination.page - 1}`} passHref>
+        <Button variant="outline" size="sm" disabled={pagination.page - 1 <= 0}>
+          Previous
+        </Button>
+      </Link>
       {Array.from({ length: pagination.pages }, (_, i) => i + 1).map(
         (item, index) => {
           return (
-            <Button
-              key={index}
-              variant="outline"
-              size="sm"
-              onClick={() => setPage(item.toString())}
-              disabled={pagination.page === item}
-            >
-              {item}
-            </Button>
+            <Link key={index} href={`?page=${item}`} passHref>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={pagination.page === item}
+              >
+                {item}
+              </Button>
+            </Link>
           );
         }
       )}
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => setPage((prev: string) => (Number(prev) + 1).toString())}
-        disabled={pagination.page + 1 > pagination.pages}
-      >
-        Next
-      </Button>
+      <Link href={`?page=${pagination.page + 1}`} passHref>
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={pagination.page + 1 > pagination.pages}
+        >
+          Next
+        </Button>
+      </Link>
     </div>
   );
 };
