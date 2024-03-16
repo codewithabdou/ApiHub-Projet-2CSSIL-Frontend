@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-const createCategorySchema = z.object({
-  name: z.string().min(2, {
-    message: "Please enter a valid name address.",
+export const createCategorySchema = z.object({
+  name: z.string().min(10, {
+    message: "Please enter a valid category name.",
   }),
-  description: z.string().min(8, {
-    message: "Please enter a valid description.",
+  description: z.string().min(50, {
+    message: "Please enter a valid category description.",
   }),
 });
 
@@ -17,26 +17,19 @@ export type categoryRequest = z.infer<typeof createCategorySchema>;
 export type successCreateCategoryResponse = {
   status: String;
   message: String;
-  // fill data form api  respoinse 
+    data: {
+        name: string;
+        description: string;
+        created_at: string;
+        updated_at: string;
+    };
 };
 
 
-export type errorAuthResponse = {
+export type errorCreateCategoryResponse = {
   errors?: any;
   message: String;
   status?: String;
 };
 
-export type succesGetLoggedInUserResponse = {
-  data: {
-    id: number;
-    email: string;
-    role: string;
-    status: string;
-    created_at: string;
-    updated_at: string;
-  };
-  status: string;
-};
 
-export { createCategorySchema};

@@ -11,10 +11,9 @@ import {
 // this is a test page to test the components you are working on
 const TestPage = () => {
   return (
-    <div>
-      <Banner />
+    <div className="flex justify-center items-center flex-col h-[100vh] border border-4">
+      
         <CreateCategoryForm />
-      <Footer />
     </div>
   );
 };

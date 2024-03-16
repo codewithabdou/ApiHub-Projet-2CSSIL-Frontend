@@ -19,23 +19,25 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { GiCancel } from "react-icons/gi";
 import { useRouter } from "next/navigation";
+import { categoryRequest, createCategorySchema } from "@typings/api/createCategoryType";
+import { createCategory } from "@services/api/categories";
 const formSchema = loginFormSchema;
 
 export default function CreateCategoryForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
-  const form = useForm<loginRequest>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<categoryRequest>({
+    resolver: zodResolver(createCategorySchema),
     defaultValues: {
-      email: "",
-      password: "",
+      name: "",
+      description: "",
     },
   });
-
-  async function onSubmit(values: loginRequest) {
+  async function onSubmit(values: categoryRequest) {
     setIsLoading(true);
-    const result = await login(values);
+const result = await  createCategory (values);
+alert("yanbis");
     if (result.status !== "success") {
       toast.error(result.status, {
         description: result.message,
@@ -69,12 +71,12 @@ export default function CreateCategoryForm() {
       >
         <FormField
           control={form.control}
-          name="email"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Adresse mail</FormLabel>
+              <FormLabel>Nom du categorie : </FormLabel>
               <FormControl>
-                <Input placeholder="Adresse mail" {...field} />
+                <Input placeholder="nom du categorie" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -82,19 +84,19 @@ export default function CreateCategoryForm() {
         />
         <FormField
           control={form.control}
-          name="password"
+          name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Mot de passe</FormLabel>
+              <FormLabel>description</FormLabel>
               <FormControl>
-                <Input placeholder="mot de passe" {...field} />
+                <Input placeholder="description" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button disabled={isLoading} type="submit">
-          {isLoading ? "Chargement..." : "Se connecter"}
+          {isLoading ? "Chargement..." : "ajouter"}
         </Button>{" "}
       </form>
     </Form>

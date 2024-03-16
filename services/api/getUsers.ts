@@ -1,3 +1,5 @@
+
+
 "use server";
 import { API_INFO } from "@config";
 import {
@@ -20,6 +22,7 @@ const getUsers = async (
     const res = await fetch(
       `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_USERS}/?per_page=10&page=${page}`,
       {
+
         method: "GET",
         headers: {
           "Content-Type": "application/json",
