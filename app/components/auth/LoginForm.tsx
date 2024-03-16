@@ -55,6 +55,8 @@ export default function LoginForm() {
         icon: <GiCancel className="text-lg text-red-500" />,
       });
     } else {
+console.log(result);
+      console.log(result.message);
       router.push(`/${result.message}`);
       form.reset();
     }

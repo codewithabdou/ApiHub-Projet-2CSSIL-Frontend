@@ -2,6 +2,7 @@
 
 import { API_INFO } from "@config";
 import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 
 async function activateUser(userId: string): Promise<boolean> {
   const userCookie = cookies().get("user")?.value;
@@ -19,6 +20,7 @@ async function activateUser(userId: string): Promise<boolean> {
       }
     );
     const data = await response.json();
+    revalidateTag("UsersListManagement");
     if (data.user_status !== "active") {
       return false;
     }

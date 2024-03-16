@@ -13,7 +13,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   },
   {
     title: "Fournisseurs",
-    path: "/admin/providers",
+    path: "/admin/suppliers",
     icon: React.createElement(FaBox),
   },
   {
