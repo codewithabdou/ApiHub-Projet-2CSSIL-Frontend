@@ -53,7 +53,8 @@ export const createCategory = async (
         };
     
         const res = await fetch(
-        "http://127.0.0.1:5000/apis/categories/create",
+          `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.CATEGORIES.CREATE_CATEGORY}`,
+      
         {
             method: "POST",
             headers: {
@@ -72,6 +73,10 @@ export const createCategory = async (
         };
     }
     }
+
+
+
+    
 
     //TODO : add  modifier affihchage table , detials affichage .
 

@@ -26,6 +26,26 @@ const formSchema = loginFormSchema;
 export default function CreateCategoryForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
+// this can be exported.
+  const errorToaster = ( status?:String , message? : String ) => {
+    toast.error(status, {
+      description: message,
+      position: "top-right",
+      dismissible: true,
+      duration: 5000,
+      cancel: {
+        label: (
+          <Button variant={"destructive"} size={"sm"}>
+            OK
+          </Button>
+        ),
+        onClick: () => {
+          toast.dismiss();
+        },
+      },
+      icon: <GiCancel className="text-lg text-red-500" />,
+    });
+  }
 
   const form = useForm<categoryRequest>({
     resolver: zodResolver(createCategorySchema),
@@ -37,25 +57,8 @@ export default function CreateCategoryForm() {
   async function onSubmit(values: categoryRequest) {
     setIsLoading(true);
 const result = await  createCategory (values);
-alert("yanbis");
     if (result.status !== "success") {
-      toast.error(result.status, {
-        description: result.message,
-        position: "top-right",
-        dismissible: true,
-        duration: 5000,
-        cancel: {
-          label: (
-            <Button variant={"destructive"} size={"sm"}>
-              OK
-            </Button>
-          ),
-          onClick: () => {
-            toast.dismiss();
-          },
-        },
-        icon: <GiCancel className="text-lg text-red-500" />,
-      });
+      errorToaster(result.status, result.message);
     } else {
       router.push(`/${result.message}`);
       form.reset();
