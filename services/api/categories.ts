@@ -3,14 +3,16 @@ import { API_INFO } from "@config";
 import {
   categoryRequest,
   successCreateCategoryResponse,
-  errorCreateCategoryResponse
+  errorCreateCategoryResponse,
+  sucessGetCategoriesResponse,
+  errorGetCategoriesResponse
 } from "@typings/api/createCategoryType"; // Assuming you have typings for categories
 import { cookies } from "next/headers";
 
 
 export const getCategories = async (
   page: string
-): Promise<errorCreateCategoryResponse | successCreateCategoryResponse> => {
+): Promise<  errorGetCategoriesResponse| sucessGetCategoriesResponse> => {
   try {
     const userCookie = cookies().get("user")?.value;
 
@@ -21,7 +23,7 @@ export const getCategories = async (
     };
 
     const res = await fetch(
-      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.CATEGORIES.GET_CATEGORIES}/`,
+      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.CATEGORIES.GET_CATEGORIES}`,
       {
         method: "GET",
         headers: {
@@ -35,7 +37,7 @@ export const getCategories = async (
   } catch (error) {
     return {
       status: "error",
-      message: "An error occurred while fetching categories",
+      message: "An error occurred while fetching categories ! ",
     };
   }
 };
@@ -75,10 +77,6 @@ export const createCategory = async (
     }
 
 
-
-    
-
-    //TODO : add  modifier affihchage table , detials affichage .
 
 
 

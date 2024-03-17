@@ -11,7 +11,7 @@ const API_INFO = {
       DEACTIVATE_USER: ["/users", "/suspend"],
     },
     CATEGORIES: {
-      GET_CATEGORIES: "/apis/categories/",
+      GET_CATEGORIES: "/apis/categories",
       CREATE_CATEGORY: "/apis/categories/create",
       DELETE_CATEGORY: "/categories/delete",
     },

@@ -10,24 +10,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "../../ui/form";
 import { loginRequest } from "@typings/auth/authForms";
 import { loginFormSchema } from "@typings/auth/authForms";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "../../ui/input";
+import { Button } from "../../ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
 import { GiCancel } from "react-icons/gi";
 import { useRouter } from "next/navigation";
-import { categoryRequest, createCategorySchema } from "@typings/api/createCategoryType";
+import {
+  categoryRequest,
+  createCategorySchema,
+} from "@typings/api/createCategoryType";
 import { createCategory } from "@services/api/categories";
 const formSchema = loginFormSchema;
 
 export default function CreateCategoryForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-// this can be exported.
-  const errorToaster = ( status?:String , message? : String ) => {
+  // this can be exporte0d and reused later ! .
+  const errorToaster = (status?: String, message?: String) => {
     toast.error(status, {
       description: message,
       position: "top-right",
@@ -45,7 +48,7 @@ export default function CreateCategoryForm() {
       },
       icon: <GiCancel className="text-lg text-red-500" />,
     });
-  }
+  };
 
   const form = useForm<categoryRequest>({
     resolver: zodResolver(createCategorySchema),
@@ -56,7 +59,7 @@ export default function CreateCategoryForm() {
   });
   async function onSubmit(values: categoryRequest) {
     setIsLoading(true);
-const result = await  createCategory (values);
+    const result = await createCategory(values);
     if (result.status !== "success") {
       errorToaster(result.status, result.message);
     } else {

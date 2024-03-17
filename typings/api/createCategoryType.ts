@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Category } from "../entities/User";
 
 export const createCategorySchema = z.object({
   name: z.string().min(10, {
@@ -31,5 +32,17 @@ export type errorCreateCategoryResponse = {
   message: String;
   status?: String;
 };
+
+export type sucessGetCategoriesResponse = {
+  status: String;
+  data: Category[];
+};
+
+
+export type errorGetCategoriesResponse = {
+  status: String;
+  message: String;
+};
+
 
 

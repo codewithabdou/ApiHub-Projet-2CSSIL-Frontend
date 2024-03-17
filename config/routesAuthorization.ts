@@ -8,6 +8,7 @@ const routesAuthorization: Record<string, string[]> = {
     "/admin/profil",
     "/admin/statistics",
     "/admin/settings",
+    "/admin/categories",
   ],
   provider: ["/supplier", "/"],
 };
