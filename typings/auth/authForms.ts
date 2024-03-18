@@ -9,6 +9,7 @@ const loginFormSchema = z.object({
   }),
 });
 
+
 const registerFormSchema = z
   .object({
     firstname: z.string().min(2, {

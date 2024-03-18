@@ -1,3 +1,4 @@
+import CreateCategoryForm from "@app/components/Admin/Categories management/CreateCategoryForm";
 import CreateApiForm from "@app/components/Provider/CreateApiForm";
 import {
   Banner,
@@ -12,6 +13,8 @@ import CreateSupplierForm from "@app/components/Admin/CreateSupplier";
 const TestPage = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-evenly  p-4 lg:p-[10%]">
+       <CreateCategoryForm />
+
      <CreateApiForm/>
 
       <CreateSupplierForm />

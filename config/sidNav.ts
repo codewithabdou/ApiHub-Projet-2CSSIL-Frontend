@@ -1,5 +1,5 @@
 import { MdDashboard, MdSettings } from "react-icons/md";
-import { FaBox, FaUser } from "react-icons/fa";
+import { FaBox, FaFolder, FaUser } from "react-icons/fa";
 import { ImStatsDots } from "react-icons/im";
 
 import { SideNavItem } from "@typings/domain/sideNavItem";
@@ -15,6 +15,11 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     title: "Fournisseurs",
     path: "/admin/suppliers",
     icon: React.createElement(FaBox),
+  },
+  {
+    title: "Categories",
+    path: "/admin/categories",
+    icon: React.createElement(FaFolder),
   },
   {
     title: "Utilisateurs",
