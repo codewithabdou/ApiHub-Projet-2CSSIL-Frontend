@@ -4,6 +4,8 @@ const API_INFO = {
     LOGIN: "/auth/login",
     REGISTER: "/auth/register",
     ME: "/auth/me",
+    CREATEAPI:"/apis/create",
+    GETCATEGORIES:"/apis/categories",
     CREATESUPPLIER:"/users/suppliers",
     ADMIN: {
       GET_USERS: "/users",
