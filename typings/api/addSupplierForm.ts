@@ -4,25 +4,7 @@
 import { z } from "zod";
 
 
-// lets begin creating the schema ...
 
-// {
-//     "email": "lilia@g.com",
-//     "password": "lilia",
-//     "firstname": "lilia",
-//     "lastname": "lilia"
-//   }
-
-
-//response {
-//   "status": "string",
-//   "message": "string"
-// }
-
-// {
-//     "status": "fail",
-//     "message": "Invalid email format."
-//   }
 export const SupplierSchema=z.object({
 email : z.string(),
 password: z.string(),
