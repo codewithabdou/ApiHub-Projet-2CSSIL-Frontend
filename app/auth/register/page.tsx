@@ -1,4 +1,4 @@
-import Navbar from "@app/components/Shared/Navbar";
+import Navbar from "@app/components/Shared/Landing page layout/Navbar";
 import RegisterForm from "@app/components/auth/RegisterForm";
 
 export default function LoginPage() {
