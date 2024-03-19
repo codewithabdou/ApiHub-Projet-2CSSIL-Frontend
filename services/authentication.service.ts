@@ -56,7 +56,6 @@ async function login(
 
 async function logout() {
   cookies().set("user", "");
-  redirect("/");
 }
 
 async function register(

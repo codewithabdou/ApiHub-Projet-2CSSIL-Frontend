@@ -6,11 +6,21 @@ import { RiMenuFoldLine } from "react-icons/ri";
 import { ImCancelCircle } from "react-icons/im";
 import { Button } from "../../ui/button";
 import ThemeToggle from "../Theme/ThemeToggle";
+import { getLoggedInUser, logout } from "@services/authentication.service";
+import User from "@typings/entities/User";
+import { set } from "date-fns";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [showDiv, setShowDiv] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    getLoggedInUser().then((user) => {
+      setUser(user);
+    });
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,21 +82,47 @@ const Navbar = () => {
                   </Link>
                 ))}
               </div>
-              <Link href="/auth/login/">
-                <Button
-                  variant={"outline"}
-                  className={`  text-primary font-medium `}
-                >
-                  Se connecter
-                </Button>
-              </Link>
-              <Link href="/auth/register">
-                <Button
-                  className={`transition-all font-medium duration-300 bg-primary bg-opacity-0 hover:bg-opacity-100 hover:text-white border-primary border-[1px]     rounded-md px-6 py-2`}
-                >
-                  S'inscrire
-                </Button>
-              </Link>
+              {user ? (
+                <>
+                  <Link href={`/${user.role}`}>
+                    <Button
+                      className={`transition-all font-medium duration-300 bg-primary bg-opacity-0 hover:bg-opacity-100 hover:text-white border-primary border-[1px]     rounded-md px-6 py-2`}
+                    >
+                      {user.role === "user" ? "Hub" : "Dashboard"}
+                    </Button>
+                  </Link>
+                  <Button
+                    variant={"outline"}
+                    className={`  text-primary font-medium `}
+                    onClick={() => {
+                      logout().then(() => {
+                        setUser(null);
+                      });
+                    }}
+                  >
+                    Se déconnecter
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link href="/auth/login/">
+                    <Button
+                      variant={"outline"}
+                      className={`  text-primary font-medium `}
+                    >
+                      Se connecter
+                    </Button>
+                  </Link>
+                  <Link href="/auth/register">
+                    <Button
+                      className={`transition-all font-medium duration-300 bg-primary bg-opacity-0 hover:bg-opacity-100 hover:text-white border-primary border-[1px]     rounded-md px-6 py-2`}
+                    >
+                      S'inscrire
+                    </Button>
+                  </Link>
+                </>
+              )}
+
               <ThemeToggle />
             </div>
           </div>
@@ -130,21 +166,46 @@ const Navbar = () => {
                 ))}
               </div>
               <div className="flex  my-4 gap-4 items-center justify-center">
-                <Link onClick={toggleMenu} href="/auth/login/">
-                  <Button
-                    variant={"outline"}
-                    className={`  text-primary font-semibold `}
-                  >
-                    Se connecter
-                  </Button>
-                </Link>
-                <Link onClick={toggleMenu} href="/auth/register">
-                  <Button
-                    className={`transition-all font-semibold duration-300 bg-primary bg-opacity-0 hover:bg-opacity-100 hover:text-white border-primary border-[1px]     rounded-md px-6 py-2`}
-                  >
-                    S'inscrire
-                  </Button>
-                </Link>
+                {user ? (
+                  <>
+                    <Link href={`/${user.role}`}>
+                      <Button
+                        className={`transition-all font-medium duration-300 bg-primary bg-opacity-0 hover:bg-opacity-100 hover:text-white border-primary border-[1px]     rounded-md px-6 py-2`}
+                      >
+                        {user.role === "user" ? "Hub" : "Dashboard"}
+                      </Button>
+                    </Link>
+                    <Button
+                      variant={"outline"}
+                      className={`  text-primary font-medium `}
+                      onClick={() => {
+                        logout().then(() => {
+                          setUser(null);
+                        });
+                      }}
+                    >
+                      Se déconnecter
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/auth/login/">
+                      <Button
+                        variant={"outline"}
+                        className={`  text-primary font-medium `}
+                      >
+                        Se connecter
+                      </Button>
+                    </Link>
+                    <Link href="/auth/register">
+                      <Button
+                        className={`transition-all font-medium duration-300 bg-primary bg-opacity-0 hover:bg-opacity-100 hover:text-white border-primary border-[1px]     rounded-md px-6 py-2`}
+                      >
+                        S'inscrire
+                      </Button>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>

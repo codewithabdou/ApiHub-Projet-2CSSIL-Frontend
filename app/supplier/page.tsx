@@ -1,15 +1,23 @@
 "use client";
 
 import { Button } from "@app/components/ui/button";
-import { useTransition } from "react";
 import { logout } from "@services/authentication.service";
+import { useRouter } from "next/navigation";
 
 const ProviderDashboard = () => {
-  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   return (
     <div>
       <h1>Provider Dashboard</h1>
-      <Button onClick={() => startTransition(() => logout())}>Logout</Button>
+      <Button
+        onClick={() => {
+          logout().then(() => {
+            router.push("/");
+          });
+        }}
+      >
+        Logout
+      </Button>
     </div>
   );
 };
