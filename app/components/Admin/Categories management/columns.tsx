@@ -29,17 +29,7 @@ const AdminCategoriesColumns = (): ColumnDef<Category>[] => {
     },
     {
       accessorKey: "description",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Description
-            <RxCaretSort className="ml-2" />
-          </Button>
-        );
-      },
+      header: "Description",
       cell: ({ row }) => (
         <div className="lowercase">{row.getValue("description")}</div>
       ),
@@ -66,9 +56,9 @@ const AdminCategoriesColumns = (): ColumnDef<Category>[] => {
                 onClick={() => {
                   console.log("Edit category", category);
                 }}
-                >Edit</DropdownMenuItem>
-               
-           
+              >
+                Edit
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -79,4 +69,4 @@ const AdminCategoriesColumns = (): ColumnDef<Category>[] => {
   return columns;
 };
 
-export default      AdminCategoriesColumns;
+export default AdminCategoriesColumns;

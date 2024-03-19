@@ -31,7 +31,7 @@ const Header = () => {
         }
       )}
     >
-      <div className="flex h-12 items-center justify-between px-4">
+      <div className="flex h-[2.97rem] items-center justify-between px-4">
         <div className="flex items-center space-x-4">
           <Link
             href="/"

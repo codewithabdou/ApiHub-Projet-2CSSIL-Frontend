@@ -5,7 +5,7 @@ import { ImStatsDots } from "react-icons/im";
 import { SideNavItem } from "@typings/domain/sideNavItem";
 import React from "react";
 
-export const SIDENAV_ITEMS: SideNavItem[] = [
+export const ADMIN_SIDENAV_ITEMS: SideNavItem[] = [
   {
     title: "Dashboard",
     path: "/admin",
@@ -35,5 +35,18 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     title: "Paramètres",
     path: "/admin/settings",
     icon: React.createElement(MdSettings),
+  },
+];
+
+export const SUPPLIER_SIDENAV_ITEMS: SideNavItem[] = [
+  {
+    title: "Dashboard",
+    path: "/supplier",
+    icon: React.createElement(MdDashboard),
+  },
+  {
+    title: "APIs",
+    path: "/supplier/apis",
+    icon: React.createElement(FaBox),
   },
 ];
