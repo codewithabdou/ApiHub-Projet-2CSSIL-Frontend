@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { login } from "@services/authentication.service";
 import {
   Form,
   FormControl,
@@ -11,8 +10,6 @@ import {
   FormLabel,
   FormMessage,
 } from "../../ui/form";
-import { loginRequest } from "@typings/auth/authForms";
-import { loginFormSchema } from "@typings/auth/authForms";
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { useState } from "react";
@@ -24,7 +21,7 @@ import {
   createCategorySchema,
 } from "@typings/api/createCategoryType";
 import { createCategory } from "@services/api/categories";
-const formSchema = loginFormSchema;
+import { Textarea } from "@app/components/ui/textarea";
 
 export default function CreateCategoryForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -63,7 +60,8 @@ export default function CreateCategoryForm() {
     if (result.status !== "success") {
       errorToaster(result.status, result.message);
     } else {
-      router.push(`/${result.message}`);
+      // redirect to categories admin page
+      router.push("/admin/categories");
       form.reset();
     }
     setIsLoading(false);
@@ -95,7 +93,7 @@ export default function CreateCategoryForm() {
             <FormItem>
               <FormLabel>description</FormLabel>
               <FormControl>
-                <Input placeholder="description" {...field} />
+                <Textarea placeholder="description ...." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -31,21 +31,19 @@ import {
   TableRow,
 } from "@app/components/ui/table";
 
-import User, { Category } from "@typings/entities/User";
 import paginationType from "@typings/api/pagination";
+import { API } from "@typings/entities/API";
+import SupplierAPIsColumns from "./columns";
+import AdminUsersPagination from "@app/components/Admin/Users management/pagination";
 
-import AdminUsersColumns from "./columns";
-import AdminUsersPagination from "../Users management/pagination";
-import AdminCategoriesColumns from "./columns";
-
-export default function AdminCategoriesDataTable({
+export default function SupplierAPIsDataTable({
   data,
   pagination,
 }: {
-  data: Category[];
+  data: API[];
   pagination: paginationType;
 }) {
-  const columns = AdminCategoriesColumns();
+  const columns = SupplierAPIsColumns();
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -78,9 +76,9 @@ export default function AdminCategoriesDataTable({
       <div className="flex items-center gap-2 py-4">
         <Input
           placeholder="Filter categories..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) => {
-            table.getColumn("title")?.setFilterValue(event.target.value);
+            table.getColumn("name")?.setFilterValue(event.target.value);
           }}
           className="max-w-sm"
         />

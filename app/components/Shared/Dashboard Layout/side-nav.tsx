@@ -7,12 +7,11 @@ import { usePathname } from "next/navigation";
 import { logout } from "@services/authentication.service";
 import { useTransition } from "react";
 
-import { SIDENAV_ITEMS } from "@config/sidNav";
 import { SideNavItem } from "@typings/domain/sideNavItem";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@app/components/ui/button";
 
-const SideNav = () => {
+const SideNav = ({ items }: { items: SideNavItem[] }) => {
   const [isPending, startTransition] = useTransition();
 
   return (
@@ -29,7 +28,7 @@ const SideNav = () => {
           </Link>
 
           <div className="flex flex-col space-y-2  md:px-6 ">
-            {SIDENAV_ITEMS.map((item, idx) => {
+            {items.map((item, idx) => {
               return <MenuItem key={idx} item={item} />;
             })}
           </div>

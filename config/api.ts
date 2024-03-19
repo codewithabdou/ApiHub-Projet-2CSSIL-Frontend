@@ -4,19 +4,24 @@ const API_INFO = {
     LOGIN: "/auth/login",
     REGISTER: "/auth/register",
     ME: "/auth/me",
-    CREATEAPI:"/apis/create",
-    GETCATEGORIES:"/apis/categories",
-    CREATESUPPLIER:"/users/suppliers",
+    CREATEAPI: "/apis/create",
+    GETCATEGORIES: "/apis/categories",
+    CREATESUPPLIER: "/users/suppliers",
     ADMIN: {
       GET_USERS: "/users",
       ACTIVATE_USER: ["/users", "/activate"],
       DEACTIVATE_USER: ["/users", "/suspend"],
+      GET_APIS: "/apis",
+    },
+    SUPPLIER: {
+      GET_MY_APIS: "/apis/mine",
     },
     CATEGORIES: {
       GET_CATEGORIES: "/apis/categories",
       CREATE_CATEGORY: "/apis/categories/create",
       DELETE_CATEGORY: "/categories/delete",
     },
+    CREATEAPIVERSION: ["/apis", "/versions/create"],
   },
 };
 

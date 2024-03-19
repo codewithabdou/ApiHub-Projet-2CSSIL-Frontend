@@ -11,7 +11,6 @@ import { cookies } from "next/headers";
 
 
 export const getCategories = async (
-  page: string
 ): Promise<  errorGetCategoriesResponse| sucessGetCategoriesResponse> => {
   try {
     const userCookie = cookies().get("user")?.value;

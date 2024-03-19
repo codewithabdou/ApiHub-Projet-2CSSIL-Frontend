@@ -10,7 +10,7 @@ const routesAuthorization: Record<string, string[]> = {
     "/admin/settings",
     "/admin/categories",
   ],
-  provider: ["/supplier", "/"],
+  provider: ["/supplier", "/", "/supplier/apis"],
 };
 
 export default routesAuthorization;

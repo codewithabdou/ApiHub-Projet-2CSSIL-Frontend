@@ -1,12 +1,13 @@
 "use server";
+
 import { API_INFO } from "@config";
 import {
-  SuccessGetUsersResponse,
-  ErrorGetUsersResponse,
-} from "@typings/api/getUsers";
+  ErrorGetAPIsResponse,
+  SuccessGetAPIsResponse,
+} from "@typings/api/getAPIs";
 import { cookies } from "next/headers";
 
-const getUsers = async (page: string) => {
+const getAPIs = async (page: string) => {
   const userCookie = cookies().get("user")?.value;
 
   if (!userCookie?.length)
@@ -17,7 +18,7 @@ const getUsers = async (page: string) => {
 
   try {
     const res = await fetch(
-      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_USERS}/?page=${page}&roles=user`,
+      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_APIS}?page=${page}`,
       {
         method: "GET",
         headers: {
@@ -25,7 +26,7 @@ const getUsers = async (page: string) => {
           Authorization: userCookie,
         },
         next: {
-          tags: ["UsersListManagement"],
+          tags: ["ApisListManagement"],
         },
       }
     );
@@ -34,15 +35,15 @@ const getUsers = async (page: string) => {
       return {
         status: "error",
         message: data.error,
-      } as ErrorGetUsersResponse;
+      } as ErrorGetAPIsResponse;
     }
-    return data as SuccessGetUsersResponse;
+    return data as SuccessGetAPIsResponse;
   } catch (error: any) {
     return {
       status: "error",
       message: error.message || "An error occurred while fetching data",
-    } as ErrorGetUsersResponse;
+    } as ErrorGetAPIsResponse;
   }
 };
 
-export default getUsers;
+export default getAPIs;
