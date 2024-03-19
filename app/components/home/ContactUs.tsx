@@ -36,12 +36,12 @@ const ContactUs = () => {
 
 
         <>
-<div className="flex mb-3">
+<div className="flex gap-x-3 sm:gap-x-5 md:gap-x-12 lg:gap-x-20  ">
 
-<h1 className="text-3xl font-bold self-end">Contactez nous</h1>
+<h1 className="text-2xl mb-6 md:mb-14 md:text-3xl font-bold flex items-center self-end">Contactez nous</h1>
 
 <Image
-  className="object-contain scale-110 ml-auto" 
+  className="object-contain max-w-40  md:max-w-xl lg:max-w-2xl scale-110 ml-auto" 
   src={IMAGES.Contactus[0].ContactUs}
   width={291}
   height={385}
@@ -51,7 +51,7 @@ const ContactUs = () => {
 <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="bg-white px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 grid grid-cols-2 gap-6"
+            className="bg-white px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 lg:grid lg:grid-cols-2 gap-6 "
           >
             <div className="col-span-1">
               <div className="flex flex-col gap-6">
@@ -118,7 +118,7 @@ const ContactUs = () => {
               </div>
             </div>
             <FormDescription />
-            <Button disabled={isLoading} type="submit" className="col-span1">
+            <Button disabled={isLoading} type="submit" className="col-span1 mt-3">
               {isLoading ? "Chargement..." : "Envoyer"}
             </Button>{" "}
           </form>
