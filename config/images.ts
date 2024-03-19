@@ -31,5 +31,15 @@ const IMAGES = {
     },
   ],
   SEARCH_ERROR: "/images/search_error.svg",
+  Contactus: [
+    {
+      ContactUs: "/images/ContatcUs.png",
+      
+    },
+  ],
+
+
+
+
 };
 export default IMAGES;
