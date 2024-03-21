@@ -3,7 +3,7 @@ import AdminUsersPagination from '@app/components/Admin/Users management/paginat
 import { ApiFilters } from '@app/components/Shared/ApiFilters';
 import MainTitle from '@app/components/Shared/MainTitle'
 import { Button } from '@app/components/ui/button';
-import Pagination,  from '@typings/api/pagination';
+import Pagination  from '@typings/api/pagination';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Router } from 'next/router';
