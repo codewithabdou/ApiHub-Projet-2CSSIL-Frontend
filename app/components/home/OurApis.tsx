@@ -36,6 +36,7 @@ const OurApis = () => {
 
   return (
     <div className="flex w-full flex-col items-center justify-center mx-auto mt-10 p-2 gap-12">
+      
       <div className="flex flex-col">
         <h1 className="md:text-3xl text-2xl text-primary font-bold z-10">
           Nos APIs

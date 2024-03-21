@@ -8,7 +8,7 @@ const ApiCategoryCard = ({
   CategoryDescription = "Fournir des donnees en temps reel sur differents sports dans le monde",
 }) => {
   return (
-    <Card className="shadow-lg    flex flex-col  ">
+    <Card className="shadow-lg  flex flex-col  ">
       <CardHeader className="p-3">
         <Avatar className="mx-auto w-16 h-16">
           <AvatarImage src={apiCategoryImage} />
