@@ -12,12 +12,18 @@ import { Router } from 'next/router';
 import React, { useEffect, useState } from 'react'
 
 
-const DetailedCategory =  async ({params} :
+const DetailedCategory =  async ({params , searchParams} :
   {
     params: {
       categoryId: number;
-    };
+    }
+    searchParams:{
+      page : number
+    }
+    ;
   }) => {
+
+    console.log('searchParams', searchParams)
     const categoryId = params.categoryId;
     const ITEMS_PER_PAGE = 12;
 
@@ -71,66 +77,66 @@ const description = `Sports APIs can refer to many different categories of APIs 
                       // };
 
 
-                      const page = 1 ;
+                      const page = searchParams?.page || 1;
                       let pagination: Pagination = {
                         page: Number(page),
                         per_page: 0,
                         total: 0,
                         pages: 0,
                       };
-                    const image =  "https://github.com/shadcn.png"
-                      let apis = [
-                        {
-                          apiName: "API 1",
-                          apiImage: image,
-                            apiDescription: "+400 Basketball Leagues & Cups with Livescore, Odds, Bookmakers, Basketball Leagues & Cups with Livescore, Odds, Bookmakers, , Statistics, Standings, Historical Data, Countries, Seasons. ",
-                        },
-                        {
-                          apiName: "API 2",
-                          apiImage: image , 
-                            apiDescription: "+400 Basketball Leagues & Cups with Livescore, Odds, Bookmakers, Statistics, Standings, Historical Data, Countries, Seasons. ",
-                        },
-                        {
-                          apiName: "API 3",
-                          apiImage: image,
-                            apiDescription: "+400 Basketball Leagues & Cups with Livescore, Odds, Bookmakers, Statistics, Standings, Historical Data, Countries, Seasons. ",
-                        },
-                        {
-                          apiName: "API 4",
-                          apiImage: image,
-                            apiDescription: "Description 4",
-                        },
-                        {
-                          apiName: "API 5",
-                          apiImage: image,
-                            apiDescription: "Description 5",
-                        },
-                        {
-                          apiName: "API 6",
-                          apiImage: image,
-                            apiDescription: "Description 6",
-                        },
-                        {
-                          apiName: "API 7",
-                          apiImage: image,
-                            apiDescription: "Description 7",
-                        },
-                        {
-                          apiName: "API 8",
-                          apiImage: image,
-                            apiDescription: "Description 8",
-                        },
-                        {
-                          apiName: "API 9",
-                          apiImage: image,
-                            apiDescription: "Description 9",
-                        },
-                        {
-                          apiName: "API 10",
-                          apiImage: image,
-                            apiDescription: "Description 10",
-                        },
-                        ];
+                    // const image =  "https://github.com/shadcn.png"
+                      // let apis = [
+                      //   {
+                      //     apiName: "API 1",
+                      //     apiImage: image,
+                      //       apiDescription: "+400 Basketball Leagues & Cups with Livescore, Odds, Bookmakers, Basketball Leagues & Cups with Livescore, Odds, Bookmakers, , Statistics, Standings, Historical Data, Countries, Seasons. ",
+                      //   },
+                      //   {
+                      //     apiName: "API 2",
+                      //     apiImage: image , 
+                      //       apiDescription: "+400 Basketball Leagues & Cups with Livescore, Odds, Bookmakers, Statistics, Standings, Historical Data, Countries, Seasons. ",
+                      //   },
+                      //   {
+                      //     apiName: "API 3",
+                      //     apiImage: image,
+                      //       apiDescription: "+400 Basketball Leagues & Cups with Livescore, Odds, Bookmakers, Statistics, Standings, Historical Data, Countries, Seasons. ",
+                      //   },
+                      //   {
+                      //     apiName: "API 4",
+                      //     apiImage: image,
+                      //       apiDescription: "Description 4",
+                      //   },
+                      //   {
+                      //     apiName: "API 5",
+                      //     apiImage: image,
+                      //       apiDescription: "Description 5",
+                      //   },
+                      //   {
+                      //     apiName: "API 6",
+                      //     apiImage: image,
+                      //       apiDescription: "Description 6",
+                      //   },
+                      //   {
+                      //     apiName: "API 7",
+                      //     apiImage: image,
+                      //       apiDescription: "Description 7",
+                      //   },
+                      //   {
+                      //     apiName: "API 8",
+                      //     apiImage: image,
+                      //       apiDescription: "Description 8",
+                      //   },
+                      //   {
+                      //     apiName: "API 9",
+                      //     apiImage: image,
+                      //       apiDescription: "Description 9",
+                      //   },
+                      //   {
+                      //     apiName: "API 10",
+                      //     apiImage: image,
+                      //       apiDescription: "Description 10",
+                      //   },
+                      //   ];
 
                         let fetchedapis ;
 
@@ -166,11 +172,10 @@ const description = `Sports APIs can refer to many different categories of APIs 
                 <div className='flex flex-row items-center justify-around mb-4 md:block'>
                     <p className="my-auto text-lg font-bold text-center md:text-left md:text-4xl text-primary">
                                     {cat.apiCategory}
-                    </p>
-                    
+                    </p>      
                     <img src={cat.apiCategoryImage} alt="category img" className='block w-10 h-10 rounded-full md:hidden md:m-auto' />
-
                     </div>
+
 
                     <p className='md:text-2xl'>
                     {description}
