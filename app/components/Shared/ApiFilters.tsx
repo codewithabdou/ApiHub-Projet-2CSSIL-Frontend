@@ -1,5 +1,7 @@
+'use client';
 import React from 'react';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select';
+import { usePathname, useRouter } from 'next/navigation';
 
 // Define types for props
 type FilterOption = {
@@ -9,13 +11,30 @@ type FilterOption = {
 
 type ApiFiltersProps = {
   filters: FilterOption[];
-  onFilterChange: (filterLabel: string, selectedValue: string) => void;
 };
 
+let selectedFilters: Record<string, string> = {};
 
-export const ApiFilters: React.FC<ApiFiltersProps> = ({ filters, onFilterChange }) => {
+
+export const ApiFilters: React.FC<ApiFiltersProps> = ({ filters }) => {
+  const router = useRouter();
+  const path = usePathname()
   const handleFilterChange = (filterLabel: string, selectedValue: string) => {
-    onFilterChange(filterLabel, selectedValue);
+    selectedFilters = {
+      ...selectedFilters,
+      [filterLabel]: selectedValue
+    };
+
+    // use the url search params to filter the data
+    const params = new URLSearchParams(
+      selectedFilters
+    );  
+
+    
+    // update the url with the new search params
+    router.replace(params.toString())
+    // router.push(params.toString()  );
+    
   };
 
   return (

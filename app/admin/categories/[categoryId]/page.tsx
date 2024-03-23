@@ -12,18 +12,15 @@ import { Router } from 'next/router';
 import React, { useEffect, useState } from 'react'
 
 
-const DetailedCategory =  async ({params , searchParams} :
-  {
-    params: {
-      categoryId: number;
-    }
-    searchParams:{
-      page : number
-    }
-    ;
-  }) => {
+const DetailedCategory =  async ({ params, searchParams }: {
+  params: {
+    categoryId: number;
+  };
+  searchParams: {
+    [key: string]: string | string[] | undefined;
+  };
+}) => {
 
-    console.log('searchParams', searchParams)
     const categoryId = params.categoryId;
     const ITEMS_PER_PAGE = 12;
 
@@ -39,11 +36,11 @@ const description = `Sports APIs can refer to many different categories of APIs 
                           "Fournir des donnees en temps reel sur differents sports dans le monde",
                       }
           
-                      // const filters = [
-                      //   { label: 'Fournisseur', options: ['Option 1', 'Option 2', 'Option 3'] },
-                      //   { label: 'Catégorie', options: ['Option A', 'Option B', 'Option C'] },
-                      //   { label: 'Trier par', options: ['Option X', 'Option Y', 'Option Z'] }
-                      // ];
+                      const filters = [
+                        { label: 'Fournisseur', options: ['Option 1', 'Option 2', 'Option 3'] },
+                        { label: 'Catégorie', options: ['Option A', 'Option B', 'Option C'] },
+                        { label: 'Trier par', options: ['Option X', 'Option Y', 'Option Z'] }
+                      ];
 
                           //******** imortant  */
                       // let filters = "get them from the params of the url , like the page."
@@ -61,23 +58,9 @@ const description = `Sports APIs can refer to many different categories of APIs 
                       //   }));
                       // };
 
-                           // useEffect(() => {
-                      //   console.log(selectedFilters); // Print the updated selectedFilters state
-                      // }, [selectedFilters]);
-                      
 
 
-                      // let selectedFilters: Record<string, string> = {};
-
-                      // const handleFilterChange: (filterLabel: string, selectedValue: string) => void = (filterLabel, selectedValue) => {
-                      //   selectedFilters = {
-                      //     ...selectedFilters,
-                      //     [filterLabel]: selectedValue
-                      //   };
-                      // };
-
-
-                      const page = searchParams?.page || 1;
+                      const page = Number(searchParams?.page ) || 1;
                       let pagination: Pagination = {
                         page: Number(page),
                         per_page: 0,
@@ -138,8 +121,8 @@ const description = `Sports APIs can refer to many different categories of APIs 
                       //   },
                       //   ];
 
-                        let fetchedapis ;
-
+                      
+                      let fetchedapis ;
                         const data = await getAPIs({category_ids: categoryId , page , per_page: ITEMS_PER_PAGE });
                         if (data.status === "success") {
                           const apiData = data as SuccessGetAPIsResponse;
@@ -198,6 +181,7 @@ const description = `Sports APIs can refer to many different categories of APIs 
                  
 
         {/* <ApiFilters  filters={filters}  onFilterChange={handleFilterChange}/> */}
+        <ApiFilters  filters={filters} />
 
         <Button className='w-32 lg:mx-auto'> Filtrer </Button>
 

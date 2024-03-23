@@ -5,7 +5,7 @@ import ContactUs from "@app/components/home/ContactUs";
 const TestPage = () => {
   return (
     <div className="flex min-h-screen flex-col p-4">
-      <DetailedCategory params={{categoryId:1}} />
+      <DetailedCategory params={{ categoryId: 1 }} searchParams={{}} />
     </div>
   );
 };
