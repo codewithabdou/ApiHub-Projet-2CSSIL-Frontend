@@ -9,6 +9,8 @@ const routesAuthorization: Record<string, string[]> = {
     "/admin/statistics",
     "/admin/settings",
     "/admin/categories",
+      // Dynamic category authorization
+    "/admin/categories/:categoryId",
   ],
   provider: ["/supplier", "/", "/supplier/apis"],
 };
