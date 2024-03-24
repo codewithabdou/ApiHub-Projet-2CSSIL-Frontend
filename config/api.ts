@@ -21,6 +21,10 @@ const API_INFO = {
       CREATE_CATEGORY: "/apis/categories/create",
       DELETE_CATEGORY: "/categories/delete",
     },
+    GENERAL: {
+      GET_APIS: "/apis",
+    }
+    ,
     CREATEAPIVERSION: ["/apis", "/versions/create"],
   },
 };

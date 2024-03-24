@@ -22,11 +22,28 @@ const authorization = {
    * @param pathname - The pathname to check authorization for.
    * @returns True if the user is authorized, otherwise false.
    */
+  
+  // Original one.
+  // isUserAuthorized(user: User | null, pathname: string): boolean {
+  //   // Get the list of authorized routes for the user's role from routesAuthorization.
+  //   const authorizedRoutes = routesAuthorization[user?.role || ""];
+  //   // Check if the pathname is included in the authorized routes.
+  //   return authorizedRoutes?.includes(pathname) ?? false;
+  // },
+
+  // new one made by Ilyes.
   isUserAuthorized(user: User | null, pathname: string): boolean {
     // Get the list of authorized routes for the user's role from routesAuthorization.
     const authorizedRoutes = routesAuthorization[user?.role || ""];
-    // Check if the pathname is included in the authorized routes.
-    return authorizedRoutes?.includes(pathname) ?? false;
+  
+    // Check if the pathname matches any of the authorized routes.
+    const isAuthorized = authorizedRoutes?.some(route => {
+      // Replace dynamic parameters in the route with a regex pattern that matches any value.
+      const routeRegex = new RegExp(route.replace(/:[^/]+/g, "[^/]+"));
+      return routeRegex.test(pathname);
+    }) ?? false;
+  
+    return isAuthorized;
   },
 
   /**
