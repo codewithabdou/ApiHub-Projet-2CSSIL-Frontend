@@ -1,12 +1,19 @@
 type User = {
   id: number;
   email: string;
+  lastname:string;
+  firstname:string;
   role: string;
   status: string;
+  "avatar:": string;
+  phone_number:string;
   created_at: string;
   updated_at: string;
-  avatar: string;
+  bio:string;
+  
 };
+
+
 
 export type Category = {
   id: number;
