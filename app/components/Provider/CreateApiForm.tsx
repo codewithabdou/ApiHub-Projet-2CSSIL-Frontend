@@ -205,12 +205,13 @@ function CreateApiForm() {
       if (Response.status === "success") {
         const data = Response as getAllCategoriesSuccessResponse;
         setCategories(data.data);
+        
       } else {
         const errorData = Response as ErrorgetAllCategoriesResponse;
         return errorData;
       }
     });
-  }, categories);
+  }, []);
   return (
     <Form {...form}>
       <form
