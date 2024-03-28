@@ -25,11 +25,12 @@ const getSuppliers = async (page: string) => {
           Authorization: userCookie,
         },
         next: {
-          tags: ["UsersListManagement"],
+          tags: ["SuppliersListManagement"],
         },
       }
     );
     const data = await res.json();
+    console.log(data);
     if (data.status !== "success") {
       return {
         status: "error",
