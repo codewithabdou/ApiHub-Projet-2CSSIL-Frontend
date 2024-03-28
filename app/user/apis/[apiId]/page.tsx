@@ -156,12 +156,12 @@ function ApiDetails() {
                     opts={{
                         align: "start",
                     }}
-                    className="sm:w-full w-[70%] bg-white p-5 rounded-[20px] shadow-md shadow-[#979797]  border-[2px]"
+                    className="sm:w-full w-[70%] bg-white sm:p-3 p-1 rounded-[20px] sm:shadow-md sm:shadow-[#979797]  sm:border-[2px]"
                 >
                     <CarouselContent>
                         {plans.map((plan, index) => (
                             <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 flex justify-center">
-                                <div className="p-1">
+                                <div className="sm:p-1 p-0">
                                     <Plan name={plan.name}
                                         price={plan.price}
                                         duration={duration(plan.duration)}

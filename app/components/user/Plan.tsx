@@ -7,7 +7,7 @@ function Plan(props:any) {
         <div className='flex flex-col gap-y-2 items-center'>
 
         
-        <h1 className='text-[#FEC53D] font-bold sm:text-2xl text-xl w-fit'>{props.name}</h1>
+        <h1 className='text-[#FEC53D] font-bold sm:text-2xl text-xl'>{props.name}</h1>
         <p className='text-white font-light text-sm'>Tarification</p>
             <h1 className='text-[#FEC53D] font-bold sm:text-2xl text-xl '>{props.price}DZD/{props.duration}</h1>
             <p className='text-white font-light'>Nombre de requettes</p>
