@@ -130,7 +130,7 @@ function ApiDetails() {
                 }}
                 >
                     <SelectTrigger className='sm:w-80 w-48 border-2 border-[#184173] outline-none'>
-                        <SelectValue placeholder={`${versions[0].version}`} defaultValue={`${versions[0].version}`} />
+                        <SelectValue placeholder={versions.length>0 ? `${versions[0].version}` : "Cet API n'a pas de versions"} defaultValue={versions.length >0 ? `${versions[0].version}` : "Cet API n'a pas de versions"} />
                     </SelectTrigger>
 
                     <SelectContent>
