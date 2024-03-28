@@ -12,6 +12,7 @@ const API_INFO = {
       ACTIVATE_USER: ["/users", "/activate"],
       DEACTIVATE_USER: ["/users", "/suspend"],
       GET_APIS: "/apis",
+      GET_USER:"/users"
     },
     SUPPLIER: {
       GET_MY_APIS: "/apis/mine",
