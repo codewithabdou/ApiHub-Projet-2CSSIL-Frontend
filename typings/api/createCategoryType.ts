@@ -10,22 +10,18 @@ export const createCategorySchema = z.object({
   }),
 });
 
-
-
 export type categoryRequest = z.infer<typeof createCategorySchema>;
-
 
 export type successCreateCategoryResponse = {
   status: String;
   message: String;
-    data: {
-        name: string;
-        description: string;
-        created_at: string;
-        updated_at: string;
-    };
+  data: {
+    name: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+  };
 };
-
 
 export type errorCreateCategoryResponse = {
   errors?: any;
@@ -38,11 +34,7 @@ export type sucessGetCategoriesResponse = {
   data: Category[];
 };
 
-
 export type errorGetCategoriesResponse = {
   status: String;
   message: String;
 };
-
-
-
