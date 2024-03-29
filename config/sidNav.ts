@@ -49,4 +49,9 @@ export const SUPPLIER_SIDENAV_ITEMS: SideNavItem[] = [
     path: "/supplier/apis",
     icon: React.createElement(FaBox),
   },
+  {
+    title: "My profile",
+    path: "/supplier/profile",
+    icon: React.createElement(FaUser),
+  },
 ];
