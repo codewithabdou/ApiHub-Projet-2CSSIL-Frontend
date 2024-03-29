@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 
 
 
-async function GetSingleSupplier(SupplierId:string) : Promise<User | null>{
+async function GetSingleSupplier(SupplierId:number) : Promise<User | null>{
     const userCookie = cookies().get("user")?.value;
 
     if(! userCookie?.length) return null

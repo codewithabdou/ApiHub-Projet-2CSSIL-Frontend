@@ -4,11 +4,11 @@ import GetSingleSupplier from '@services/api/getSingleSupplier';
 import getSupplierAPIs from '@services/api/getSupplierApis';
 import User from '@typings/entities/User';
 import React, { useEffect, useState } from 'react'
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Input } from '../../../ui/input';
+import { Label } from '../../../ui/label';
+import { Avatar, AvatarFallback, AvatarImage } from '../../../ui/avatar';
 import Image from 'next/image';
-import { Textarea } from '../ui/textarea';
+import { Textarea } from '../../../ui/textarea';
 import { ErrorGetAPIsResponse, SuccessGetAPIsResponse } from '@typings/api/getAPIs';
 
 const SingleUser = ({idSupplier}:{idSupplier:string}) => {

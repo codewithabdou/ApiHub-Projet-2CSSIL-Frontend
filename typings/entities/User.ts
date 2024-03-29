@@ -5,7 +5,7 @@ type User = {
   firstname:string;
   role: string;
   status: string;
-  "avatar:": string;
+  avatar: string;
   phone_number:string;
   created_at: string;
   updated_at: string;
