@@ -34,8 +34,20 @@ const IMAGES = {
   Contactus: [
     {
       ContactUs: "/images/ContatcUs.png",
-    },
+      
+    }, 
   ],
+
+  API_STATS: {
+    popularity:"/images/popularity.svg",
+    time:"/images/time.svg",
+    service:"/images/service.svg"
+
+
+  }
+
+
+,
   HUB_BANNER: "/images/HubBanner.png",
 };
 export default IMAGES;
