@@ -30,8 +30,10 @@ const getSupplierAPIs = async (page: string) => {
         },
       }
     );
+
     const data = await res.json();
     if (data.status !== "success") {
+      console.log("successful",data);
       return {
         status: "error",
         message: data.error,
@@ -39,7 +41,9 @@ const getSupplierAPIs = async (page: string) => {
     }
     return data as SuccessGetAPIsResponse;
   } catch (error: any) {
+
     return {
+      
       status: "error",
       message: error.message || "An error occurred while fetching data",
     } as ErrorGetAPIsResponse;
