@@ -9,7 +9,6 @@ const loginFormSchema = z.object({
   }),
 });
 
-
 const registerFormSchema = z
   .object({
     firstname: z.string().min(2, {
@@ -55,8 +54,11 @@ export type successLoginResponse = {
 };
 
 export type successRegisterResponse = {
-  status: String;
-  message: String;
+  status: string;
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
 };
 
 export type errorAuthResponse = {
