@@ -34,12 +34,8 @@ const IMAGES = {
   Contactus: [
     {
       ContactUs: "/images/ContatcUs.png",
-      
     },
   ],
-
-
-
-
+  HUB_BANNER: "/images/HubBanner.png",
 };
 export default IMAGES;
