@@ -17,7 +17,7 @@ const getUsers = async (page: string) => {
 
   try {
     const res = await fetch(
-      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_USERS}/?page=${page}&roles=user`,
+      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_USERS}/?page=${page}&roles=user&per_page=5`,
       {
         method: "GET",
         headers: {
@@ -30,13 +30,7 @@ const getUsers = async (page: string) => {
       }
     );
     const data = await res.json();
-    if (data.status !== "success") {
-      return {
-        status: "error",
-        message: data.error,
-      } as ErrorGetUsersResponse;
-    }
-    return data as SuccessGetUsersResponse;
+    return { ...data, status: "success" } as SuccessGetUsersResponse;
   } catch (error: any) {
     return {
       status: "error",

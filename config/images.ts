@@ -47,5 +47,7 @@ const IMAGES = {
   }
 
 
+,
+  HUB_BANNER: "/images/HubBanner.png",
 };
 export default IMAGES;

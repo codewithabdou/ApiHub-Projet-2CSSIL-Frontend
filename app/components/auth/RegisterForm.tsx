@@ -13,7 +13,7 @@ import {
 } from "../ui/form";
 import { MdDone } from "react-icons/md";
 import { GiCancel } from "react-icons/gi";
-import { registerRequest } from "@typings/auth/authForms";
+import { errorAuthResponse, registerRequest } from "@typings/auth/authForms";
 import { registerFormSchema } from "@typings/auth/authForms";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -43,8 +43,9 @@ export default function RegisterForm() {
     setIsLoading(true);
     const result = await register(values);
     if (result.status !== "success") {
+      const resultError = result as errorAuthResponse;
       toast.error(result.status, {
-        description: result.message,
+        description: resultError.message,
         position: "top-right",
         dismissible: true,
         cancel: {
@@ -55,7 +56,7 @@ export default function RegisterForm() {
           ),
           onClick: () => {
             toast.dismiss();
-            if (result.message === "User already exists. Please Log in.")
+            if (resultError.message === "User already exists. Please Log in.")
               router.push("/auth/login");
           },
         },
@@ -64,7 +65,7 @@ export default function RegisterForm() {
     }
     if (result.status === "success") {
       toast.success(result.status, {
-        description: result.message,
+        description: "Succefully registered. ",
         position: "top-right",
         dismissible: true,
 

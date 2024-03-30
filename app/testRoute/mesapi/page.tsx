@@ -1,16 +1,17 @@
 import React from "react";
-import AdminUsersDataTable from "@app/components/Admin/Users management/data-table";
-import getSuppliers from "@services/api/getSuppliers";
-import type User from "@typings/entities/User";
-import {
-  ErrorGetUsersResponse,
-  SuccessGetUsersResponse,
-} from "@typings/api/getUsers";
+
 import Pagination from "@typings/api/pagination";
 import Image from "next/image";
 import { IMAGES } from "@config";
 import Link from "next/link";
 import { Button } from "@app/components/ui/button";
+import { API } from "@typings/entities/API";
+import {
+  ErrorGetAPIsResponse,
+  SuccessGetAPIsResponse,
+} from "@typings/api/getAPIs";
+import SupplierAPIsDataTable from "@app/components/Provider/APIs Management/data-table";
+import getSupplierAPIs from "@services/api/getSupplierApis";
 
 const page = async ({
   searchParams,
@@ -18,20 +19,20 @@ const page = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const page = typeof searchParams.page === "string" ? searchParams.page : "1";
-  const data = await getSuppliers(page);
-  let users: User[] = [];
+  const data = await getSupplierAPIs(page);
+  let apis: API[] = [];
   let pagination: Pagination = {
     page: Number(page),
     per_page: 10,
     total: 0,
     pages: 0,
   };
-  if (data.status === "success") {
-    const usersData = data as SuccessGetUsersResponse;
-    users = usersData.data;
-    pagination = usersData.pagination;
+  if (data) {
+    const apisData = data as SuccessGetAPIsResponse;
+    apis = apisData.data;
+    pagination = apisData.pagination;
   } else {
-    const errorData = data as ErrorGetUsersResponse;
+    const errorData = data as ErrorGetAPIsResponse;
     return (
       <div className="flex flex-col gap-6 justify-center items-center">
         <Image
@@ -43,13 +44,13 @@ const page = async ({
         <p className="text-center text-sm bg-red-200 rounded-md max-w-[40ch] text-red-600 p-2">
           {errorData.message}
         </p>
-        <Link href={`/admin/users`}>
+        <Link href={`/supplier/apis`}>
           <Button>Go to first page</Button>
         </Link>
       </div>
     );
   }
-  return <AdminUsersDataTable data={users} pagination={pagination} />;
+  return <SupplierAPIsDataTable data={apis} pagination={pagination} />;
 };
 
 export default page;
