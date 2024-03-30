@@ -1,6 +1,7 @@
 type User = {
   id: number;
   email: string;
+
   firstname: string;
   lastname: string;
   role: string;
@@ -11,6 +12,8 @@ type User = {
   phone_number: string;
   bio: string;
 };
+
+
 
 export type Category = {
   id: number;
