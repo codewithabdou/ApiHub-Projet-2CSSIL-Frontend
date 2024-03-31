@@ -14,10 +14,15 @@ import deactivateUser from "@services/api/deactivateUser";
 import { ColumnDef } from "@tanstack/react-table";
 
 import User from "@typings/entities/User";
+import { useRouter } from "next/navigation";
 import { HiMiniEllipsisHorizontal } from "react-icons/hi2";
 import { RxCaretSort } from "react-icons/rx";
 
 const AdminUsersColumns = (): ColumnDef<User>[] => {
+
+
+const router =useRouter()
+
   const columns: ColumnDef<User>[] = [
     {
       accessorKey: "status",
@@ -87,6 +92,17 @@ const AdminUsersColumns = (): ColumnDef<User>[] => {
                   Activate
                 </DropdownMenuItem>
               )}
+              <DropdownMenuSeparator />
+
+<DropdownMenuItem
+                  onClick={() => {
+                    router.push("suppliers/1")
+                  
+                  }}
+                >
+
+                  Voir
+                </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );

@@ -4,14 +4,14 @@ import GetSingleSupplier from '@services/api/GetSingleSupplier';
 import getSupplierAPIs from '@services/api/getSupplierApis';
 import User from '@typings/entities/User';
 import React, { useEffect, useState } from 'react'
-import { Input } from '../../../ui/input';
-import { Label } from '../../../ui/label';
-import { Avatar, AvatarFallback, AvatarImage } from '../../../ui/avatar';
+import { Label } from '@app/components/ui/label';
+import { Avatar, AvatarFallback, AvatarImage } from '@app/components/ui/avatar';
 import Image from 'next/image';
-import { Textarea } from '../../../ui/textarea';
+import { Textarea } from '@app/components/ui/textarea';
 import { ErrorGetAPIsResponse, SuccessGetAPIsResponse } from '@typings/api/getAPIs';
+import { Input } from '@app/components/ui/input';
 
-const SingleUser = ({idSupplier}:{idSupplier:string}) => {
+const page= ({idSupplier}:{idSupplier:string}) => {
 
 
 
@@ -144,4 +144,4 @@ const SingleUser = ({idSupplier}:{idSupplier:string}) => {
   )
 }
 
-export default SingleUser
+export default page
