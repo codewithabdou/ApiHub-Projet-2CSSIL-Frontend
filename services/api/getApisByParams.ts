@@ -27,7 +27,7 @@ import { cookies } from "next/headers";
     category_ids?: number;
     status?: string;
     per_page?: number;
-    supplierId?:number;
+    supplierId?:string;
   }
 
   const getAPIs = async (options: GetAPIsOptions = {}) => {

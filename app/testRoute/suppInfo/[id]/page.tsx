@@ -1,6 +1,6 @@
 "use client"
 
-import GetSingleSupplier from '@services/api/getSingleSupplier';
+import GetSingleSupplier from '@services/api/GetSingleSupplier;
 import getSupplierAPIs from '@services/api/getSupplierApis';
 import User from '@typings/entities/User';
 import { Input } from '@app/components/ui/input'; 

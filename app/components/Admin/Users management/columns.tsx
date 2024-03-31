@@ -96,7 +96,8 @@ const router =useRouter()
 
 <DropdownMenuItem
                   onClick={() => {
-                    router.push("suppliers/1")
+                    
+                    router.push(`suppliers/${user.id}`)
                   
                   }}
                 >
