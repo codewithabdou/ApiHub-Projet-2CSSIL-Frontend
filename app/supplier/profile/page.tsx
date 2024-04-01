@@ -1,7 +1,7 @@
 'use client';
 import { Avatar, AvatarFallback, AvatarImage } from '@app/components/ui/avatar';
 import { Button } from '@app/components/ui/button';
-import React ,  { useRef, useState } from 'react';
+import React ,  { useEffect, useRef, useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FileUpload } from 'primereact/fileupload';
 import { Toast } from 'primereact/toast';
@@ -19,6 +19,9 @@ import {
   import { Input } from "@app/components/ui/input"
 import { toast } from "sonner";
 import { Textarea } from '@app/components/ui/textarea';
+import { getLoggedInUser } from '@services/authentication.service';
+import User from '@typings/entities/User';
+//todo : get the user from the backend , and update it.
 
 
   const FormSchema = z.object({
@@ -32,17 +35,31 @@ import { Textarea } from '@app/components/ui/textarea';
       message: "Password must be at least 8 characters.",
     }),
   })
-
-  
- 
-   
- 
-    
   
   const ProviderProfile = () => {
+      const [image , setImage] = useState<string |undefined>("");
+      let [user, setUser] = useState<User | null>(null);
+      let [edditing, setEdditing] = useState(false);
 
 
-    const [image , setImage] = useState("https://github.com/shadcn.png");
+      useEffect(() => {
+        const fetchUserData = async () => {
+          try {
+            const userData = await getLoggedInUser();
+            console.log( userData)
+            setUser(userData);
+            
+            setImage(userData["avatar:"]);
+            console.log('userData', userData)
+          } catch (error) {
+            console.error('Error fetching user data:', error);
+          }
+        };
+        fetchUserData(); 
+      }, []); 
+
+
+
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -63,9 +80,9 @@ import { Textarea } from '@app/components/ui/textarea';
             //@ts-ignore
           setImage(reader.result);
         };
-    
         // Read the selected file as a Data URL
         reader.readAsDataURL(file);
+    
       };
 
     return (
@@ -79,14 +96,15 @@ import { Textarea } from '@app/components/ui/textarea';
                 <div className='flex flex-col lg:flex-row justify-center gap-8'>
                     {/* //todo : modify the image + add image */}
                     <div className='mx-auto lg:size-1/5 lg:mt-10 flex flex-col gap-3 text-primary'>
-                    <Avatar className="size-full">
-                        <AvatarImage src={image} />
-                        <AvatarFallback>profile image</AvatarFallback>
+                    <Avatar className="size-full border-[3px] border-primary">
+                        <AvatarImage src={image}  />
+                        <AvatarFallback  className='size-full'>profile image</AvatarFallback>
                     </Avatar>
                         <div className='w-full h-6 relative'>
                         <Input type='file' className='file:hidden opacity-0 absolute top-0' onChange={upload}></Input>
 
                             <p className='text-center hover:underline'> upload image </p> 
+                            <p className='text-center hover:underline'> {user?.avatar} </p> 
                         </div>
 
                             <div className="card flex justify-content-center">
@@ -105,8 +123,8 @@ import { Textarea } from '@app/components/ui/textarea';
           render={({ field }) => (
             <FormItem>
               <FormLabel>{field.name}</FormLabel>
-              <FormControl>
-                <Input placeholder="username" {...field} />
+              <FormControl >
+                <Input placeholder="username"  {...field} />
               </FormControl>
               
               <FormMessage />
@@ -121,7 +139,7 @@ import { Textarea } from '@app/components/ui/textarea';
             <FormItem>
               <FormLabel>{field.name}</FormLabel>
               <FormControl>
-                <Input placeholder="email" {...field} />
+                <Input placeholder="email"  {...field}  defaultValue={user?.email}disabled={ edditing ? false : true} />
               </FormControl>
               
               <FormMessage />
@@ -153,7 +171,7 @@ import { Textarea } from '@app/components/ui/textarea';
                 <FormItem>
                     <FormLabel>Bio</FormLabel>
                     <FormControl>
-                        <Textarea placeholder="bio" {...field} />
+                        <Textarea placeholder="bio" {...field}  defaultValue={user?.bio}disabled={ edditing ? false : true} />
                     </FormControl>
                     <FormMessage />
                 </FormItem>
@@ -173,10 +191,11 @@ import { Textarea } from '@app/components/ui/textarea';
                 </FormItem>
             )}
         />
+            {edditing ? <div className='flex flex-row gap-2 justify-end'> 
+            <Button onClick={() => setEdditing(false)} className='max-w-32 px-5 ' variant={'outline'}> Annuler </Button>
+            <Button className='max-w-32 px-5 '> Enregistrer </Button>
 
-                        
-                        
-                        <Button className='max-w-32 px-5 mx-auto'> Enregistrer </Button>
+             </div> : <Button onClick={() => setEdditing(true)} className='max-w-32 px-5 mx-auto'> Editer </Button> }
                     </div>
                 </div>
             </div>
