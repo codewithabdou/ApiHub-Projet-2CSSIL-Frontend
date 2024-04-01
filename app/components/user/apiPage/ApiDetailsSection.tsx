@@ -1,6 +1,7 @@
 import React from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar'
 import { IMAGES } from '@config'
+import getTimeDifference from '@helpers/timeDifference'
 function ApiDetailsSection(props:any) {
     const stats=[
         {name:"popularity",
@@ -13,8 +14,11 @@ function ApiDetailsSection(props:any) {
          image:IMAGES.API_STATS.service,
         value:"100%"}
     ]
+   
+  
+  
   return (
-<div className='w-full flex flex-col gap-y-5 items-center p-5'>
+<div className='w-full flex flex-col gap-y-5 items-center p-5 m-5 bg-white'>
     <div className='sm:flex-row  w-full flex flex-col gap-y-10 items-center justify-center  '>
         <div className='flex gap-x-5 md:w-1/2 w-full'>
          <Avatar className=" rounded-full w-24 h-24">
@@ -23,7 +27,7 @@ function ApiDetailsSection(props:any) {
           </Avatar>  
             <div className='flex flex-col gap-y-2 items-start'>
                 <h1 className='sm:text-3xl text-2xl font-bold text-[#184173]'>{props.name}</h1>
-                <p> Par <span className='text-[#184173] font-bold'>{props.supplier}</span>| Mise a jour il y a {props.updateDate} jours| <span className='text-[#184173] font-bold'>{props.category}</span> </p>
+                <p> Par <span className='text-[#184173] font-bold'>{props.supplier}</span>| Mise a jour il y a {getTimeDifference(props.updateDate)} | <span className='text-[#184173] font-bold'>{props.category}</span> </p>
             </div>      
         </div>
         <div className='sm:flex  sm:flex-row flex-col gap-y-5  sm:gap-x-5 items-center'>

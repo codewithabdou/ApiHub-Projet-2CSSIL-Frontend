@@ -1,14 +1,13 @@
 "use client"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@app/components/ui/carousel';
-import { Label } from '@app/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@app/components/ui/select';
+import Navbar from "@app/components/Shared/Landing page layout/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@app/components/ui/tabs"
-import ApiDetailsSection from '@app/components/user/ApiDetailsSection';
-import EndpointDetails from '@app/components/user/EndpointDetails';
-import Plan from '@app/components/user/Plan';
-import getAllVersionsByApi from '@services/api/getAllversionsByApi';
-import getApiById from '@services/api/getApiById';
-import getVersionDetails from '@services/api/getVersionDetails';
+import ApiDetailsSection from '@app/components/user/apiPage/ApiDetailsSection';
+import DiscussionsSection from '@app/components/user/apiPage/DiscussionsSection';
+import EndpointsSection from '@app/components/user/apiPage/EndpointsSection';
+import PlansSection from '@app/components/user/PlansSection';
+import getAllVersionsByApi from "@services/api/apiPage/getAllversionsByApi";
+import getApiById from '@services/api/apiPage/getApiById';
+import getVersionDetails from '@services/api/apiPage/getVersionDetails';
 import { errorGetApiByIdResponse, successGetApiByIdResponse } from '@typings/api/getApiByIdTypes'
 import { errorGetVersionDetailsResponse, successGetVersionDetailsResponse } from '@typings/api/getVersionDetailsTypes';
 import { errorGetVersionsResponse, successGetVersionsResponse } from '@typings/api/getVersionsTypes';
@@ -64,116 +63,45 @@ function ApiDetails() {
         fetchData();
     }, []);
 
-    function calculateDaysSinceUpdate(updateDate: string): number { //calculate days since the last api update
-        const updateDateTime = new Date(updateDate);
-        const currentDate = new Date();
-        const differenceInMs = currentDate.getTime() - updateDateTime.getTime();
-        const daysSinceUpdate = differenceInMs / (1000 * 60 * 60 * 24);
-        return Math.floor(daysSinceUpdate);
-    }
+    
 
-    function duration(duration: Number) { //function to display plan duration
-        switch (duration) {
-            case 7:
-                return "Semaine";
-            case 30:
-                return "Mois";
-            case 365:
-                return "An";
-            case 999999:
-                return "Ilimitée";
-            default:
-                return "not set";
-        }
-    }
-
-    async function handleVersionChange(version: String) {//load current version
-        const res = await getVersionDetails(apiId, version);
-        if (res) {
-            const data = res as successGetVersionDetailsResponse;
-            setEndpoints(data.data.endpoints);
-        } else {
-            const errorData = res as errorGetVersionDetailsResponse;
-            return errorData;
-        }
-    }
-
+    
     if (loading) {
         return <div>Loading...</div>; 
     }
 
     return (
-        <div className='w-screen flex justify-center items-center flex-col gap-y-10 bg-white'>
+        <div className='w-screen h-screen flex  items-center flex-col  bg-white'>
             <ApiDetailsSection
                 image={api?.data.image}
                 name={api?.data.name}
                 supplier={`${api?.data.supplier.firstname} ${api?.data.supplier.lastname}`}
-                updateDate={calculateDaysSinceUpdate(`${api?.data.updated_at}`)}
+                updateDate={`${api?.data.updated_at}`}
                 category={api?.data.category.name}
             ></ApiDetailsSection>
             
-            <div className='w-full p-5 flex flex-col gap-y-5 items-center overflow-x-hidden'>
-                {/* <div className='w-full p-10'>
-                    <h1>Base url : <div className='bg-[#F2F1F1] h-fit p-2'> {baseUrl}</div></h1>
-                </div>*/}
-                <Tabs defaultValue="endpoints" className="sm:w-4/5 w-full border-[1px] flex flex-col sm:gap-y-2  gap-y-10 rounded-[7px] border-[#184173] sm:p-5 ">
-                    <TabsList className='flex flex-wrap justify-start w-4/5' >
+            <div className='w-full p-0 flex gap-y-5 justify-center overflow-x-hidden m-0 '>
+                <Tabs defaultValue="endpoints" className="sm:w-4/5 w-full bg-white flex flex-col sm:gap-y-0  gap-y-10 sm:p-2 ">
+                    <div className="w-full bg-white flex items-center border-b-[1px] border-primary  sticky top-0 z-50 sm:min-h-16 min-h-32 sm:justify-start justify-center ">
+                    <TabsList className=' flex h-fit bg-white flex-wrap sm:justify-start justify-center w-4/5 z-50' >
                         <TabsTrigger value="endpoints">Endpoints</TabsTrigger>
                         <TabsTrigger value="description">Description</TabsTrigger>
                         <TabsTrigger value="disscussions">Disscussions</TabsTrigger>
                         <TabsTrigger value="plans">Plans d'abonement</TabsTrigger>
                     </TabsList>
-                    <TabsContent className='w-full flex flex-col gap-y-5 items-start p-5' value="endpoints">
-                    <Label>Veuillez choisir une version</Label>
-                <Select onValueChange={(e) => {
-                    handleVersionChange(e);
-                }}
-                >
-                    <SelectTrigger className='sm:w-80 w-48 border-2 border-[#184173] outline-none'>
-                        <SelectValue placeholder={versions.length>0 ? `${versions[0].version}` : "Cet API n'a pas de versions"} defaultValue={versions.length >0 ? `${versions[0].version}` : "Cet API n'a pas de versions"} />
-                    </SelectTrigger>
-
-                    <SelectContent>
-                        {versions.map((dur, key) => (
-                            <SelectItem key={key} value={`${dur.version}`}>
-                                {dur.version}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
-                      {endpoints ? endpoints.map((endpoint, index) => (
-                        <EndpointDetails name={endpoint.url} method={endpoint.method} description={endpoint.description} req={endpoint.request_body} res={endpoint.response_body} />
-                    )
-
-                    ) : <h1>Cette version n'a pas de endpoints</h1>}</TabsContent>
-                    <TabsContent value="description">
+                    </div>
                     
-                    <p className='text-[#184173]'>{api?.data.description}</p>
+                    <TabsContent className='w-full ' value="endpoints">
+                     <EndpointsSection apiId={apiId} setEndpoints={setEndpoints} versions={versions} endpoints={endpoints}/>
+                   </TabsContent>
+                    <TabsContent value="description">
+                      <p className='text-[#184173]' style={{ whiteSpace: 'pre-line' }}>{api?.data.description}</p>
                     </TabsContent>
-                    <TabsContent value="disscussions">Not done yet</TabsContent>
+                    <TabsContent value="disscussions">
+                       <DiscussionsSection id={apiId}></DiscussionsSection>                    
+                    </TabsContent>
                     <TabsContent className='w-full flex justify-center items-center' value="plans">
-                    <Carousel
-                    opts={{
-                        align: "start",
-                    }}
-                    className="sm:w-full w-[70%] bg-white sm:p-3 p-1 rounded-[20px] sm:shadow-md sm:shadow-[#979797]  sm:border-[2px]"
-                >
-                    <CarouselContent>
-                        {plans.map((plan, index) => (
-                            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 flex justify-center">
-                                <div className="sm:p-1 p-0">
-                                    <Plan name={plan.name}
-                                        price={plan.price}
-                                        duration={duration(plan.duration)}
-                                        nbrRequests={plan.max_requests} />
-                                       
-                                </div>
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
-                </Carousel>
+                      <PlansSection plans={plans}/>
                     </TabsContent>
 
                 </Tabs>

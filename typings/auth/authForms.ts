@@ -49,6 +49,7 @@ export type registerRequest = z.infer<typeof registerFormSchema>;
 export type loginRequest = z.infer<typeof loginFormSchema>;
 
 export type successLoginResponse = {
+  userId:number;
   status: String;
   message: String;
 };

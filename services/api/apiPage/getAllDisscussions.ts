@@ -1,17 +1,17 @@
 "use server"
 import { API_INFO } from "@config";
-import { createApiRequest, errorCreateApiResponse, successCreateApiResponse } from "@typings/api/createApiTypes";
+import { createDisscussionRequest, errorCreateDiscussionResponse, Disscussion } from "@typings/api/disscussionTypes";
 import { cookies } from "next/headers";
-async function createApi(formData:createApiRequest):Promise<number | errorCreateApiResponse>
+async function getAllDiscussions(apiId:number):Promise<Disscussion[] | errorCreateDiscussionResponse>
 {
     try{
-        const formdatajson = JSON.stringify(formData);
+        
         const accessToken = cookies().get("user")?.value;
         const response = await fetch(
-            `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.CREATEAPI}`,
+            `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.GENERAL.GET_APIS}/${apiId}/discussions`,
             {
-              method: "POST",
-              body: formdatajson,
+              method: "GET",
+             
               headers: {
                 'Authorization': ` ${accessToken}`,
                 "Content-Type": "application/json",
@@ -20,14 +20,14 @@ async function createApi(formData:createApiRequest):Promise<number | errorCreate
           );
           const data = await response.json();
           if (!data?.Authorization) {
-            return data ;
+            return data as errorCreateDiscussionResponse ;
           }else 
-          return data ;
+          return data as Disscussion[] ;
     }catch (error:any){
         return {
             status: "server error",
             message: error.message || "An unexpected server error occurred",
-          } ;
+          } as errorCreateDiscussionResponse ;
     }
 }
-export default createApi;
+export default getAllDiscussions;
