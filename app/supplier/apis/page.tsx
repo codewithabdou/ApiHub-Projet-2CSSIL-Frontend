@@ -27,6 +27,7 @@ const page = async ({
     total: 0,
     pages: 0,
   };
+
   if (data.status === "success") {
     const apisData = data as SuccessGetAPIsResponse;
     apis = apisData.data;

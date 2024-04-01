@@ -10,9 +10,11 @@ import { useTransition } from "react";
 import { SideNavItem } from "@typings/domain/sideNavItem";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@app/components/ui/button";
+import { Router, useRouter } from "next/router";
 
 const SideNav = ({ items }: { items: SideNavItem[] }) => {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   return (
     <div className="md:w-60 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
@@ -34,7 +36,12 @@ const SideNav = ({ items }: { items: SideNavItem[] }) => {
           </div>
         </div>
         <Button
-          onClick={() => startTransition(() => logout())}
+          onClick={() =>
+            startTransition(() => {
+              logout();
+              router.push("/");
+            })
+          }
           className="rounded-none"
           variant={"outline"}
         >

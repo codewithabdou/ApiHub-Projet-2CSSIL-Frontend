@@ -128,6 +128,7 @@ const DetailedCategory = async ({
     page,
     per_page: ITEMS_PER_PAGE,
   });
+
   if (data.status === "success") {
     const apiData = data as SuccessGetAPIsResponse;
     fetchedapis = apiData.data;

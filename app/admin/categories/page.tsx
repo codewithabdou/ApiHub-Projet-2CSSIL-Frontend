@@ -47,7 +47,17 @@ const page = async ({
       </div>
     );
   }
-  return <AdminCategoriesDataTable data={Categories} pagination={pagination} />;
+  return (
+    <div>
+      <div className="flex px-4 justify-between">
+        <h1 className="font-bold text-2xl">Categories Mangement</h1>
+        <Link href="/admin/categories/create">
+          <Button>Create Category</Button>
+        </Link>
+      </div>
+      <AdminCategoriesDataTable data={Categories} pagination={pagination} />;
+    </div>
+  );
 };
 
 export default page;
