@@ -1,8 +1,8 @@
 "use client"
 
-import GetSingleSupplier from '@services/api/GetSingleSupplier;
-import getSupplierAPIs from '@services/api/getSupplierApis';
+
 import User from '@typings/entities/User';
+import GetSingleSupplier from '@services/api/getSingleSupplier';
 import { Input } from '@app/components/ui/input'; 
 import { Label } from '@app/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from  '@app/components/ui/avatar';
@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 
 
 
-  const page =  ({ params: { id } }: {params: {id:number}}) => {
+  const page =  ({ params: { id } }: {params: {id:string}}) => {
 
 
   const [supplierAPI,setSupplierAPI]=  useState<API[]>();
