@@ -1,6 +1,5 @@
 "use server";
 import { API_INFO } from "@config";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import User from "@typings/entities/User";
 import {
@@ -36,6 +35,7 @@ async function login(
 
       if (user) {
         return {
+          userId:user.id,
           status: "success",
           message: user.role,
         } as successLoginResponse;
@@ -77,11 +77,7 @@ async function register(
 
     const data = await response.json();
 
-    if (data.status !== "success") {
-      return data as errorAuthResponse;
-    } else {
-      return data as successRegisterResponse;
-    }
+    return { ...data, status: "success" } as successRegisterResponse;
   } catch (error: any) {
     return {
       status: "server error",

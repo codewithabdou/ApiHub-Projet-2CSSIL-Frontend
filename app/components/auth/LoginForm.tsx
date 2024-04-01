@@ -11,7 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { loginRequest } from "@typings/auth/authForms";
+import { loginRequest, successLoginResponse } from "@typings/auth/authForms";
 import { loginFormSchema } from "@typings/auth/authForms";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -32,7 +32,6 @@ export default function LoginForm() {
       password: "",
     },
   });
-
   async function onSubmit(values: loginRequest) {
     setIsLoading(true);
     const result = await login(values);
@@ -55,6 +54,8 @@ export default function LoginForm() {
         icon: <GiCancel className="text-lg text-red-500" />,
       });
     } else {
+      const data=result as successLoginResponse;
+      localStorage.setItem("userId",JSON.stringify(data.userId));
 console.log(result);
       console.log(result.message);
       router.push(`/${result.message}`);

@@ -8,9 +8,10 @@ import { Button } from "../../ui/button";
 import ThemeToggle from "../Theme/ThemeToggle";
 import { getLoggedInUser, logout } from "@services/authentication.service";
 import User from "@typings/entities/User";
-import { set } from "date-fns";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [showDiv, setShowDiv] = useState(true);
@@ -97,6 +98,7 @@ const Navbar = () => {
                     onClick={() => {
                       logout().then(() => {
                         setUser(null);
+                        router.push("/");
                       });
                     }}
                   >
@@ -181,6 +183,7 @@ const Navbar = () => {
                       onClick={() => {
                         logout().then(() => {
                           setUser(null);
+                          router.push("/");
                         });
                       }}
                     >

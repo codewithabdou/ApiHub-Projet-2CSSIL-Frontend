@@ -6,7 +6,7 @@ import {
 } from "@typings/api/getUsers";
 import { cookies } from "next/headers";
 
-const getSuppliers = async (page: string) => {
+const getUsers = async (page: string) => {
   const userCookie = cookies().get("user")?.value;
 
   if (!userCookie?.length)
@@ -17,27 +17,21 @@ const getSuppliers = async (page: string) => {
 
   try {
     const res = await fetch(
-      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_USERS}/?page=${page}&roles=supplier`,
+      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_USERS}/?page=${page}&roles=supplier&per_page=5`,
       {
+
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: userCookie,
         },
         next: {
-          tags: ["SuppliersListManagement"],
+          tags: ["UsersListManagement"],
         },
       }
     );
     const data = await res.json();
-    console.log(data);
-    if (data.status !== "success") {
-      return {
-        status: "error",
-        message: data.error,
-      } as ErrorGetUsersResponse;
-    }
-    return data as SuccessGetUsersResponse;
+    return { ...data, status: "success" } as SuccessGetUsersResponse;
   } catch (error: any) {
     return {
       status: "error",
@@ -46,4 +40,4 @@ const getSuppliers = async (page: string) => {
   }
 };
 
-export default getSuppliers;
+export default getUsers;

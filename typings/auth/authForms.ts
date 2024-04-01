@@ -9,7 +9,6 @@ const loginFormSchema = z.object({
   }),
 });
 
-
 const registerFormSchema = z
   .object({
     firstname: z.string().min(2, {
@@ -50,13 +49,17 @@ export type registerRequest = z.infer<typeof registerFormSchema>;
 export type loginRequest = z.infer<typeof loginFormSchema>;
 
 export type successLoginResponse = {
+  userId:number;
   status: String;
   message: String;
 };
 
 export type successRegisterResponse = {
-  status: String;
-  message: String;
+  status: string;
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
 };
 
 export type errorAuthResponse = {

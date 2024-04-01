@@ -27,10 +27,11 @@ import { cookies } from "next/headers";
     category_ids?: number;
     status?: string;
     per_page?: number;
+    supplierId?:string;
   }
 
   const getAPIs = async (options: GetAPIsOptions = {}) => {
-    const { page, category_ids, status, per_page } = options;
+    const { page, category_ids, status, per_page,supplierId } = options;
     
     const userCookie = cookies().get("user")?.value;
   if (!userCookie?.length)
@@ -61,13 +62,14 @@ import { cookies } from "next/headers";
       }
     );
     const data = await res.json();
-    if (data.status !== "success") {
-      return {
-        status: "error",
-        message: data.error,
-      } as ErrorGetAPIsResponse;
+    if (data.status !== "error") {
+      return data as SuccessGetAPIsResponse;
+
     }
-    return data as SuccessGetAPIsResponse;
+    return {
+      status: "error",
+      message: data.error,
+    } as ErrorGetAPIsResponse;
   } catch (error: any) {
     return {
       status: "error",

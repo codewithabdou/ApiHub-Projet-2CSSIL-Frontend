@@ -2,7 +2,7 @@
 import { API_INFO } from "@config";
 import { createApiRequest, errorCreateApiResponse, successCreateApiResponse } from "@typings/api/createApiTypes";
 import { cookies } from "next/headers";
-async function createApi(formData:createApiRequest):Promise<successCreateApiResponse | errorCreateApiResponse>
+async function createApi(formData:createApiRequest):Promise<number | errorCreateApiResponse>
 {
     try{
         const formdatajson = JSON.stringify(formData);
@@ -20,14 +20,14 @@ async function createApi(formData:createApiRequest):Promise<successCreateApiResp
           );
           const data = await response.json();
           if (!data?.Authorization) {
-            return data as errorCreateApiResponse;
+            return data ;
           }else 
-          return data as successCreateApiResponse;
+          return data ;
     }catch (error:any){
         return {
             status: "server error",
             message: error.message || "An unexpected server error occurred",
-          } as errorCreateApiResponse;
+          } ;
     }
 }
 export default createApi;

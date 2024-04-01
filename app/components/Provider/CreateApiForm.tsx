@@ -79,9 +79,9 @@ function CreateApiForm() {
   //Submit function that uses the backend API
   async function onSubmit(values: createApiRequest) {
     console.log(values);
-    const result = await createApi(transformDataToApiStructure(values));
-    if (result.status !== "success") {
-      toast.error(result.status, {
+    const result:any = await createApi(transformDataToApiStructure(values));
+    if (result!==201) {
+      toast.error( `result.status`, {
         description: result.message,
         position: "top-right",
         dismissible: true,
@@ -100,6 +100,23 @@ function CreateApiForm() {
       });
     } else {
       form.reset();
+      toast.success(result, {
+        description:"API added successfuly",
+        position: "top-right",
+        dismissible: true,
+        duration: 5000,
+        cancel: {
+          label: (
+            <Button className="bg-green-500" variant={"destructive"} size={"sm"}>
+              OK
+            </Button>
+          ),
+          onClick: () => {
+            toast.dismiss();
+          },
+        },
+        icon: <GiCancel className="text-lg text-green-500" />,
+      });
     }
   }
   //creating the plan forms dynamically
@@ -202,15 +219,16 @@ function CreateApiForm() {
 
   useEffect(() => {
     getAllCategories().then((Response) => {
-      if (Response.status === "success") {
+      if (Response) {
         const data = Response as getAllCategoriesSuccessResponse;
         setCategories(data.data);
+        
       } else {
         const errorData = Response as ErrorgetAllCategoriesResponse;
         return errorData;
       }
     });
-  }, categories);
+  }, []);
   return (
     <Form {...form}>
       <form
