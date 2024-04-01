@@ -10,9 +10,8 @@ import {
   SuccessGetAPIsResponse,
 } from "@typings/api/getAPIs";
 import Pagination from "@typings/api/pagination";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Router } from "next/router";
-import React, { useEffect, useState } from "react";
+
+import React from "react";
 
 const DetailedCategory = async ({
   params,
@@ -46,20 +45,6 @@ const DetailedCategory = async ({
     { label: "Trier par", options: ["Option X", "Option Y", "Option Z"] },
   ];
 
-  //******** imortant  */
-  // let filters = "get them from the params of the url , like the page."
-  // when clicking on filter, send the filters to the url.
-
-  // const [selectedFilters, setSelectedFilters] = useState({});
-  // const handleFilterChange: (filterLabel: string, selectedValue: string) => void = (filterLabel, selectedValue) => {
-  // const searchParams = useSearchParams();
-  // const page =  searchParams.has("page") ? searchParams.get("page") : "1";
-
-  //   setSelectedFilters(prevState => ({
-  //     ...prevState,
-  //     [filterLabel]: selectedValue
-  //   }));
-  // };
 
   const page = Number(searchParams?.page) || 1;
   let pagination: Pagination = {
@@ -68,59 +53,7 @@ const DetailedCategory = async ({
     total: 0,
     pages: 0,
   };
-  // const image =  "https://github.com/shadcn.png"
-  // let apis = [
-  //   {
-  //     apiName: "API 1",
-  //     apiImage: image,
-  //       apiDescription: "+400 Basketball Leagues & Cups with Livescore, Odds, Bookmakers, Basketball Leagues & Cups with Livescore, Odds, Bookmakers, , Statistics, Standings, Historical Data, Countries, Seasons. ",
-  //   },
-  //   {
-  //     apiName: "API 2",
-  //     apiImage: image ,
-  //       apiDescription: "+400 Basketball Leagues & Cups with Livescore, Odds, Bookmakers, Statistics, Standings, Historical Data, Countries, Seasons. ",
-  //   },
-  //   {
-  //     apiName: "API 3",
-  //     apiImage: image,
-  //       apiDescription: "+400 Basketball Leagues & Cups with Livescore, Odds, Bookmakers, Statistics, Standings, Historical Data, Countries, Seasons. ",
-  //   },
-  //   {
-  //     apiName: "API 4",
-  //     apiImage: image,
-  //       apiDescription: "Description 4",
-  //   },
-  //   {
-  //     apiName: "API 5",
-  //     apiImage: image,
-  //       apiDescription: "Description 5",
-  //   },
-  //   {
-  //     apiName: "API 6",
-  //     apiImage: image,
-  //       apiDescription: "Description 6",
-  //   },
-  //   {
-  //     apiName: "API 7",
-  //     apiImage: image,
-  //       apiDescription: "Description 7",
-  //   },
-  //   {
-  //     apiName: "API 8",
-  //     apiImage: image,
-  //       apiDescription: "Description 8",
-  //   },
-  //   {
-  //     apiName: "API 9",
-  //     apiImage: image,
-  //       apiDescription: "Description 9",
-  //   },
-  //   {
-  //     apiName: "API 10",
-  //     apiImage: image,
-  //       apiDescription: "Description 10",
-  //   },
-  //   ];
+
 
   let fetchedapis;
   const data = await getAPIs({
@@ -128,6 +61,7 @@ const DetailedCategory = async ({
     page,
     per_page: ITEMS_PER_PAGE,
   });
+
   if (data.status === "success") {
     const apiData = data as SuccessGetAPIsResponse;
     fetchedapis = apiData.data;
@@ -183,7 +117,6 @@ const DetailedCategory = async ({
           />
         </div>
 
-        {/* <ApiFilters  filters={filters}  onFilterChange={handleFilterChange}/> */}
         <ApiFilters filters={filters} />
 
         <Button className="w-32 lg:mx-auto"> Filtrer </Button>
