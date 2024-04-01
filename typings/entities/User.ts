@@ -2,6 +2,8 @@ type User = {
   id: number;
   email: string;
   role: string;
+  firstname: string;
+  lastname: string;
   status: string;
   created_at: string;
   updated_at: string;

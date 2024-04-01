@@ -1,5 +1,5 @@
 import React from 'react'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../ui/accordion'
 import { CodeBlock } from "react-code-blocks";
 function EndpointDetails(props:any) {
   
@@ -14,7 +14,7 @@ function EndpointDetails(props:any) {
       <AccordionContent>
         <div className='w-full flex flex-col gap-y-5 p-2'>
           <h1 className='sm:text-xl text-lg font-medium '>Méthode: <span className='text-[#048B77]'>{props.method}</span></h1>
-          <h1 className='sm:text-xl text-lg font-medium' >Déscription:</h1>
+          <h1 className='sm:text-xl text-lg font-medium' style={{ whiteSpace: 'pre-line' }} >Déscription:</h1>
           <div className='bg-[#F2F1F1] h-fit p-2'>
 {props.description}    
       </div>

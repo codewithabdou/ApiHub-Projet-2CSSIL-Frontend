@@ -36,6 +36,7 @@ async function login(
 
       if (user) {
         return {
+          userId:user.id,
           status: "success",
           message: user.role,
         } as successLoginResponse;
