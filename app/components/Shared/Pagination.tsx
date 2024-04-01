@@ -19,7 +19,6 @@ function PaginationBar(props:any) {
             props.startIndex === 0 ? "pointer-events-none opacity-50" : undefined
           }
           onClick={() => {
-            props.setRefresh(5);
             props.setStartIndex(props.startIndex - props.rowsPerPage);
             props.setEndIndex(props.endIndex - props.rowsPerPage);
           }} />
@@ -31,7 +30,6 @@ function PaginationBar(props:any) {
             props.endIndex === props.length ? "pointer-events-none opacity-50" : undefined
           }
           onClick={() => {
-            props.setRefresh(6);
             props.setStartIndex(props.startIndex + props.rowsPerPage); 
             props.setEndIndex(props.endIndex + props.rowsPerPage); 
           }} />
