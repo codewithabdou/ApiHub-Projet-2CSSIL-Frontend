@@ -3,17 +3,17 @@
 import { getLoggedInUser } from '@services/authentication.service';
 import User from '@typings/entities/User';
 import React, { useCallback, useEffect, useState } from 'react'
-import { Form ,FormField,FormItem,FormMessage,FormControl,FormLabel} from '../ui/form';
+import { Form ,FormField,FormItem,FormMessage,FormControl,FormLabel} from '@app/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { UpdateAdminProfileRequest, UpdateProfileAdminSchema } from '@typings/api/AdminProfile';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from '../ui/input';
-import { Textarea } from '../ui/textarea';
+import { Input } from '@app/components/ui/input';
+import { Textarea } from '@app/components/ui/textarea';
 
-import { Avatar,AvatarFallback,AvatarImage } from "../ui/avatar"
+import { Avatar,AvatarFallback,AvatarImage } from '@app/components/ui/avatar'
 import { UpdateProfile } from '@services/api/updateProfile';
 import { toast } from 'sonner';
-import { Button } from '../ui/button';
+import { Button } from '@app/components/ui/button';
 import { GiCancel } from 'react-icons/gi';
 import { MdDone } from 'react-icons/md';
 
@@ -121,13 +121,20 @@ if(result.status !=="success"){
 
     <div>
 
+<main className='flex min-h-screen flex-col items-center justify-evenly p-4 lg:p-[10%] '>
 
+
+
+<div className='w-full '>
+
+<h1  className=" text-2xl md:text-4xl mb-6 font-bold">Profile</h1>
+</div>
 <Form  {...form}>
 
 
 <form onSubmit={form.handleSubmit(handleSubmit)}
 
-className="bg-white  lg:px-20 px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 gap-16 lg:grid lg:grid-cols-2  align-top "
+className="space-y-8 bg-white px-8 py-12 rounded-lg shadow-md w-full "
 
 >
 
@@ -142,8 +149,8 @@ className="bg-white  lg:px-20 px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 ga
 
 
 
-<Avatar className=' w-1/2 h-1/2 mx-auto'>
-  <AvatarImage src={user?.['avatar:']} className='w-full' />
+<Avatar className=' md:w-45 md:h-45 w-40 h-40   mx-auto'>
+  <AvatarImage src={user?.avatar} className='w-full' />
   <AvatarFallback>Avatar</AvatarFallback>
 </Avatar>
 
@@ -159,7 +166,7 @@ className="bg-white  lg:px-20 px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 ga
 
 <div className='flex flex-col gap-6'>
 
-<div className=' block gap-4 md:flex'>
+<div className=' block gap-6 md:flex'>
 
 
 <FormField    control={form.control} name="firstname" 
@@ -216,14 +223,6 @@ render={({field})=>(
 />
 
 
-
-
-</div>
-
-
-
-
-
 <FormField    control={form.control} name="email" render={({field})=>
 
 
@@ -245,6 +244,14 @@ render={({field})=>(
   </FormItem>)
 }
 />
+
+</div>
+
+
+
+
+
+
 
 
 
@@ -295,19 +302,19 @@ render={({field})=>(
   </FormItem>)
 }
 />
-<Button  type="submit">
-         Enregistrer
-        </Button>
+
 
 </div>
 
-
+<Button className='flex mx-auto w-40 md:w-60 mt-6'  type="submit">
+         Enregistrer
+        </Button>
 </div>
 
 
 </form>
 </Form>
-
+</main>
 
 
     </div>

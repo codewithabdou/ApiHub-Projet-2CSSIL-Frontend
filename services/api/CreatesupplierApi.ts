@@ -13,6 +13,7 @@ async function createSupplier(
   formData: createSupplierRequest
 ): Promise<errorcreateSupplierrResponse | successcreateSupplierrResponse> {
   const formdatajson = JSON.stringify(formData);
+  console.log(formData)
   const userCookie = cookies().get("user")?.value;
 
   try {
@@ -29,17 +30,22 @@ async function createSupplier(
     );
 
     const data = await response.json();
+    console.log("after creating ",data);
 
-    if (data.status !== "success") {
-      return data as errorcreateSupplierrResponse;
-    } else {
-      return data as successcreateSupplierrResponse;
-    }
+
+
+ 
+ 
+ 
+  return { ...data, status: "success" } as successcreateSupplierrResponse;
+
   } catch (error: any) {
     return {
-      status: "server error",
+      status: "error",
       message: error.message || "An unexpected server error occurred",
     } as errorcreateSupplierrResponse;
   }
+
+  
 }
 export { createSupplier };
