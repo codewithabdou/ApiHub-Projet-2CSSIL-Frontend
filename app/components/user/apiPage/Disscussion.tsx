@@ -1,45 +1,35 @@
-"use client"
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../ui/accordion'
 import {Avatar , AvatarFallback, AvatarImage } from '../../ui/avatar'
 import getTimeDifference from '@helpers/timeDifference'
-import { Answer, errorCreateDiscussionResponse, successCreateDiscussionResponse } from '@typings/api/disscussionTypes'
+import { Answer, successCreateDiscussionResponse } from '@typings/api/disscussionTypes'
 import getDiscussion from '@services/api/apiPage/getDiscussionById'
 import AddAnswerForm from './AddAnswerForm'
 import AnswerDetails from './AnswerDetails'
 import DeleteDiscussionPopUp from './DeleteDiscussionPopUp'
 import { toast } from 'sonner'
 import PaginationBar from '../../Shared/Pagination'
-function DisscussionDetails(props:any) {
-  const [discussion,setDiscussion]=useState<successCreateDiscussionResponse|null>(null);
-  const [userId,setUserId]=useState();
-  const [refresh,setRefresh]=useState(0);
-  const [startIndex, setStartIndex] = useState(0);
-  const rowsPerPage=3;
-  const [endIndex, setEndIndex] = useState(rowsPerPage);
-
-
-  useEffect(()=>{
-    getDiscussion(props.apiId,props.id).then((Response:any)=>{
-      if (Response) {
-        setDiscussion(Response);
+import { getLoggedInUser } from '@services/authentication.service'
+import { ErrorType } from '@typings/entities/Error'
+const DisscussionDetails= async(props:any)=> {
+  let discussion: successCreateDiscussionResponse | undefined = undefined;
+  let userId;
+   const result:{data:successCreateDiscussionResponse,status:string,message:string} | ErrorType=await getDiscussion(props.apiId,props.id)
+      if (result.status==="success") {
+        const res= result as {data:successCreateDiscussionResponse,status:string,message:string};
+         discussion=res.data;
       } else {
         toast("Message", {
-          description: Response.message,
+          description: result.message,
           action: {
             label: "Ok",
             onClick: () => null,
           }}
     )
       }
-    });
-    
-    let id;
-    if (localStorage.getItem("userId")!==null) {
-      id=localStorage.getItem("userId") as string;
-      setUserId(JSON.parse(id))
-    }
-  },[refresh])
+    const res=await getLoggedInUser();
+    userId=res?.id;
+   
   
   return (
     <Accordion type="single" collapsible className='w-full border-[2px] border-[#184173] p-5 rounded-[7px] bg-white overflow-x-hidden z-10'>
@@ -56,7 +46,7 @@ function DisscussionDetails(props:any) {
               <h1 className=''>{`${props.title}`}</h1>
               <div className='flex gap-x-5 '>
               <p className='text-sm font-light'>{getTimeDifference(props.created_date)}</p>
-              {(userId==props.userId) && ( <DeleteDiscussionPopUp setRefresh={props.setRefresh} apiId={props.apiId} discussionId={discussion?.data.id}/>)}
+              {(userId==props.userId) && ( <DeleteDiscussionPopUp apiId={props.apiId} discussionId={discussion?.data.id}/>)}
 
               </div>
          </div>
@@ -86,13 +76,13 @@ function DisscussionDetails(props:any) {
                 apiId={props.apiId}
                 discussionId={answer.discussion_id}
                 answerId={answer.id}
-                setRefresh={setRefresh}/>
+                />
                
               )))}
             {/*discussion?.data.answers.length ?  (<PaginationBar rowsPerPage={rowsPerPage} startIndex={startIndex} endIndex={endIndex}
             setRefresh={setRefresh}  setStartIndex={setStartIndex} setEndIndex={setEndIndex} length={discussion?.data.answers.length ? Math.ceil(discussion?.data.answers.length / rowsPerPage)*rowsPerPage :0}/>) : null*/}  
         </div>         
-                    <AddAnswerForm setRefresh={setRefresh} apiId={props.apiId} id={discussion?.data.id}/>
+                    <AddAnswerForm  apiId={props.apiId} id={discussion?.data.id}/>
       </AccordionContent>
     </AccordionItem>
   </Accordion>

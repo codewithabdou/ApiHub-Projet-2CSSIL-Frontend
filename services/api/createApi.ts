@@ -2,7 +2,7 @@
 import { API_INFO } from "@config";
 import { createApiRequest, errorCreateApiResponse, successCreateApiResponse } from "@typings/api/createApiTypes";
 import { cookies } from "next/headers";
-async function createApi(formData:createApiRequest):Promise<number | errorCreateApiResponse>
+async function createApi(formData:createApiRequest):Promise<{data:number,status:string,message:string} | errorCreateApiResponse>
 {
     try{
         const formdatajson = JSON.stringify(formData);
@@ -18,11 +18,9 @@ async function createApi(formData:createApiRequest):Promise<number | errorCreate
               },
             }
           );
-          const data = await response.json();
-          if (!data?.Authorization) {
-            return data ;
-          }else 
-          return data ;
+          const data =  response.status;
+         
+          return {data:data,status:"success",message:"api created succesfully"} ;
     }catch (error:any){
         return {
             status: "server error",

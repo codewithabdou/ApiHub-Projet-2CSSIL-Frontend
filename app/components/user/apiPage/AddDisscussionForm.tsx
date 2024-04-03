@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '../../ui/sheet'
 import { Button } from '../../ui/button'
@@ -22,7 +23,6 @@ function AddDisscussionForm(props:any) {
         
            const result:any= await createDisscussion(values,props.id);
            if (result.data) {
-            props.setRefresh(1);
            form.reset();
            toast("Message", {
             description: "Discussion ajoutée",

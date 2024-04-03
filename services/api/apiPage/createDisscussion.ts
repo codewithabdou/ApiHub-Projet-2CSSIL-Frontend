@@ -1,8 +1,10 @@
 "use server"
 import { API_INFO } from "@config";
-import { createDisscussionRequest, errorCreateDiscussionResponse, successCreateDiscussionResponse } from "@typings/api/disscussionTypes";
+import { createDisscussionRequest,  successCreateDiscussionResponse } from "@typings/api/disscussionTypes";
+import { ErrorType } from "@typings/entities/Error";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-async function createDisscussion(formData:createDisscussionRequest,apiId:number):Promise<successCreateDiscussionResponse | errorCreateDiscussionResponse>
+async function createDisscussion(formData:createDisscussionRequest,apiId:number):Promise<successCreateDiscussionResponse | ErrorType>
 {
     try{
         const formdatajson = JSON.stringify(formData);
@@ -19,15 +21,14 @@ async function createDisscussion(formData:createDisscussionRequest,apiId:number)
             }
           );
           const data = await response.json();
-          if (!data?.Authorization) {
-            return data as errorCreateDiscussionResponse ;
-          }else 
+          revalidateTag("getAllDiscussions");
+         
           return data as successCreateDiscussionResponse ;
     }catch (error:any){
         return {
             status: "server error",
             message: error.message || "An unexpected server error occurred",
-          } as errorCreateDiscussionResponse ;
+          } as ErrorType ;
     }
 }
 export default createDisscussion;

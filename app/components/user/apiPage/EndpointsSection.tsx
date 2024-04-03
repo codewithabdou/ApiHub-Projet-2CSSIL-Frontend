@@ -6,16 +6,22 @@ import EndpointDetails from '@app/components/user/apiPage/EndpointDetails';
 import getVersionDetails from '@services/api/apiPage/getVersionDetails';
 import { errorGetVersionDetailsResponse, successGetVersionDetailsResponse } from '@typings/api/getVersionDetailsTypes';
 import PaginationBar from '../../Shared/Pagination';
+import Endpoint from '@typings/entities/Endpoint';
+import { ErrorType } from '@typings/entities/Error';
 
 function EndpointsSection(props:any) {
-    const [startIndex, setStartIndex] = useState(0);
-    const rowsPerPage=3;
-    const [endIndex, setEndIndex] = useState(rowsPerPage);
+    
+    const [endpoints,setEndpoints]=useState< Endpoint[]>(props.endpoints)
     async function handleVersionChange(version: String) {//load current version
-        const res = await getVersionDetails(props.apiId, version);
-        if (res) {
-            const data = res as successGetVersionDetailsResponse;
-            props.setEndpoints(data.data.endpoints);
+        const res:{data:successGetVersionDetailsResponse,status:string,message:string} | ErrorType = await getVersionDetails(props.apiId, version);
+        if (res.status==="success") {
+            const result=res as {data:successGetVersionDetailsResponse,status:string,message:string};
+            const data = result.data;
+            console.log(data);
+            
+            setEndpoints(data.data.endpoints);
+            console.log(props.endpoints);
+            
         } else {
             const errorData = res as errorGetVersionDetailsResponse;
             return errorData;
@@ -40,13 +46,13 @@ function EndpointsSection(props:any) {
                         ))}
                     </SelectContent>
                 </Select>
-                      {props.endpoints ?  props.endpoints.slice(startIndex, endIndex).map((endpoint:any, index:number) => (
+                      {endpoints ?  endpoints/*.slice(startIndex, endIndex)*/.map((endpoint:any, index:number) => (
                         <EndpointDetails name={endpoint.url} method={endpoint.method} description={endpoint.description} req={endpoint.request_body} res={endpoint.response_body} />
                     )
                        
                     ) : <h1>Cette version n'a pas de endpoints</h1>}
-                     {props.endpoints.length ?  (<PaginationBar rowsPerPage={rowsPerPage} startIndex={startIndex} endIndex={endIndex}
-              setStartIndex={setStartIndex} setEndIndex={setEndIndex} length={props.endpoints.length ? Math.ceil(props.endpoints.length/ rowsPerPage)*rowsPerPage :0}/>) : null}  
+                     {/*endpoints.length ?  (<PaginationBar rowsPerPage={rowsPerPage} startIndex={startIndex} endIndex={endIndex}
+              setStartIndex={setStartIndex} setEndIndex={setEndIndex} length={endpoints.length ? Math.ceil(endpoints.length/ rowsPerPage)*rowsPerPage :0}/>) : null*/}  
     </div>
   )
 }
