@@ -4,6 +4,7 @@ import createApi from "@services/api/createApi";
 import {
   createApiFormSchema,
   createApiRequest,
+  errorCreateApiResponse,
 } from "@typings/api/createApiTypes";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,7 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import getAllCategories from "@services/api/getAllCategories";
+import getAllCategories from "@services/api/createCategory";
 import {
   ErrorgetAllCategoriesResponse,
   getAllCategoriesSuccessResponse,
@@ -79,9 +80,10 @@ function CreateApiForm() {
   //Submit function that uses the backend API
   async function onSubmit(values: createApiRequest) {
     console.log(values);
-    const result:any = await createApi(transformDataToApiStructure(values));
-    if (result!==201) {
-      toast.error( `result.status`, {
+    const result: any = await createApi(transformDataToApiStructure(values));
+    if (result !== 201) {
+      toast.error(`result.status`, {
+
         description: result.message,
         position: "top-right",
         dismissible: true,
@@ -101,13 +103,18 @@ function CreateApiForm() {
     } else {
       form.reset();
       toast.success(result, {
-        description:"API added successfuly",
+        description: "API added successfuly",
+
         position: "top-right",
         dismissible: true,
         duration: 5000,
         cancel: {
           label: (
-            <Button className="bg-green-500" variant={"destructive"} size={"sm"}>
+            <Button
+              className="bg-green-500"
+              variant={"destructive"}
+              size={"sm"}
+            >
               OK
             </Button>
           ),
@@ -222,7 +229,6 @@ function CreateApiForm() {
       if (Response) {
         const data = Response as getAllCategoriesSuccessResponse;
         setCategories(data.data);
-        
       } else {
         const errorData = Response as ErrorgetAllCategoriesResponse;
         return errorData;

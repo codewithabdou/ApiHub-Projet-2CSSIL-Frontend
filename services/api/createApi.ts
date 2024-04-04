@@ -7,6 +7,7 @@ import {
 } from "@typings/api/createApiTypes";
 import { cookies } from "next/headers";
 <<<<<<< HEAD
+<<<<<<< HEAD
 async function createApi(
   formData: createApiRequest
 ): Promise<successCreateApiResponse | errorCreateApiResponse> {
@@ -37,6 +38,9 @@ async function createApi(
   }
 =======
 async function createApi(formData:createApiRequest):Promise<number | errorCreateApiResponse>
+=======
+async function createApi(formData:createApiRequest):Promise<{data:number,status:string,message:string} | errorCreateApiResponse>
+>>>>>>> c0af9dfde36912ae31de23f0dae7a2b2eb3b5e4d
 {
     try{
         const formdatajson = JSON.stringify(formData);
@@ -52,11 +56,9 @@ async function createApi(formData:createApiRequest):Promise<number | errorCreate
               },
             }
           );
-          const data = await response.json();
-          if (!data?.Authorization) {
-            return data ;
-          }else 
-          return data ;
+          const data =  response.status;
+         
+          return {data:data,status:"success",message:"api created succesfully"} ;
     }catch (error:any){
         return {
             status: "server error",

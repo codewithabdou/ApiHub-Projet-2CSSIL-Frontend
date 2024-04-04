@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import {
     AlertDialog,
@@ -17,7 +18,9 @@ import { toast } from 'sonner';
 function DeleteAnswerPpoUp(props:any) {
    async function handleClick(){
        const result=await deleteAnswer(props.apiId,props.discussionId,props.answerId);
-       if (result) {
+       console.log(result);
+       
+       if (result.status==="success") {
         toast("Message", {
           description: "La réponse a été supprimée avec success",
           action: {
@@ -25,7 +28,6 @@ function DeleteAnswerPpoUp(props:any) {
             onClick: () => console.log("Undo"),
           }}
     );
-    props.setRefresh(10)
        } else {
         toast("Message", {
           description: "Erreur lors de la suppression",

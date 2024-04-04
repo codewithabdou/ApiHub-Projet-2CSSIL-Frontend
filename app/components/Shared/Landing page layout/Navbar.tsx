@@ -59,6 +59,7 @@ const Navbar = () => {
       Link: "/",
       name: "APIs",
     },
+    
   ];
 
   return (

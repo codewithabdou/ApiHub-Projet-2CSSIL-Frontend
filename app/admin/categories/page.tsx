@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Button } from "@app/components/ui/button";
 import AdminCategoriesDataTable from "@app/components/Admin/Categories management/dataTable";
 import { sucessGetCategoriesResponse } from "@typings/api/createCategoryType";
-import { getCategories } from "@services/api/categories";
+import getCategories from "@services/api/getCategoriesByParams";
 
 const page = async ({
   searchParams,
@@ -22,12 +22,13 @@ const page = async ({
   let pagination: Pagination = {
     page: Number(page),
     per_page: 10,
-    total: 0,
-    pages: 0,
+    total: 1,
+    pages: 1,
   };
   if (data.status === "success") {
     const categoriesData = data as sucessGetCategoriesResponse;
-    Categories = categoriesData.data;
+    Categories = categoriesData.data as Category[];
+    //todo : get the pagination from the backend .
   } else {
     const errorData = data as ErrorGetUsersResponse;
     return (

@@ -1,6 +1,7 @@
 "use server";
 
 import { API_INFO } from "@config";
+import buildUrl from "@helpers/buildUrl";
 import {
   ErrorGetAPIsResponse,
   SuccessGetAPIsResponse,
@@ -11,6 +12,7 @@ function buildUrl(baseUrl: string, endpoint: string, params = {}) {
   const url = `${baseUrl}${endpoint}`;
   const searchParams = new URLSearchParams();
 
+<<<<<<< HEAD
   // Loop through each parameter key-value pair
   for (const [key, value] of Object.entries(params)) {
     // Check if value is defined before adding
@@ -22,6 +24,8 @@ function buildUrl(baseUrl: string, endpoint: string, params = {}) {
   
     return url + (searchParams.toString() ? `?${searchParams.toString()}` : "");
   }
+=======
+>>>>>>> c0af9dfde36912ae31de23f0dae7a2b2eb3b5e4d
   interface GetAPIsOptions {
     page?: number;
     category_ids?: number;
@@ -69,8 +73,13 @@ const getAPIs = async (options: GetAPIsOptions = {}) => {
       },
     });
     const data = await res.json();
+<<<<<<< HEAD
     if (data.status !== "error") {
       return data as SuccessGetAPIsResponse;
+=======
+    if (data.data) {
+      return {...data , status:"success"} as SuccessGetAPIsResponse;
+>>>>>>> c0af9dfde36912ae31de23f0dae7a2b2eb3b5e4d
     }
     return {
       status: "error",

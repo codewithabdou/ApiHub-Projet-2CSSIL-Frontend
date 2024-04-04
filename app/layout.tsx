@@ -25,6 +25,7 @@ export default function LocaleLayout({
           enableSystem
           disableTransitionOnChange
         >
+          
           {children}
           <Toaster />
         </ThemeProvider>

@@ -6,7 +6,7 @@ export const createCategorySchema = z.object({
     message: "Please enter a valid category name.",
   }),
   description: z.string().min(50, {
-    message: "Please enter a valid category description.",
+    message: "Please enter a valid category description (50 caracters minimum).",
   }),
 });
 
@@ -14,24 +14,17 @@ export type categoryRequest = z.infer<typeof createCategorySchema>;
 
 export type successCreateCategoryResponse = {
   status: String;
-  message: String;
-  data: {
-    name: string;
-    description: string;
-    created_at: string;
-    updated_at: string;
-  };
 };
 
 export type errorCreateCategoryResponse = {
-  errors?: any;
+  // errors?: any;
   message: String;
   status?: String;
 };
 
 export type sucessGetCategoriesResponse = {
   status: String;
-  data: Category[];
+  data: Category[] | Category;
 };
 
 export type errorGetCategoriesResponse = {

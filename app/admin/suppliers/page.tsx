@@ -26,7 +26,6 @@ const page = async ({
     total: 0,
     pages: 0,
   };
-  console.log(data);
   if (data.status === "success") {
     const usersData = data as SuccessGetUsersResponse;
     users = usersData.data;

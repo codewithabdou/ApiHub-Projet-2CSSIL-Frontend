@@ -10,13 +10,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "@app/components/ui/form";
 import { MdDone } from "react-icons/md";
 import { GiCancel } from "react-icons/gi";
 import { registerRequest } from "@typings/auth/authForms";
 import { registerFormSchema } from "@typings/auth/authForms";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "@app/components/ui/input";
+import { Button } from "@app/components/ui/button";
 import { toast } from "sonner";
 import Link from "next/link";
 import { useState } from "react";
@@ -44,6 +44,7 @@ export default function CreateSupplierForm() {
   async function onSubmit(values: createSupplierRequest) {
     setIsLoading(true);
     const result = await createSupplier(values);
+    console.log(result);
     if (result.status !== "success") {
       toast.error(result.status, {
         description: result.message,
@@ -92,7 +93,20 @@ export default function CreateSupplierForm() {
   }
 
   return (
-    <Form {...form}>
+
+    <>
+
+  
+
+    <main className="
+    flex min-h-screen flex-col items-center justify-evenly p-4 lg:p-[10%]">
+
+
+<div className="w-full">
+
+<h1  className=" text-2xl md:text-4xl font-bold mb-6">Ajouter fournisseur</h1>
+</div>
+    <Form {...form} >
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 bg-white px-8 py-12 rounded-lg shadow-md w-full"
@@ -171,5 +185,9 @@ export default function CreateSupplierForm() {
         </Button>
       </form>
     </Form>
+    </main>
+
+    </>
+
   );
 }

@@ -14,7 +14,6 @@ import {
   FaClock,
   FaStackpath,
 } from "react-icons/fa";
-import { IMAGES } from "@config";
 
 const ApiCard = ({
   api,

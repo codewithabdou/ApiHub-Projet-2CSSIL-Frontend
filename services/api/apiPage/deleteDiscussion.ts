@@ -1,8 +1,10 @@
 "use server"
 import { API_INFO } from "@config";
-import { createDisscussionRequest, errorCreateDiscussionResponse, Disscussion, successCreateDiscussionResponse } from "@typings/api/disscussionTypes";
+import { errorCreateDiscussionResponse } from "@typings/api/disscussionTypes";
+import { ErrorType } from "@typings/entities/Error";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-async function deleteDiscussion(apiId:number,discussionId:number):Promise<number | errorCreateDiscussionResponse>
+async function deleteDiscussion(apiId:number,discussionId:number):Promise<{data:number,status:string,message:string} | ErrorType>
 {
     try{
         
@@ -18,16 +20,15 @@ async function deleteDiscussion(apiId:number,discussionId:number):Promise<number
               },
             }
           );
-          const data = await response.json();
-          if (!data?.Authorization) {
-            return data as errorCreateDiscussionResponse ;
-          }else 
-          return data  ;
+          const data =  response.status;
+          revalidateTag("getAllDiscussion");
+         
+          return {data:data,status:"success",message:"discussion deleted succesfully"}  ;
     }catch (error:any){
         return {
             status: "server error",
             message: error.message || "An unexpected server error occurred",
-          } as errorCreateDiscussionResponse ;
+          } as ErrorType ;
     }
 }
 export default deleteDiscussion

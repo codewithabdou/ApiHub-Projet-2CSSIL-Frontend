@@ -13,7 +13,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { RxChevronDown } from "react-icons/rx";
+import { RxChevronDown} from "react-icons/rx";
+import { IoPersonAddOutline } from "react-icons/io5";
 import { Button } from "@app/components/ui/button";
 import {
   DropdownMenu,
@@ -36,6 +37,7 @@ import paginationType from "@typings/api/pagination";
 
 import AdminUsersColumns from "./columns";
 import AdminUsersPagination from "./pagination";
+import { useRouter } from "next/navigation";
 
 export default function AdminUsersDataTable({
   data,
@@ -50,6 +52,8 @@ export default function AdminUsersDataTable({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+
+  const router =useRouter()
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
@@ -73,6 +77,18 @@ export default function AdminUsersDataTable({
   });
 
   return (
+
+<>
+
+<div className=" flex self-end mt-3 mb-4 pr-20">
+
+<Button  onClick={()=>router.push("suppliers/addsupplier")}>
+      <IoPersonAddOutline className="mr-2 h-4 w-4 m-3" /> Ajouter fournisseur
+    </Button>
+</div>
+
+
+
     <div className="w-full space-y-4  bg-white p-4">
       <div className="flex items-center gap-2 py-4">
         <Input
@@ -162,5 +178,6 @@ export default function AdminUsersDataTable({
       </div>
       <AdminUsersPagination pagination={pagination} />
     </div>
+    </>
   );
 }
