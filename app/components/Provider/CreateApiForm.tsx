@@ -4,6 +4,7 @@ import createApi from "@services/api/createApi";
 import {
   createApiFormSchema,
   createApiRequest,
+  errorCreateApiResponse,
 } from "@typings/api/createApiTypes";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -79,9 +80,9 @@ function CreateApiForm() {
   //Submit function that uses the backend API
   async function onSubmit(values: createApiRequest) {
     console.log(values);
-    const result:any = await createApi(transformDataToApiStructure(values));
-    if (result!==201) {
-      toast.error( `result.status`, {
+    const result:{data:number,status:string,message:string} | errorCreateApiResponse = await createApi(transformDataToApiStructure(values));
+    if (result.status!=="success") {
+      toast.error( `error`, {
         description: result.message,
         position: "top-right",
         dismissible: true,
@@ -100,7 +101,7 @@ function CreateApiForm() {
       });
     } else {
       form.reset();
-      toast.success(result, {
+      toast.success("API added successfuly", {
         description:"API added successfuly",
         position: "top-right",
         dismissible: true,

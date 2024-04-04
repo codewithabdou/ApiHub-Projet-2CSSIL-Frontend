@@ -1,8 +1,9 @@
 "use server"
 import { API_INFO } from "@config";
-import { createDisscussionRequest, errorCreateDiscussionResponse, Disscussion, successCreateDiscussionResponse } from "@typings/api/disscussionTypes";
+import { ErrorType } from "@typings/entities/Error";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-async function deleteVote(apiId:number,discussionId:number,answerId:number):Promise<number | errorCreateDiscussionResponse>
+async function deleteVote(apiId:number,discussionId:number,answerId:number):Promise<{data:number,status:string,message:string} | ErrorType>
 {
     try{
         
@@ -18,16 +19,14 @@ async function deleteVote(apiId:number,discussionId:number,answerId:number):Prom
               },
             }
           );
-          const data = await response.json();
-          if (!data?.Authorization) {
-            return data as errorCreateDiscussionResponse ;
-          }else 
-          return data  ;
+          const data =  response.status;
+          revalidateTag("getVotes");
+          return  {data:data,status:"success",message:"vote deleted succesfully"} ;
     }catch (error:any){
         return {
             status: "server error",
             message: error.message || "An unexpected server error occurred",
-          } as errorCreateDiscussionResponse ;
+          } as ErrorType ;
     }
 }
 export default deleteVote;

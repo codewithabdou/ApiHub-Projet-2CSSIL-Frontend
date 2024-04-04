@@ -1,5 +1,6 @@
 "use server"
 import { API_INFO } from "@config";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 interface VoteFormData {
@@ -31,6 +32,7 @@ async function vote(formData: VoteFormData, apiId: number, discussionId: number,
         );
 
         if (response.status === 204) {
+            revalidateTag("getVotes");
             return { status: "success", message: "voted successfully" };
         } else {
             const data = await response.json();

@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import { Button } from '../../ui/button'
 import { useForm } from 'react-hook-form';
@@ -19,7 +20,6 @@ function AddAnswerForm(props:any) {
            const result:any= await createAnswer(values,props.apiId,props.id);
            if (result.data) {
            form.reset();
-           props.setRefresh(4);
            toast("Message", {
             description: "Réponse ajoutée",
             action: {

@@ -1,5 +1,3 @@
-"use client"
-import Navbar from "@app/components/Shared/Landing page layout/Navbar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@app/components/ui/tabs"
 import ApiDetailsSection from '@app/components/user/apiPage/ApiDetailsSection';
 import DiscussionsSection from '@app/components/user/apiPage/DiscussionsSection';
@@ -12,40 +10,46 @@ import { errorGetApiByIdResponse, successGetApiByIdResponse } from '@typings/api
 import { errorGetVersionDetailsResponse, successGetVersionDetailsResponse } from '@typings/api/getVersionDetailsTypes';
 import { errorGetVersionsResponse, successGetVersionsResponse } from '@typings/api/getVersionsTypes';
 import Endpoint from '@typings/entities/Endpoint';
+import { ErrorType } from "@typings/entities/Error";
 import { Version } from '@typings/entities/Versions';
 import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-function ApiDetails() {
-    const [loading, setLoading] = useState(true);
-    const [api, setApi] = useState<successGetApiByIdResponse | null>(null);
-    const [plans, setPlans] = useState<{ name: String, description: String, price: Number, max_requests: Number, duration: Number }[]>([]);
-    const [versions, setVersions] = useState<Version[]>([]);
-    const [endpoints, setEndpoints] = useState<Endpoint[]>([]);
-    const params = useParams();
-    const apiId = Number(params.apiId);
+const ApiDetails= async ({ params }: {
+    params: {
+      apiId: number;
+    };
+   
+  }) =>  {
+   
+    const apiId = params.apiId;
+    let api :successGetApiByIdResponse;
+    let plans :{ name: String, description: String, price: Number, max_requests: Number, duration: Number }[];
+    let versions :Version[];
+    let endpoints: Endpoint[];
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const apiResponse = await getApiById(apiId);
-                const versionsResponse = await getAllVersionsByApi(apiId);
-                if (apiResponse) {
-                    const data = apiResponse as successGetApiByIdResponse;
-                    setApi(data);
-                    setPlans(data.data.plans);
+
+        
+                const apiResponse:{data:successGetApiByIdResponse,status:string,message:string} | ErrorType = await getApiById(apiId);
+                const versionsResponse:{data:successGetVersionsResponse,status:string,message:string}|ErrorType = await getAllVersionsByApi(apiId);
+                if (apiResponse.status==="success") {
+                    const data = apiResponse as {data:successGetApiByIdResponse,status:string,message:string} ;
+                   
+                    api=data.data;
+                    console.log(api);
+                    
+                    plans=api.data.plans;
                 } else {
                     const errorData = apiResponse as errorGetApiByIdResponse;
                     return errorData
                 }
-                if (versionsResponse) {
-                    const data = versionsResponse as successGetVersionsResponse;
-                    setVersions(data.data);
-                     // Fetch endpoints of the default version
-                     const defaultVersionEndpointsResponse = await getVersionDetails(apiId, data.data[0].version);
-                     if (defaultVersionEndpointsResponse) {
-                         const endpointsData = defaultVersionEndpointsResponse as successGetVersionDetailsResponse;
-                         setEndpoints(endpointsData.data.endpoints);
+                if (versionsResponse.status==="success") {
+                    const data = versionsResponse as {data:successGetVersionsResponse,status:string,message:string};
+                    versions=data.data.data;
+                     const defaultVersionEndpointsResponse :{data:successGetVersionDetailsResponse,status:string,message:string} | ErrorType = await getVersionDetails(apiId, versions[0].version);
+                     if (defaultVersionEndpointsResponse.status==="success") {
+                         const endpointsData  = defaultVersionEndpointsResponse as {data:successGetVersionDetailsResponse,status:string,message:string};
+                         endpoints=endpointsData.data.data.endpoints;
                      } else {
                          const errorData = defaultVersionEndpointsResponse as errorGetVersionDetailsResponse;
                          return errorData 
@@ -54,31 +58,22 @@ function ApiDetails() {
                     const errorData = versionsResponse as errorGetVersionsResponse;
                     return errorData 
                 }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                setLoading(false); 
-            }
-        }
-        fetchData();
-    }, []);
+           
 
     
 
     
-    if (loading) {
-        return <div>Loading...</div>; 
-    }
+   
 
     return (
         <div className='w-screen h-screen flex  items-center flex-col  bg-white'>
-            <ApiDetailsSection
+           {api ?  (<ApiDetailsSection
                 image={api?.data.image}
                 name={api?.data.name}
                 supplier={`${api?.data.supplier.firstname} ${api?.data.supplier.lastname}`}
                 updateDate={`${api?.data.updated_at}`}
                 category={api?.data.category.name}
-            ></ApiDetailsSection>
+            ></ApiDetailsSection>) : null} 
             
             <div className='w-full p-0 flex gap-y-5 justify-center overflow-x-hidden m-0 '>
                 <Tabs defaultValue="endpoints" className="sm:w-4/5 w-full bg-white flex flex-col sm:gap-y-0  gap-y-10 sm:p-2 ">
@@ -92,7 +87,7 @@ function ApiDetails() {
                     </div>
                     
                     <TabsContent className='w-full ' value="endpoints">
-                     <EndpointsSection apiId={apiId} setEndpoints={setEndpoints} versions={versions} endpoints={endpoints}/>
+                     <EndpointsSection apiId={apiId}  versions={versions} endpoints={endpoints}/>
                    </TabsContent>
                     <TabsContent value="description">
                       <p className='text-[#184173]' style={{ whiteSpace: 'pre-line' }}>{api?.data.description}</p>
