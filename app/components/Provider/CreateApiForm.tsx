@@ -4,6 +4,7 @@ import createApi from "@services/api/createApi";
 import {
   createApiFormSchema,
   createApiRequest,
+  errorCreateApiResponse,
 } from "@typings/api/createApiTypes";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -82,6 +83,7 @@ function CreateApiForm() {
     const result: any = await createApi(transformDataToApiStructure(values));
     if (result !== 201) {
       toast.error(`result.status`, {
+
         description: result.message,
         position: "top-right",
         dismissible: true,
@@ -102,6 +104,7 @@ function CreateApiForm() {
       form.reset();
       toast.success(result, {
         description: "API added successfuly",
+
         position: "top-right",
         dismissible: true,
         duration: 5000,

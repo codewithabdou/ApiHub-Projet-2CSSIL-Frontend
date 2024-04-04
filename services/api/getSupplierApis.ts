@@ -33,7 +33,6 @@ const getSupplierAPIs = async (page: string) => {
 
     const data = await res.json();
     if (data.status !== "success") {
-      console.log("successful",data);
       return {
         status: "error",
         message: data.error,

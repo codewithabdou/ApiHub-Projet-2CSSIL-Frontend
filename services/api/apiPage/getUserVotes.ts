@@ -16,6 +16,9 @@ async function getUserVotes(apiId:number,discussionId:number,answerId:number):Pr
                 'Authorization': ` ${accessToken}`,
                 "Content-Type": "application/json",
               },
+              next:{
+                tags: ["getVotes"]
+              }
             }
           );
           const data = await response.json();

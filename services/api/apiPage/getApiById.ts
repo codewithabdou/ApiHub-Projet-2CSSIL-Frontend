@@ -1,8 +1,9 @@
 "use server"
 import { API_INFO } from "@config";
-import { errorGetApiByIdResponse, successGetApiByIdResponse } from "@typings/api/getApiByIdTypes";
+import { successGetApiByIdResponse } from "@typings/api/getApiByIdTypes";
+import { ErrorType } from "@typings/entities/Error";
 import { cookies } from "next/headers";
-async function getApiById(id:Number):Promise<successGetApiByIdResponse | errorGetApiByIdResponse>
+async function getApiById(id:Number):Promise<{data:successGetApiByIdResponse,status:string,message:string} | ErrorType>
 {
     try{
         const accessToken = cookies().get("user")?.value;
@@ -17,15 +18,12 @@ async function getApiById(id:Number):Promise<successGetApiByIdResponse | errorGe
             }
           );
           const data = await response.json();
-          if (!data?.Authorization) {
-            return data as errorGetApiByIdResponse;
-          }else 
-          return data as successGetApiByIdResponse;
+          return {data:data,status:"success",message:"got api succesfully"} ;
     }catch (error:any){
         return {
             status: "server error",
             message: error.message || "An unexpected server error occurred",
-          } as errorGetApiByIdResponse;
+          } as ErrorType;
     }
 }
 export default getApiById;

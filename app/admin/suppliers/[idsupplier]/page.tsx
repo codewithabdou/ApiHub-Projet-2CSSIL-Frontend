@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 
 
 
-  const page =  ({ params: { id } }: {params: {id:string}}) => {
+  const page =  ({ params: { idsupplier } }: {params: {idsupplier:string}}) => {
 
 
   const [supplierAPI,setSupplierAPI]=  useState<API[]>();
@@ -30,16 +30,16 @@ import { useEffect, useState } from 'react';
     const [user,setUser]=useState<User | null>();
     useEffect(() => {
         const fetchData = async () => {
-            const res = await GetSingleSupplier(id);
+            const res = await GetSingleSupplier(idsupplier);
 
           setUser(res);
         };
         fetchData();
-      }, [id]);
+      }, [idsupplier]);
 
       useEffect(() => {
         const fetchData = async () => {
-            const data = await getAPIs({supplierId: id});
+            const data = await getAPIs({supplierId: idsupplier});
 
 
     if (data.status !== "error") {
@@ -66,7 +66,7 @@ import { useEffect, useState } from 'react';
         };
       
         fetchData();
-      }, [id]);
+      }, [idsupplier]);
 
 
 
@@ -84,7 +84,13 @@ import { useEffect, useState } from 'react';
 
 
 
-<div className="bg-white  lg:px-20 px-8 py-12 rounded-lg shadow-md max-w-full  md:w-10/12 gap-16   align-top "
+
+<main className='  flex min-h-screen flex-col items-center justify-evenly p-4 lg:p-[10%]'>
+<div className='w-full '>
+
+<h1  className=" text-2xl md:text-4xl mb-6 font-bold">  <span className='text-primary'>   Fournisseur :  </span> {user?.lastname} {user?.lastname}</h1>
+</div>
+<div className="bg-white  lg:px-20 px-8 py-12 rounded-lg shadow-md max-w-full   gap-16   align-top "
 >
 
 <div>
@@ -205,6 +211,7 @@ import { useEffect, useState } from 'react';
 </div>
 
 </div>
+</main>
 
 
     </div>
