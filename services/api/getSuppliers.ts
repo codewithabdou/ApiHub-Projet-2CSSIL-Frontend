@@ -19,6 +19,7 @@ const getUsers = async (page: string) => {
     const res = await fetch(
       `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.ADMIN.GET_USERS}/?page=${page}&roles=supplier&per_page=5`,
       {
+
         method: "GET",
         headers: {
           "Content-Type": "application/json",

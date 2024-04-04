@@ -4,6 +4,8 @@ type User = {
   firstname: string;
   lastname: string;
   role: string;
+  firstname: string;
+  lastname: string;
   status: string;
   avatar: string;
   phone_number:string;

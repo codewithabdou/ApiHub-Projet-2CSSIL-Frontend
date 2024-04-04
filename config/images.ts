@@ -42,6 +42,10 @@ const IMAGES = {
     time: "/images/time.svg",
     service: "/images/service.svg",
   },
+  ANSWER_VOTE: {
+    upVote: "/images/upVote.svg",
+    downVote: "/images/downVote.svg",
+  },
 
   HUB_BANNER: "/images/HubBanner.png",
 };

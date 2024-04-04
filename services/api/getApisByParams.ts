@@ -17,6 +17,18 @@ function buildUrl(baseUrl: string, endpoint: string, params = {}) {
     if (value !== undefined) {
       searchParams.append(key, value?.toString() || "");
     }
+<<<<<<< HEAD
+=======
+  
+    return url + (searchParams.toString() ? `?${searchParams.toString()}` : "");
+  }
+  interface GetAPIsOptions {
+    page?: number;
+    category_ids?: number;
+    status?: string;
+    per_page?: number;
+    supplierId?:string;
+>>>>>>> 393243ffe77bb9811e4f06bb68e600f528e04e88
   }
 
   return url + (searchParams.toString() ? `?${searchParams.toString()}` : "");

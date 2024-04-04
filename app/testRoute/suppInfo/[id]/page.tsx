@@ -1,38 +1,22 @@
 "use client";
 
-import GetSingleSupplier from "@services/api/getSingleSupplier";
-import getSupplierAPIs from "@services/api/getSupplierApis";
-import User from "@typings/entities/User";
-import { Input } from "@app/components/ui/input";
-import { Label } from "@app/components/ui/label";
-import { Avatar, AvatarFallback, AvatarImage } from "@app/components/ui/avatar";
-import Image from "next/image";
-import { Textarea } from "@app/components/ui/textarea";
-import {
-  ErrorGetAPIsResponse,
-  SuccessGetAPIsResponse,
-} from "@typings/api/getAPIs";
-import getAPIs from "@services/api/getApisByParams";
-import { API } from "@typings/entities/API";
-import Pagination from "@typings/api/pagination";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@app/components/ui/card";
-import { Select } from "@radix-ui/react-select";
-import { Button } from "@app/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@app/components/ui/carousel";
-import { useEffect, useState } from "react";
+import GetSingleSupplier from '@services/api/GetSingleSupplier;
+import getSupplierAPIs from '@services/api/getSupplierApis';
+import User from '@typings/entities/User';
+import { Input } from '@app/components/ui/input'; 
+import { Label } from '@app/components/ui/label';
+import { Avatar, AvatarFallback, AvatarImage } from  '@app/components/ui/avatar';
+import Image from 'next/image';
+import { Textarea } from '@app/components/ui/textarea'; 
+import { ErrorGetAPIsResponse, SuccessGetAPIsResponse } from '@typings/api/getAPIs';
+import getAPIs from '@services/api/getApisByParams';
+import { API } from '@typings/entities/API';
+import Pagination from '@typings/api/pagination';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@app/components/ui/card';
+import { Select } from '@radix-ui/react-select';
+import { Button } from '@app/components/ui/button';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@app/components/ui/carousel';
+import { useEffect, useState } from 'react';
 
 const page = ({ params: { id } }: { params: { id: number } }) => {
   const [supplierAPI, setSupplierAPI] = useState<API[]>();
