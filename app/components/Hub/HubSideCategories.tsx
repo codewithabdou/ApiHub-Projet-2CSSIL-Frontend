@@ -1,4 +1,4 @@
-import { getCategories } from "@services/api/categories";
+import getCategories from "@services/api/getCategoriesByParams";
 import {
   errorGetCategoriesResponse,
   sucessGetCategoriesResponse,
@@ -14,7 +14,7 @@ const HubSideCategories = async () => {
     return <div>{errorData.message}</div>;
   }
   const successData = data as sucessGetCategoriesResponse;
-  const categories: Category[] = successData.data;
+  const categories: Category[] = successData.data as Category[];
   return (
     <aside className="bg-white md:order-1 order-2 md:w-[20%] w-full flex flex-col items-start justify-start     py-8 min-h-[50vh] px-[5%] rounded-lg shadow-md">
       <h3 className="font-semibold">Categories</h3>
