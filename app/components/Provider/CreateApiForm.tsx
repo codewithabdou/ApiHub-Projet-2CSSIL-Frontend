@@ -35,6 +35,8 @@ import {
   getAllCategoriesSuccessResponse,
 } from "@typings/api/getCategoryTypes";
 import Category from "@typings/entities/Category";
+import getCategories from "@services/api/getCategoriesByParams";
+import { sucessGetCategoriesResponse } from "@typings/api/createCategoryType";
 
 function CreateApiForm() {
   const router = useRouter();
@@ -225,10 +227,11 @@ function CreateApiForm() {
   ));
 
   useEffect(() => {
-    getAllCategories().then((Response) => {
+    getCategories().then((Response) => {
       if (Response) {
-        const data = Response as getAllCategoriesSuccessResponse;
-        setCategories(data.data);
+        const data = Response as sucessGetCategoriesResponse;
+        const res=data.data as Category[]
+        setCategories(res);
       } else {
         const errorData = Response as ErrorgetAllCategoriesResponse;
         return errorData;
