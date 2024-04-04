@@ -19,9 +19,11 @@ import { useRouter } from "next/navigation";
 import {
   categoryRequest,
   createCategorySchema,
+  errorCreateCategoryResponse,
 } from "@typings/api/createCategoryType";
-import { createCategory } from "@services/api/categories";
 import { Textarea } from "@app/components/ui/textarea";
+import { MdDone } from "react-icons/md";
+import createCategory from "@services/api/createCategory";
 
 export default function CreateCategoryForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -58,10 +60,21 @@ export default function CreateCategoryForm() {
     setIsLoading(true);
     const result = await createCategory(values);
     if (result.status !== "success") {
-      errorToaster(result.status, result.message);
+      errorToaster(result.status, ( result as errorCreateCategoryResponse).message);
     } else {
-      // redirect to categories admin page
-      router.push("/admin/categories");
+      if (result.status === "success") {
+        toast.success(result.status, {
+          description: "Category succesfully added. ",
+          position: "top-right",
+          dismissible: true,
+  
+          icon: (
+            <MdDone className=" aspect-square hover:bg-opacity-0 p-[0.5px] rounded-full text-white bg-green-500" />
+          ),
+        });
+        form.reset();
+      }
+      setIsLoading(false);
       form.reset();
     }
     setIsLoading(false);

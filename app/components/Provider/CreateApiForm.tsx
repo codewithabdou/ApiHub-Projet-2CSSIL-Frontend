@@ -29,7 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import getAllCategories from "@services/api/getAllCategories";
+import getAllCategories from "@services/api/createCategory";
 import {
   ErrorgetAllCategoriesResponse,
   getAllCategoriesSuccessResponse,
@@ -80,9 +80,10 @@ function CreateApiForm() {
   //Submit function that uses the backend API
   async function onSubmit(values: createApiRequest) {
     console.log(values);
-    const result:{data:number,status:string,message:string} | errorCreateApiResponse = await createApi(transformDataToApiStructure(values));
-    if (result.status!=="success") {
-      toast.error( `error`, {
+    const result: any = await createApi(transformDataToApiStructure(values));
+    if (result !== 201) {
+      toast.error(`result.status`, {
+
         description: result.message,
         position: "top-right",
         dismissible: true,
@@ -101,14 +102,19 @@ function CreateApiForm() {
       });
     } else {
       form.reset();
-      toast.success("API added successfuly", {
-        description:"API added successfuly",
+      toast.success(result, {
+        description: "API added successfuly",
+
         position: "top-right",
         dismissible: true,
         duration: 5000,
         cancel: {
           label: (
-            <Button className="bg-green-500" variant={"destructive"} size={"sm"}>
+            <Button
+              className="bg-green-500"
+              variant={"destructive"}
+              size={"sm"}
+            >
               OK
             </Button>
           ),
@@ -223,7 +229,6 @@ function CreateApiForm() {
       if (Response) {
         const data = Response as getAllCategoriesSuccessResponse;
         setCategories(data.data);
-        
       } else {
         const errorData = Response as ErrorgetAllCategoriesResponse;
         return errorData;
