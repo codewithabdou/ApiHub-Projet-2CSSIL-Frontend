@@ -3,7 +3,9 @@ import AdminUsersPagination from "@app/components/Admin/Users management/paginat
 import ApiCard from "@app/components/Shared/ApiCard";
 import { ApiFilters } from "@app/components/Shared/ApiFilters";
 import MainTitle from "@app/components/Shared/MainTitle";
+import UrlPagination from "@app/components/Shared/UrlPagination";
 import { Button } from "@app/components/ui/button";
+import getCategories from "@services/api/getCategoriesByParams";
 import getAPIs from "@services/api/getApisByParams";
 import {
   ErrorGetAPIsResponse,
@@ -12,6 +14,8 @@ import {
 import Pagination from "@typings/api/pagination";
 
 import React from "react";
+import Category from "@typings/entities/Category";
+import { sucessGetCategoriesResponse } from "@typings/api/createCategoryType";
 
 const DetailedCategory = async ({
   params,
@@ -26,6 +30,25 @@ const DetailedCategory = async ({
 }) => {
   const categoryId = params.categoryId;
   const ITEMS_PER_PAGE = 12;
+  let category : Category ;
+
+  //? call the api to get the category informations.
+  const categoryData = await getCategories({
+    category_ids: categoryId,
+  });
+
+  if (categoryData.status === "success") {
+     category = (categoryData as sucessGetCategoriesResponse).data as Category ;
+  } else {
+    const errorData = categoryData as ErrorGetAPIsResponse;
+    return (
+      <div className="flex flex-col gap-6 justify-center items-center">
+        <p className="text-center text-sm bg-red-200 rounded-md max-w-[40ch] text-red-600 p-2">
+          {errorData.message}
+        </p>
+      </div>
+    );
+  }
 
   const description = `Sports APIs can refer to many different categories of APIs in 
                     the world of sports. Some of the more popular APIs fall under umbrellas like sports 
@@ -45,7 +68,6 @@ const DetailedCategory = async ({
     { label: "Trier par", options: ["Option X", "Option Y", "Option Z"] },
   ];
 
-
   const page = Number(searchParams?.page) || 1;
   let pagination: Pagination = {
     page: Number(page),
@@ -54,11 +76,10 @@ const DetailedCategory = async ({
     pages: 0,
   };
 
-
   let fetchedapis;
   const data = await getAPIs({
     category_ids: categoryId,
-    page,
+    page: 1,
     per_page: ITEMS_PER_PAGE,
   });
 
@@ -78,7 +99,7 @@ const DetailedCategory = async ({
   }
 
   return (
-    <div className="flex flex-col w-full gap-4 md:px-28">
+    <div className="flex flex-col w-full gap-4 md:px-28 mt-5">
       {/* the card of the big screen */}
 
       <div className="grid w-full grid-cols-4 p-10 border-2 rounded-xl min-h-72 bg-white">
@@ -141,7 +162,7 @@ const DetailedCategory = async ({
             )}
           </div>
           {/* we can use a reusable general pagination here  */}
-          <AdminUsersPagination pagination={pagination} />
+          <UrlPagination pagination={pagination} />
         </section>
       </section>
     </div> // end of page

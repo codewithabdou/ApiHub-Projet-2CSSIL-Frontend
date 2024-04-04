@@ -31,39 +31,39 @@ const AdminCategoriesColumns = (): ColumnDef<Category>[] => {
       accessorKey: "description",
       header: "Description",
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("description")}</div>
+        <div className="lowercase">{row.original.description}</div>
       ),
     },
 
-    {
-      id: "actions",
-      header: "Actions",
-      enableHiding: false,
-      cell: ({ row }) => {
-        const category = row.original;
+    // {
+    //   id: "actions",
+    //   header: "Actions",
+    //   enableHiding: false,
+    //   cell: ({ row }) => {
+    //     const category = row.original;
 
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <HiMiniEllipsisHorizontal />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => {
-                  console.log("Edit category", category);
-                }}
-              >
-                Edit
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      },
-    },
+    //     return (
+    //       <DropdownMenu>
+    //         <DropdownMenuTrigger asChild>
+    //           <Button variant="ghost" className="h-8 w-8 p-0">
+    //             <span className="sr-only">Open menu</span>
+    //             <HiMiniEllipsisHorizontal />
+    //           </Button>
+    //         </DropdownMenuTrigger>
+    //         <DropdownMenuContent align="end">
+    //           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+    //           <DropdownMenuItem
+    //             onClick={() => {
+    //               console.log("Edit category", category);
+    //             }}
+    //           >
+    //             Edit
+    //           </DropdownMenuItem>
+    //         </DropdownMenuContent>
+    //       </DropdownMenu>
+    //     );
+    //   },
+    // },
   ];
 
   return columns;

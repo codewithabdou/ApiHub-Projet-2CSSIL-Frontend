@@ -29,6 +29,7 @@ import User from '@typings/entities/User';
       message: "Username must be at least 2 characters.",
     }),
     email : z.string().email(),
+    
     location: z.string(),
     bio: z.string(),
     password: z.string().min(8, {

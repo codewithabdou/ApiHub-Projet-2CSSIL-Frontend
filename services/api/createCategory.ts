@@ -4,35 +4,12 @@ import {
   categoryRequest,
   successCreateCategoryResponse,
   errorCreateCategoryResponse,
-  sucessGetCategoriesResponse,
-  errorGetCategoriesResponse,
 } from "@typings/api/createCategoryType"; // Assuming you have typings for categories
 import { cookies } from "next/headers";
 
-export const getCategories = async (): Promise<
-  errorGetCategoriesResponse | sucessGetCategoriesResponse
-> => {
-  try {
-    const res = await fetch(
-      `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.CATEGORIES.GET_CATEGORIES}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await res.json();
-    return { ...data, status: "success" } as sucessGetCategoriesResponse;
-  } catch (error) {
-    return {
-      status: "error",
-      message: "An error occurred while fetching categories ! ",
-    };
-  }
-};
 
-export const createCategory = async (
+
+ const createCategory = async (
   category: categoryRequest
 ): Promise<errorCreateCategoryResponse | successCreateCategoryResponse> => {
   try {
@@ -56,8 +33,13 @@ export const createCategory = async (
         body: JSON.stringify(category),
       }
     );
-    const data: successCreateCategoryResponse = await res.json();
-    return data;
+    if (res.ok){
+      return {status : "success"}
+    }
+    else {
+      let error =await  res.json();
+      return {status : "error" , ... error } as errorCreateCategoryResponse
+    }
   } catch (error) {
     return {
       status: "error",
@@ -65,3 +47,5 @@ export const createCategory = async (
     };
   }
 };
+
+export default createCategory;

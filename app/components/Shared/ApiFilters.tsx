@@ -32,19 +32,20 @@ export const ApiFilters: React.FC<ApiFiltersProps> = ({ filters }) => {
 
     
     // update the url with the new search params
-    router.replace(params.toString())
-    // router.push(params.toString()  );
+    // router.replace(params.toString())
+    router.push("?"+params.toString()  );
     
   };
 
   return (
     <section>
-      <label htmlFor="search" className='text-lg'>Filtrer par:</label>
+      <label htmlFor="search" className='text-lg '>Filtrer par:</label>
       <div className='flex flex-row flex-wrap gap-2 items-starts-center'>
 
         {filters.map(filter => (
-    <Select  onValueChange={(e)=>handleFilterChange(filter.label, e)}>
-      <SelectTrigger className="w-[180px]">
+          
+    <Select  onValueChange={(e)=>handleFilterChange(filter.label, e)} >
+      <SelectTrigger className="w-[180px] bg-white">
         <SelectValue placeholder={filter.label} />
       </SelectTrigger>
       <SelectContent>
@@ -58,6 +59,7 @@ export const ApiFilters: React.FC<ApiFiltersProps> = ({ filters }) => {
             </SelectGroup>
         </SelectContent>
         </Select>
+        
 
         ))}
       </div>

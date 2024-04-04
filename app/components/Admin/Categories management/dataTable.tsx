@@ -37,6 +37,9 @@ import paginationType from "@typings/api/pagination";
 import AdminUsersColumns from "./columns";
 import AdminUsersPagination from "../Users management/pagination";
 import AdminCategoriesColumns from "./columns";
+import MainTitle from "@app/components/Shared/MainTitle";
+import Link  from "next/link";
+import UrlPagination from "@app/components/Shared/UrlPagination";
 
 export default function AdminCategoriesDataTable({
   data,
@@ -74,7 +77,16 @@ export default function AdminCategoriesDataTable({
   });
 
   return (
-    <div className="w-full space-y-4  bg-white p-4">
+    <div className="flex gap-3 flex-col">
+      <div className="flex flex-row justify-between px-8">
+      <MainTitle title="Categories management :"></MainTitle>
+      <Link href={"categories/create"}>
+      <Button>Ajouter Categorie</Button>
+      </Link>
+      </div>
+    <div className="w-full space-y-4  bg-white p-4 ">
+
+
       <div className="flex items-center gap-2 py-4">
         <Input
           placeholder="Filter categories..."
@@ -161,7 +173,8 @@ export default function AdminCategoriesDataTable({
           </TableBody>
         </Table>
       </div>
-      <AdminUsersPagination pagination={pagination} />
+      <UrlPagination pagination={pagination} />
+    </div>
     </div>
   );
 }
