@@ -32,17 +32,6 @@ const getSupplierAPIs = async (page: string) => {
     );
 
     const data = await res.json();
-<<<<<<< HEAD
-=======
-    if (data.status !== "success") {
-      return {
-        status: "error",
-        message: data.error,
-      } as ErrorGetAPIsResponse;
-    }
-    return data as SuccessGetAPIsResponse;
-  } catch (error: any) {
->>>>>>> c0af9dfde36912ae31de23f0dae7a2b2eb3b5e4d
 
     return { ...data, status: "success" } as SuccessGetAPIsResponse;
   } catch (error: any) {

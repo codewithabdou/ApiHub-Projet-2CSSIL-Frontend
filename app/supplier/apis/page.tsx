@@ -6,6 +6,7 @@ import { IMAGES } from "@config";
 import Link from "next/link";
 import { Button } from "@app/components/ui/button";
 import { API } from "@typings/entities/API";
+import { IoMdAddCircleOutline } from "react-icons/io";
 import {
   ErrorGetAPIsResponse,
   SuccessGetAPIsResponse,
@@ -51,7 +52,20 @@ const page = async ({
       </div>
     );
   }
-  return <SupplierAPIsDataTable data={apis} pagination={pagination} />;
+  return (
+    <div>
+      <div className="flex p-4 justify-between">
+        <h1 className="font-bold lg:text-3xl text-2xl">Mes APIs</h1>
+        <Link href="/supplier/apis/create">
+          <Button>
+            <IoMdAddCircleOutline size={20} className="mr-2" /> Créer un nouveau
+            API
+          </Button>
+        </Link>
+      </div>{" "}
+      <SupplierAPIsDataTable data={apis} pagination={pagination} />
+    </div>
+  );
 };
 
 export default page;

@@ -1,4 +1,4 @@
-import { getCategories } from "@services/api/categories";
+import getCategories from "@services/api/getCategoriesByParams";
 import {
   errorGetCategoriesResponse,
   sucessGetCategoriesResponse,
@@ -21,7 +21,9 @@ const HubSideCategories = async () => {
       <ul className="mt-4">
         {categories.map((category) => (
           <li className="hover:underline text-blue-600" key={category.id}>
-            <Link href="#">{category.name}</Link>
+            <Link href={`/user/categories/${category.id}`}>
+              {category.name}
+            </Link>
           </li>
         ))}
       </ul>

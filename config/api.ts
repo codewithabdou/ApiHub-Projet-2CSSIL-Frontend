@@ -12,10 +12,14 @@ const API_INFO = {
       ACTIVATE_USER: ["/users", "/activate"],
       DEACTIVATE_USER: ["/users", "/suspend"],
       GET_APIS: "/apis",
-      GET_USER:"/users"
+      GET_USER: "/users",
     },
     SUPPLIER: {
       GET_MY_APIS: "/apis/mine",
+      ACTIVATE_API: ["/apis", "/activate"],
+      DEACTIVATE_API: ["/apis", "/deactivate"],
+      ACTIVATE_VERSION: ["/apis", "/versions", "/activate"],
+      DEACTIVATE_VERSION: ["/apis", "/versions", "/deactivate"],
     },
     CATEGORIES: {
       GET_CATEGORIES: "/apis/categories",
@@ -24,8 +28,7 @@ const API_INFO = {
     },
     GENERAL: {
       GET_APIS: "/apis",
-    }
-    ,
+    },
     CREATEAPIVERSION: ["/apis", "/versions/create"],
   },
 };

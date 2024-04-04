@@ -54,10 +54,6 @@ export default function LoginForm() {
         icon: <GiCancel className="text-lg text-red-500" />,
       });
     } else {
-      const data=result as successLoginResponse;
-      localStorage.setItem("userId",JSON.stringify(data.userId));
-console.log(result);
-      console.log(result.message);
       router.push(`/${result.message}`);
       form.reset();
     }

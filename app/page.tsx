@@ -6,11 +6,12 @@ import {
   Banner,
   Nosservices,
 } from "./components/home";
+import NavbarUserActions from "./components/Shared/Landing page layout/NavbarUserActions";
 
 export default function Home() {
   return (
     <div>
-      <Navbar />
+      <NavbarUserActions />
       <main>
         <Banner />
         <Nosservices />

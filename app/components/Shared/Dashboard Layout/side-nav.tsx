@@ -5,15 +5,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { logout } from "@services/authentication.service";
-import { useTransition } from "react";
 
 import { SideNavItem } from "@typings/domain/sideNavItem";
 import { ChevronDown } from "lucide-react";
 import { Button } from "@app/components/ui/button";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const SideNav = ({ items }: { items: SideNavItem[] }) => {
-  const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   return (
@@ -35,18 +33,17 @@ const SideNav = ({ items }: { items: SideNavItem[] }) => {
             })}
           </div>
         </div>
-        <Button
-          onClick={() =>
-            startTransition(() => {
-              logout();
-              router.push("/");
-            })
-          }
-          className="rounded-none"
-          variant={"outline"}
-        >
-          Se déconnecter
-        </Button>
+        <Link className="w-full" href="/">
+          <Button
+            onClick={async () => {
+              await logout();
+            }}
+            className="rounded-none w-full"
+            variant={"outline"}
+          >
+            Se déconnecter
+          </Button>
+        </Link>
       </div>
     </div>
   );

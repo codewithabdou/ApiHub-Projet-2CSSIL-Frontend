@@ -6,7 +6,8 @@ export const createCategorySchema = z.object({
     message: "Please enter a valid category name.",
   }),
   description: z.string().min(50, {
-    message: "Please enter a valid category description (50 caracters minimum).",
+    message:
+      "Please enter a valid category description (50 caracters minimum).",
   }),
 });
 
@@ -24,7 +25,7 @@ export type errorCreateCategoryResponse = {
 
 export type sucessGetCategoriesResponse = {
   status: String;
-  data: Category[] | Category;
+  data: Category[];
 };
 
 export type errorGetCategoriesResponse = {

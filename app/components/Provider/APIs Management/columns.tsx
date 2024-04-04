@@ -9,6 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@app/components/ui/dropdown-menu";
+import activateApi from "@services/api/activateApi";
+import deactivateApi from "@services/api/deactivateApi";
 
 import { ColumnDef } from "@tanstack/react-table";
 import { API } from "@typings/entities/API";
@@ -85,19 +87,26 @@ const SupplierAPIsColumns = (): ColumnDef<API>[] => {
               >
                 Create new version
               </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={async () => {
+                  router.push(`/supplier/apis/${api.id}/versions`);
+                }}
+              >
+                Versions management
+              </DropdownMenuItem>
               {api.status === "active" ? (
                 <DropdownMenuItem
-                //   onClick={async () => {
-                //     await deactivateAPI(api.id.toString());
-                //   }}
+                  onClick={async () => {
+                    await deactivateApi(api.id.toString());
+                  }}
                 >
                   Deactivate
                 </DropdownMenuItem>
               ) : (
                 <DropdownMenuItem
-                //   onClick={async () => {
-                //     await activateAPI(api.id.toString());
-                //   }}
+                  onClick={async () => {
+                    await activateApi(api.id.toString());
+                  }}
                 >
                   Activate
                 </DropdownMenuItem>

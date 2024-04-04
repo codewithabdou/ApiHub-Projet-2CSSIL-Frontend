@@ -1,10 +1,9 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import createApi from "@services/api/createApi";
+
 import {
   createApiFormSchema,
   createApiRequest,
-  errorCreateApiResponse,
 } from "@typings/api/createApiTypes";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -35,6 +34,13 @@ import {
   getAllCategoriesSuccessResponse,
 } from "@typings/api/getCategoryTypes";
 import Category from "@typings/entities/Category";
+import createApi from "@services/api/createApi";
+import { get } from "http";
+import getCategories from "@services/api/getCategoriesByParams";
+import {
+  errorGetCategoriesResponse,
+  sucessGetCategoriesResponse,
+} from "@typings/api/createCategoryType";
 
 function CreateApiForm() {
   const router = useRouter();
@@ -83,7 +89,6 @@ function CreateApiForm() {
     const result: any = await createApi(transformDataToApiStructure(values));
     if (result !== 201) {
       toast.error(`result.status`, {
-
         description: result.message,
         position: "top-right",
         dismissible: true,
@@ -225,12 +230,12 @@ function CreateApiForm() {
   ));
 
   useEffect(() => {
-    getAllCategories().then((Response) => {
+    getCategories().then((Response) => {
       if (Response) {
-        const data = Response as getAllCategoriesSuccessResponse;
+        const data = Response as sucessGetCategoriesResponse;
         setCategories(data.data);
       } else {
-        const errorData = Response as ErrorgetAllCategoriesResponse;
+        const errorData = Response as errorGetCategoriesResponse;
         return errorData;
       }
     });

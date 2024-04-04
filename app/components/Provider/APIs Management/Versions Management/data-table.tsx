@@ -31,19 +31,17 @@ import {
   TableRow,
 } from "@app/components/ui/table";
 
-import paginationType from "@typings/api/pagination";
-import { API } from "@typings/entities/API";
-import SupplierAPIsColumns from "./columns";
-import AdminUsersPagination from "@app/components/Admin/Users management/pagination";
+import { Version } from "@typings/entities/Versions";
+import SupplierAPIVersionsColumns from "./columns";
 
-export default function SupplierAPIsDataTable({
+export default function SupplierAPIVersionsDataTable({
   data,
-  pagination,
+  apiId,
 }: {
-  data: API[];
-  pagination: paginationType;
+  data: Version[];
+  apiId: number;
 }) {
-  const columns = SupplierAPIsColumns();
+  const columns = SupplierAPIVersionsColumns(apiId);
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -75,10 +73,10 @@ export default function SupplierAPIsDataTable({
     <div className="w-full space-y-4  bg-white p-4">
       <div className="flex items-center gap-2 py-4">
         <Input
-          placeholder="Filter apis..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter versions..."
+          value={(table.getColumn("version")?.getFilterValue() as string) ?? ""}
           onChange={(event) => {
-            table.getColumn("name")?.setFilterValue(event.target.value);
+            table.getColumn("version")?.setFilterValue(event.target.value);
           }}
           className="max-w-sm"
         />
@@ -159,7 +157,6 @@ export default function SupplierAPIsDataTable({
           </TableBody>
         </Table>
       </div>
-      <AdminUsersPagination pagination={pagination} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
@@ -8,16 +8,9 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import useScroll from "@/hooks/use-scroll";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { getLoggedInUser } from "@services/authentication.service";
 import User from "@typings/entities/User";
 
-const Header = () => {
-  let [user, setUser] = useState<User | null>(null);
-  useEffect(() => {
-    getLoggedInUser().then((user) => {
-      setUser(user);
-    });
-  }, []);
+const Header = ({ user }: { user: User | null }) => {
   const scrolled = useScroll(5);
   const selectedLayout = useSelectedLayoutSegment();
 

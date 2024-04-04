@@ -1,4 +1,4 @@
-import Header from "@app/components/Shared/Dashboard Layout/header";
+import HeaderUserActions from "@app/components/Shared/Dashboard Layout/HeaderUserActions";
 import HeaderMobile from "@app/components/Shared/Dashboard Layout/header-mobile";
 import MarginWidthWrapper from "@app/components/Shared/Dashboard Layout/margin-width-wrapper";
 import PageWrapper from "@app/components/Shared/Dashboard Layout/page-wrapper";
@@ -21,7 +21,7 @@ export default function SupplierLayout({
       <SideNav items={SUPPLIER_SIDENAV_ITEMS} />
       <main className="flex-1">
         <MarginWidthWrapper>
-          <Header />
+          <HeaderUserActions />
           <HeaderMobile items={SUPPLIER_SIDENAV_ITEMS} />
           <PageWrapper>{children}</PageWrapper>
         </MarginWidthWrapper>

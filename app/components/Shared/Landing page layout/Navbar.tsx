@@ -6,22 +6,16 @@ import { RiMenuFoldLine } from "react-icons/ri";
 import { ImCancelCircle } from "react-icons/im";
 import { Button } from "../../ui/button";
 import ThemeToggle from "../Theme/ThemeToggle";
-import { getLoggedInUser, logout } from "@services/authentication.service";
-import User from "@typings/entities/User";
-import { useRouter } from "next/navigation";
 
-const Navbar = () => {
+import { useRouter } from "next/navigation";
+import User from "@typings/entities/User";
+import { logout } from "@services/authentication.service";
+
+const Navbar = ({ user }: { user: User | null }) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [showDiv, setShowDiv] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    getLoggedInUser().then((user) => {
-      setUser(user);
-    });
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,7 +53,6 @@ const Navbar = () => {
       Link: "/",
       name: "APIs",
     },
-    
   ];
 
   return (
@@ -93,18 +86,17 @@ const Navbar = () => {
                       {user.role === "user" ? "Hub" : "Dashboard"}
                     </Button>
                   </Link>
-                  <Button
-                    variant={"outline"}
-                    className={`  text-primary font-medium `}
-                    onClick={() => {
-                      logout().then(() => {
-                        setUser(null);
-                        router.push("/");
-                      });
-                    }}
-                  >
-                    Se déconnecter
-                  </Button>
+                  <Link href="/">
+                    <Button
+                      variant={"outline"}
+                      className={`  text-primary font-medium `}
+                      onClick={async () => {
+                        await logout();
+                      }}
+                    >
+                      Se déconnecter
+                    </Button>
+                  </Link>
                 </>
               ) : (
                 <>
@@ -178,18 +170,17 @@ const Navbar = () => {
                         {user.role === "user" ? "Hub" : "Dashboard"}
                       </Button>
                     </Link>
-                    <Button
-                      variant={"outline"}
-                      className={`  text-primary font-medium `}
-                      onClick={() => {
-                        logout().then(() => {
-                          setUser(null);
-                          router.push("/");
-                        });
-                      }}
-                    >
-                      Se déconnecter
-                    </Button>
+                    <Link href="/">
+                      <Button
+                        variant={"outline"}
+                        className={`  text-primary font-medium `}
+                        onClick={async () => {
+                          await logout();
+                        }}
+                      >
+                        Se déconnecter
+                      </Button>
+                    </Link>
                   </>
                 ) : (
                   <>

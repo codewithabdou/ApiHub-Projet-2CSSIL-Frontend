@@ -62,6 +62,10 @@ function CreateApiVersionForm() {
     if (headers > 1) {
       setHeaders(headers - 1);
       form.getValues().headers.filter((_, i) => i !== index);
+      form.setValue(
+        "headers",
+        form.getValues().headers.filter((_, i) => i !== index)
+      );
     }
   };
 
@@ -69,11 +73,14 @@ function CreateApiVersionForm() {
     if (endpoints > 1) {
       setEndpoints(endpoints - 1);
       form.getValues().endpoints.filter((_, i) => i !== index);
+      form.setValue(
+        "endpoints",
+        form.getValues().endpoints.filter((_, i) => i !== index)
+      );
     }
   };
   //Submit function that uses the backend API
   async function onSubmit(values: createAPIVersionRequest) {
-    console.log(values);
     const result = await createApiVersion({
       payload: values,
       id: parseInt(apiId),
@@ -192,20 +199,20 @@ function CreateApiVersionForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Méthode</FormLabel>
-              <FormControl>
-                <Select>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
                   <SelectTrigger>
-                    <SelectValue>{field.value}</SelectValue>
+                    <SelectValue placeholder="La méthode ..."></SelectValue>
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="GET">GET</SelectItem>
-                    <SelectItem value="POST">POST</SelectItem>
-                    <SelectItem value="PUT">PUT</SelectItem>
-                    <SelectItem value="DELETE">DELETE</SelectItem>
-                    <SelectItem value="PATCH">PATCH</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormControl>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="GET">GET</SelectItem>
+                  <SelectItem value="POST">POST</SelectItem>
+                  <SelectItem value="PUT">PUT</SelectItem>
+                  <SelectItem value="DELETE">DELETE</SelectItem>
+                  <SelectItem value="PATCH">PATCH</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
@@ -263,7 +270,6 @@ function CreateApiVersionForm() {
   return (
     <Form {...form}>
       <form
-        onChange={(e) => console.log(form.formState.errors)}
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 bg-white px-4 py-12 rounded-lg shadow-md w-full"
       >

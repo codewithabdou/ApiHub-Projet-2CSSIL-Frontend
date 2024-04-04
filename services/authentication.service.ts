@@ -9,6 +9,7 @@ import {
   successLoginResponse,
   successRegisterResponse,
 } from "@typings/auth/authForms";
+import { revalidateTag } from "next/cache";
 
 async function login(
   formData: loginRequest
@@ -35,7 +36,7 @@ async function login(
 
       if (user) {
         return {
-          userId:user.id,
+          userId: user.id,
           status: "success",
           message: user.role,
         } as successLoginResponse;
@@ -56,6 +57,7 @@ async function login(
 
 async function logout() {
   cookies().set("user", "");
+  revalidateTag("user");
 }
 
 async function register(
@@ -75,9 +77,7 @@ async function register(
       }
     );
 
-    const data = await response.json();
-
-    return { ...data, status: "success" } as successRegisterResponse;
+    return { status: "success" } as successRegisterResponse;
   } catch (error: any) {
     return {
       status: "server error",
@@ -98,6 +98,10 @@ async function getLoggedInUser(): Promise<User | null> {
       headers: {
         "Content-Type": "application/json",
         Authorization: userCookie,
+      },
+      next: {
+        revalidate: 60 * 60 * 24,
+        tags: ["user"],
       },
     }
   );
