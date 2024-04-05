@@ -1,31 +1,29 @@
+"use client";
+
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import {
-  FaChartLine,
-  FaCheckCircle,
-  FaCheckSquare,
-  FaClock,
-  FaStackpath,
-} from "react-icons/fa";
+import { FaChartLine, FaCheckCircle, FaClock } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const ApiCard = ({
   api,
 }: {
   api: {
+    apiId: string;
     apiName: string;
     apiDescription: string;
     apiImage: string;
   };
 }) => {
+  const router = useRouter();
   return (
-    <Card className="shadow-lg flex flex-col max-h-60 min-h-52 ">
+    <Card
+      onClick={() => {
+        router.push(`/user/apis/${api.apiId}`);
+      }}
+      className="shadow-lg cursor-pointer hover:scale-105 hover:-translate-y-1 hover:translate-x-1 transition-all duration-300 flex flex-col max-h-60 min-h-52 "
+    >
       <CardHeader className="p-3 flex flex-row items-center px-5 gap-2 w-full">
         <Avatar className=" rounded-full w-12 h-12">
           <AvatarImage src={api.apiImage} />

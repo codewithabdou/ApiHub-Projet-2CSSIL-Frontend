@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import User from "@typings/entities/User";
 import { getLoggedInUser } from "@services/authentication.service";
 import authorization from "@services/authorizations.service";
+import { cookies } from "next/headers";
 
 /**
  * Middleware function to handle route authorization.
@@ -16,18 +17,22 @@ export default async function middleware(
   const url = request.nextUrl.clone();
 
   // Get the currently logged-in user.
-  const user: User | null = await getLoggedInUser();
+  const userRole: string | undefined = cookies().get("role")?.value;
+  const UserIsNotAuthenticated: boolean = !userRole || !userRole.length;
 
   // Check if the current route is a protected route.
   if (authorization.isProtectedRoute(pathname)) {
     // If the user is not logged in or is not authorized, redirect to not found.
-    if (!user || !authorization.isUserAuthorized(user, pathname)) {
+    if (
+      UserIsNotAuthenticated ||
+      !authorization.isUserAuthorized(userRole, pathname)
+    ) {
       return redirectToNotFound(url);
     }
   } else if (authorization.isAuthRoute(pathname)) {
     // If it's an authentication route and the user is logged in, redirect based on user's role.
-    if (user) {
-      url.pathname = `/${user.role}`;
+    if (!UserIsNotAuthenticated) {
+      url.pathname = `/${userRole}`;
       return NextResponse.redirect(url);
     }
   } else {

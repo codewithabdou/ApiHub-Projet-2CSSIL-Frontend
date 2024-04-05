@@ -30,7 +30,8 @@ const AllCategories = async ({ searchParams }: { searchParams?: any }) => {
   try {
     const data = await getCategories();
     if (data.status === "success") {
-      fetchedCategories = (data as sucessGetCategoriesResponse).data as Category[];
+      fetchedCategories = (data as sucessGetCategoriesResponse)
+        .data as Category[];
     } else {
       const errorData = data as ErrorgetAllCategoriesResponse;
       alert(errorData.message);

@@ -138,6 +138,7 @@ const HubAPIsArea = () => {
               >
                 <ApiCard
                   api={{
+                    apiId: Api.id.toString(),
                     apiName: Api.name,
                     apiDescription: Api.description,
                     apiImage: Api.image,
@@ -169,6 +170,7 @@ const HubAPIsArea = () => {
               >
                 <ApiCard
                   api={{
+                    apiId: Api.id.toString(),
                     apiName: Api.name,
                     apiDescription: Api.description,
                     apiImage: Api.image,

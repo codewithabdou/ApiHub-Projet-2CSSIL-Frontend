@@ -11,6 +11,7 @@ import Image from "next/image";
 import { IMAGES } from "@config";
 import Link from "next/link";
 import { Button } from "@app/components/ui/button";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 const page = async ({
   searchParams,
@@ -49,7 +50,16 @@ const page = async ({
       </div>
     );
   }
-  return <AdminUsersDataTable data={users} pagination={pagination} />;
+  return (
+    <div>
+      <div className="flex p-4 justify-start">
+        <h1 className="font-bold lg:text-3xl text-2xl">
+          Utilisateurs Management
+        </h1>
+      </div>{" "}
+      <AdminUsersDataTable data={users} pagination={pagination} />;
+    </div>
+  );
 };
 
 export default page;

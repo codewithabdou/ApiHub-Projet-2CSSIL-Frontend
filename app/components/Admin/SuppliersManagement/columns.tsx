@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { HiMiniEllipsisHorizontal } from "react-icons/hi2";
 import { RxCaretSort } from "react-icons/rx";
 
-const AdminUsersColumns = (): ColumnDef<User>[] => {
+const AdminSuppliersColumns = (): ColumnDef<User>[] => {
   const router = useRouter();
 
   const columns: ColumnDef<User>[] = [
@@ -70,7 +70,7 @@ const AdminUsersColumns = (): ColumnDef<User>[] => {
                   navigator.clipboard.writeText(user.id.toString())
                 }
               >
-                Copy User ID
+                Copy Supplier ID
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               {user.status === "active" ? (
@@ -90,6 +90,15 @@ const AdminUsersColumns = (): ColumnDef<User>[] => {
                   Activate
                 </DropdownMenuItem>
               )}
+              <DropdownMenuSeparator />
+
+              <DropdownMenuItem
+                onClick={() => {
+                  router.push(`suppliers/${user.id}`);
+                }}
+              >
+                Voir
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -100,4 +109,4 @@ const AdminUsersColumns = (): ColumnDef<User>[] => {
   return columns;
 };
 
-export default AdminUsersColumns;
+export default AdminSuppliersColumns;

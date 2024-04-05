@@ -35,6 +35,7 @@ async function login(
       const user = await getLoggedInUser();
 
       if (user) {
+        cookies().set("role", user.role);
         return {
           userId: user.id,
           status: "success",
@@ -57,6 +58,7 @@ async function login(
 
 async function logout() {
   cookies().set("user", "");
+  cookies().set("role", "");
   revalidateTag("user");
 }
 
@@ -110,6 +112,7 @@ async function getLoggedInUser(): Promise<User | null> {
 
   if (data?.data?.status !== "active") {
     cookies().set("user", "");
+    cookies().set("role", "");
     return null;
   }
 

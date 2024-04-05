@@ -1,7 +1,7 @@
 "use client";
 import { getLoggedInUser } from "@services/authentication.service";
 import User from "@typings/entities/User";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   FormField,
@@ -9,42 +9,22 @@ import {
   FormMessage,
   FormControl,
   FormLabel,
-} from "../ui/form";
+} from "@app/components/ui/form";
 import { useForm } from "react-hook-form";
 import {
   UpdateAdminProfileRequest,
   UpdateProfileAdminSchema,
 } from "@typings/api/AdminProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
+import { Input } from "@app/components/ui/input";
+import { Textarea } from "@app/components/ui/textarea";
 
-<<<<<<< HEAD
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@app/components/ui/avatar";
 import { UpdateProfile } from "@services/api/updateProfile";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
+import { Button } from "@app/components/ui/button";
 import { GiCancel } from "react-icons/gi";
 import { MdDone } from "react-icons/md";
-=======
-"use client"
-import { getLoggedInUser } from '@services/authentication.service';
-import User from '@typings/entities/User';
-import React, { useCallback, useEffect, useState } from 'react'
-import { Form ,FormField,FormItem,FormMessage,FormControl,FormLabel} from '@app/components/ui/form';
-import { useForm } from 'react-hook-form';
-import { UpdateAdminProfileRequest, UpdateProfileAdminSchema } from '@typings/api/AdminProfile';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from '@app/components/ui/input';
-import { Textarea } from '@app/components/ui/textarea';
-
-import { Avatar,AvatarFallback,AvatarImage } from '@app/components/ui/avatar'
-import { UpdateProfile } from '@services/api/updateProfile';
-import { toast } from 'sonner';
-import { Button } from '@app/components/ui/button';
-import { GiCancel } from 'react-icons/gi';
-import { MdDone } from 'react-icons/md';
->>>>>>> c0af9dfde36912ae31de23f0dae7a2b2eb3b5e4d
 
 const AdminProfile = () => {
   const formSchema = UpdateProfileAdminSchema;
@@ -122,33 +102,89 @@ const AdminProfile = () => {
 
   return (
     <div>
-<<<<<<< HEAD
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className="bg-white  lg:px-20 px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 gap-16 lg:grid lg:grid-cols-2  align-top "
-        >
-          <div className="col-span-1">
-            <div className=" flex flex-col   ">
-              <Avatar className=" w-1/2 h-1/2 mx-auto">
-                <AvatarImage src={user?.avatar} className="w-full" />
-                <AvatarFallback>Avatar</AvatarFallback>
-              </Avatar>
+      <main className="flex min-h-screen flex-col items-center justify-evenly p-4 lg:p-[10%] ">
+        <div className="w-full ">
+          <h1 className=" text-2xl md:text-4xl mb-6 font-bold">Profile</h1>
+        </div>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="space-y-8 bg-white px-8 py-12 rounded-lg shadow-md w-full "
+          >
+            <div className="col-span-1">
+              <div className=" flex flex-col   ">
+                <Avatar className=" md:w-45 md:h-45 w-40 h-40   mx-auto">
+                  <AvatarImage src={user?.avatar} className="w-full" />
+                  <AvatarFallback>Avatar</AvatarFallback>
+                </Avatar>
+              </div>
             </div>
-          </div>
 
-          <div className="col-span-1">
-            <div className="flex flex-col gap-6">
-              <div className=" block gap-4 md:flex">
+            <div className="col-span-1">
+              <div className="flex flex-col gap-6">
+                <div className=" block gap-6 md:flex">
+                  <FormField
+                    control={form.control}
+                    name="firstname"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Prénom :</FormLabel>
+
+                        <FormControl>
+                          <Input {...field}></Input>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="lastname"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nom :</FormLabel>
+
+                        <FormControl>
+                          <Input {...field}></Input>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email :</FormLabel>
+
+                        <FormControl>
+                          <Input disabled type="email" {...field}></Input>
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
                 <FormField
                   control={form.control}
-                  name="firstname"
+                  name="bio"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Prénom :</FormLabel>
+                      <FormLabel>Bio :</FormLabel>
 
                       <FormControl>
-                        <Input {...field}></Input>
+                        <Textarea
+                          placeholder="Votre bio"
+                          className="resize-none"
+                          {...field}
+                        />
                       </FormControl>
 
                       <FormMessage />
@@ -158,13 +194,13 @@ const AdminProfile = () => {
 
                 <FormField
                   control={form.control}
-                  name="lastname"
+                  name="phone_number"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nom :</FormLabel>
+                      <FormLabel>Numero de telephone :</FormLabel>
 
                       <FormControl>
-                        <Input {...field}></Input>
+                        <Input placeholder="N telephone" {...field}></Input>
                       </FormControl>
 
                       <FormMessage />
@@ -173,272 +209,15 @@ const AdminProfile = () => {
                 />
               </div>
 
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email :</FormLabel>
-
-                    <FormControl>
-                      <Input disabled type="email" {...field}></Input>
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="bio"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Bio :</FormLabel>
-
-                    <FormControl>
-                      <Textarea
-                        placeholder="Votre bio"
-                        className="resize-none"
-                        {...field}
-                      />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="phone_number"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Numero de telephone :</FormLabel>
-
-                    <FormControl>
-                      <Input placeholder="N telephone" {...field}></Input>
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Enregistrer</Button>
+              <Button className="flex mx-auto w-40 md:w-60 mt-6" type="submit">
+                Enregistrer
+              </Button>
             </div>
-          </div>
-        </form>
-      </Form>
-=======
-
-<main className='flex min-h-screen flex-col items-center justify-evenly p-4 lg:p-[10%] '>
-
-
-
-<div className='w-full '>
-
-<h1  className=" text-2xl md:text-4xl mb-6 font-bold">Profile</h1>
-</div>
-<Form  {...form}>
-
-
-<form onSubmit={form.handleSubmit(handleSubmit)}
-
-className="space-y-8 bg-white px-8 py-12 rounded-lg shadow-md w-full "
-
->
-
-
-
-
-
-<div className='col-span-1'>
-
-
-<div className=' flex flex-col   '>
-
-
-
-<Avatar className=' md:w-45 md:h-45 w-40 h-40   mx-auto'>
-  <AvatarImage src={user?.avatar} className='w-full' />
-  <AvatarFallback>Avatar</AvatarFallback>
-</Avatar>
-
-
-
-
-</div>
-
-</div>
-
-
-<div className='col-span-1' >
-
-<div className='flex flex-col gap-6'>
-
-<div className=' block gap-6 md:flex'>
-
-
-<FormField    control={form.control} name="firstname" 
-render={({field})=>(
-
-
-
-
-<FormItem>
-<FormLabel>
-Prénom :
-</FormLabel>
-
-<FormControl>
-
-<Input 
-    {...field}></Input>
-
-</FormControl>
-
-<FormMessage/>
-  </FormItem>)
-}
-
-
-/>
-
-
-
-
-<FormField    control={form.control} name="lastname" 
-render={({field})=>(
-
-
-
-
-<FormItem>
-<FormLabel>
-
-  Nom :
-</FormLabel>
-
-<FormControl>
-
-<Input           {...field}></Input>
-
-</FormControl>
-
-<FormMessage/>
-  </FormItem>)
-}
-
-
-/>
-
-
-<FormField    control={form.control} name="email" render={({field})=>
-
-
- (
-
-<FormItem>
-<FormLabel>
-
-  Email :
-</FormLabel>
-
-<FormControl>
-
-<Input  disabled  type='email'  {...field}></Input>
-
-</FormControl>
-
-<FormMessage/>
-  </FormItem>)
-}
-/>
-
-</div>
-
-
-
-
-
-
-
-
-
-<FormField
-  control={form.control}
-  name="bio"
-  render={({field}) => ( 
-
-  <FormItem>
-    <FormLabel>
-      Bio :
-    </FormLabel>
-
-    <FormControl>
-      <Textarea
-        placeholder="Votre bio"
-        className="resize-none"
-        {...field}
-      />
-    </FormControl>
-
-    <FormMessage />
-  </FormItem>
-)}
-/>
-
-
-<FormField    control={form.control} name="phone_number" render={({field})=>
-
-
-(
-
-<FormItem>
-<FormLabel>
-
-  Numero de telephone :
-</FormLabel>
-
-<FormControl>
-
-
-<Input placeholder='N telephone'      {...field}></Input>
-
-
-</FormControl>
-
-<FormMessage/>
-  </FormItem>)
-}
-/>
-
-
-</div>
-
-<Button className='flex mx-auto w-40 md:w-60 mt-6'  type="submit">
-         Enregistrer
-        </Button>
-</div>
-
-
-</form>
-</Form>
-</main>
-
-
->>>>>>> c0af9dfde36912ae31de23f0dae7a2b2eb3b5e4d
+          </form>
+        </Form>
+      </main>
     </div>
   );
 };
 
-<<<<<<< HEAD
 export default AdminProfile;
-=======
-
-
-  )
-}
-
-export default AdminProfile
->>>>>>> c0af9dfde36912ae31de23f0dae7a2b2eb3b5e4d

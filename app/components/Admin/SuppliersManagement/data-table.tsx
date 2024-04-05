@@ -35,18 +35,18 @@ import {
 import User from "@typings/entities/User";
 import paginationType from "@typings/api/pagination";
 
-import AdminUsersColumns from "./columns";
-import AdminUsersPagination from "./pagination";
 import { useRouter } from "next/navigation";
+import AdminSuppliersColumns from "./columns";
+import AdminSuppliersPagination from "./pagination";
 
-export default function AdminUsersDataTable({
+export default function AdminSuppliersDataTable({
   data,
   pagination,
 }: {
   data: User[];
   pagination: paginationType;
 }) {
-  const columns = AdminUsersColumns();
+  const columns = AdminSuppliersColumns();
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -164,7 +164,7 @@ export default function AdminUsersDataTable({
           </TableBody>
         </Table>
       </div>
-      <AdminUsersPagination pagination={pagination} />
+      <AdminSuppliersPagination pagination={pagination} />
     </div>
   );
 }

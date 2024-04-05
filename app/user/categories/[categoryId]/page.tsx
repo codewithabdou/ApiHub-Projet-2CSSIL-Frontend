@@ -1,5 +1,3 @@
-// 'use client';
-import AdminUsersPagination from "@app/components/Admin/Users management/pagination";
 import ApiCard from "@app/components/Shared/ApiCard";
 import { ApiFilters } from "@app/components/Shared/ApiFilters";
 import MainTitle from "@app/components/Shared/MainTitle";
@@ -30,7 +28,7 @@ const DetailedCategory = async ({
 }) => {
   const categoryId = params.categoryId;
   const ITEMS_PER_PAGE = 12;
-  let category : Category ;
+  let category: Category;
 
   //? call the api to get the category informations.
   const categoryData = await getCategories({
@@ -38,7 +36,8 @@ const DetailedCategory = async ({
   });
 
   if (categoryData.status === "success") {
-     category = (categoryData as sucessGetCategoriesResponse).data as Category ;
+    const successData = categoryData as sucessGetCategoriesResponse;
+    category = successData.data[0];
   } else {
     const errorData = categoryData as ErrorGetAPIsResponse;
     return (
@@ -151,6 +150,7 @@ const DetailedCategory = async ({
                 <ApiCard
                   key={index}
                   api={{
+                    apiId: api.id.toString(),
                     apiDescription: api.description,
                     apiImage: api.image,
                     apiName: api.name,

@@ -1,5 +1,4 @@
 import React from "react";
-import AdminUsersDataTable from "@app/components/Admin/Users management/data-table";
 import getSuppliers from "@services/api/getSuppliers";
 import type User from "@typings/entities/User";
 import {
@@ -11,6 +10,8 @@ import Image from "next/image";
 import { IMAGES } from "@config";
 import Link from "next/link";
 import { Button } from "@app/components/ui/button";
+import AdminSuppliersDataTable from "@app/components/Admin/SuppliersManagement/data-table";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 const page = async ({
   searchParams,
@@ -49,7 +50,23 @@ const page = async ({
       </div>
     );
   }
-  return <AdminUsersDataTable data={users} pagination={pagination} />;
+  return (
+    <div>
+      {" "}
+      <div className="flex p-4 justify-between">
+        <h1 className="font-bold lg:text-3xl text-2xl">
+          Fournisseurs Management
+        </h1>
+        <Link href="/admin/suppliers/addsupplier">
+          <Button>
+            <IoMdAddCircleOutline size={20} className="mr-2" /> Créer un nouveau
+            Fournisseur
+          </Button>
+        </Link>
+      </div>{" "}
+      <AdminSuppliersDataTable data={users} pagination={pagination} />;
+    </div>
+  );
 };
 
 export default page;
