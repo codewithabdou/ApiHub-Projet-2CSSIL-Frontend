@@ -31,6 +31,7 @@ import {
 import { useParams } from "next/navigation";
 
 import { createApiVersion } from "@services/api/createApiVersion";
+import { MdDone } from "react-icons/md";
 
 function CreateApiVersionForm() {
   const params = useParams<{ apiId: string }>();
@@ -79,7 +80,7 @@ function CreateApiVersionForm() {
       );
     }
   };
-  //Submit function that uses the backend API
+
   async function onSubmit(values: createAPIVersionRequest) {
     const result = await createApiVersion({
       payload: values,
@@ -104,27 +105,27 @@ function CreateApiVersionForm() {
         icon: <GiCancel className="text-lg text-red-500" />,
       });
     } else {
-      toast.success("Success", {
-        description: "La version a été créée avec succès",
+      form.setValue("headers", new Array(0));
+      form.setValue("endpoints", new Array(0));
+      form.reset();
+      toast.success(result.status, {
+        description: "API added successfuly",
+
         position: "top-right",
         dismissible: true,
-        duration: 5000,
         cancel: {
           label: (
-            <Button
-              onClick={(e) => router.push("/supplier/apis")}
-              variant={"destructive"}
-              size={"sm"}
-            >
+            <Button className="bg-green-500 hover:bg-green-700" size={"sm"}>
               OK
             </Button>
           ),
           onClick: () => {
             toast.dismiss();
+            router.push("/supplier/apis");
           },
         },
+        icon: <MdDone className="text-lg text-green-500" />,
       });
-      form.reset();
     }
   }
 

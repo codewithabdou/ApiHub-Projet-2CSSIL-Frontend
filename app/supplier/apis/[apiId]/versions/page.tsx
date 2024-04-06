@@ -20,9 +20,9 @@ const page = () => {
           const versionsData = data as {
             status: string;
             message: string;
-            data: Version[];
+            data: { data: Version[] };
           };
-          setVersions(versionsData.data);
+          setVersions(versionsData.data.data);
         }
       })
       .finally(() => {

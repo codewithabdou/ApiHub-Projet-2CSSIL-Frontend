@@ -5,6 +5,7 @@ import {
   errorCreateApiResponse,
   successCreateApiResponse,
 } from "@typings/api/createApiTypes";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 async function createApi(
@@ -27,7 +28,7 @@ async function createApi(
       }
     );
     const data = response.status;
-
+    revalidateTag("MyApisListManagement");
     return {
       data: data,
       status: "success",
@@ -35,7 +36,7 @@ async function createApi(
     };
   } catch (error: any) {
     return {
-      status: "server error",
+      status: "error",
       message: error.message || "An unexpected server error occurred",
     };
   }

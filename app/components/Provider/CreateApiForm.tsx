@@ -28,14 +28,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import getAllCategories from "@services/api/createCategory";
-import {
-  ErrorgetAllCategoriesResponse,
-  getAllCategoriesSuccessResponse,
-} from "@typings/api/getCategoryTypes";
+import { MdDone } from "react-icons/md";
+
 import Category from "@typings/entities/Category";
 import createApi from "@services/api/createApi";
-import { get } from "http";
 import getCategories from "@services/api/getCategoriesByParams";
 import {
   errorGetCategoriesResponse,
@@ -86,9 +82,9 @@ function CreateApiForm() {
   //Submit function that uses the backend API
   async function onSubmit(values: createApiRequest) {
     console.log(values);
-    const result: any = await createApi(transformDataToApiStructure(values));
-    if (result !== 201) {
-      toast.error(`result.status`, {
+    const result = await createApi(transformDataToApiStructure(values));
+    if (result.status !== "success") {
+      toast.error(result.status, {
         description: result.message,
         position: "top-right",
         dismissible: true,
@@ -107,16 +103,15 @@ function CreateApiForm() {
       });
     } else {
       form.reset();
-      toast.success(result, {
+      toast.success(result.status, {
         description: "API added successfuly",
 
         position: "top-right",
         dismissible: true,
-        duration: 5000,
         cancel: {
           label: (
             <Button
-              className="bg-green-500"
+              className="bg-green-500 hover:bg-green-700"
               variant={"destructive"}
               size={"sm"}
             >
@@ -125,9 +120,10 @@ function CreateApiForm() {
           ),
           onClick: () => {
             toast.dismiss();
+            router.push("/supplier/apis");
           },
         },
-        icon: <GiCancel className="text-lg text-green-500" />,
+        icon: <MdDone className="text-lg text-green-500" />,
       });
     }
   }

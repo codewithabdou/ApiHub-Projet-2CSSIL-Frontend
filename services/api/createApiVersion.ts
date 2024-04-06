@@ -29,18 +29,11 @@ async function createApiVersion({
         },
       }
     );
-    const data = await response.json();
-    if (data.status === "success") {
-      return {
-        status: "success",
-        message: "API version created successfully",
-      } as successCreateAPIVersionResponse;
-    } else {
-      return {
-        status: "error",
-        message: data.message || "An unexpected error occurred",
-      } as errorCreateAPIVersionResponse;
-    }
+
+    return {
+      status: "success",
+      message: "API version created successfully",
+    } as successCreateAPIVersionResponse;
   } catch (error: any) {
     return {
       status: "server error",
