@@ -24,7 +24,8 @@ const API_INFO = {
     CATEGORIES: {
       GET_CATEGORIES: "/apis/categories",
       CREATE_CATEGORY: "/apis/categories/create",
-      DELETE_CATEGORY: "/categories/delete",
+      DELETE_CATEGORY: "/apis/categories/delete",
+      GET_CATEGORY_BY_ID : "/apis/categories"
     },
     GENERAL: {
       GET_APIS: "/apis",

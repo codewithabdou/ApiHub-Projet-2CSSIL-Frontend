@@ -14,6 +14,7 @@ import Pagination from "@typings/api/pagination";
 import React from "react";
 import Category from "@typings/entities/Category";
 import { sucessGetCategoriesResponse } from "@typings/api/createCategoryType";
+import getCategoryById from "@services/api/getCategoryById";
 
 const DetailedCategory = async ({
   params,
@@ -28,16 +29,14 @@ const DetailedCategory = async ({
 }) => {
   const categoryId = params.categoryId;
   const ITEMS_PER_PAGE = 12;
-  let category: Category;
+  let successData: Category;
 
   //? call the api to get the category informations.
-  const categoryData = await getCategories({
-    category_ids: categoryId,
-  });
+  const categoryData = await getCategoryById(categoryId);
 
   if (categoryData.status === "success") {
-    const successData = categoryData as sucessGetCategoriesResponse;
-    category = successData.data[0];
+    successData = categoryData.data;
+    console.log('successData', successData)
   } else {
     const errorData = categoryData as ErrorGetAPIsResponse;
     return (
@@ -105,20 +104,20 @@ const DetailedCategory = async ({
         <div className="col-span-4 md:col-span-3">
           <div className="flex flex-row items-center justify-around mb-4 md:block">
             <p className="my-auto text-lg font-bold text-center md:text-left md:text-4xl text-primary">
-              {cat.apiCategory}
+              {successData.name}
             </p>
             <img
-              src={cat.apiCategoryImage}
+              src={successData.image}
               alt="category img"
               className="block w-10 h-10 rounded-full md:hidden md:m-auto"
             />
           </div>
 
-          <p className="md:text-2xl">{description}</p>
+          <p className="md:text-2xl">{successData.description}</p>
         </div>
 
         <img
-          src={cat.apiCategoryImage}
+          src={successData.image}
           alt="category img"
           className="hidden rounded-full md:m-auto md:max-h-36 md:block"
         />
