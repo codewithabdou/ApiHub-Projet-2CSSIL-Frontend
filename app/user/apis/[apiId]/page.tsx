@@ -7,6 +7,7 @@ import {
 import ApiDetailsSection from "@app/components/user/apiPage/ApiDetailsSection";
 import DiscussionsSection from "@app/components/user/apiPage/DiscussionsSection";
 import EndpointsSection from "@app/components/user/apiPage/EndpointsSection";
+import VersionDescription from "@app/components/user/apiPage/versionDescription";
 import PlansSection from "@app/components/user/PlansSection";
 import getAllVersionsByApi from "@services/api/apiPage/getAllversionsByApi";
 import getApiById from "@services/api/apiPage/getApiById";
@@ -100,7 +101,7 @@ const ApiDetails = async ({
   }
 
   return (
-    <div className="w-screen h-screen flex  items-center flex-col  bg-white">
+    <div className="py-8 flex  items-center flex-col  bg-white min-h-[900px] ">
       {api ? (
         <ApiDetailsSection
           image={api?.data.image}
@@ -133,9 +134,12 @@ const ApiDetails = async ({
             />
           </TabsContent>
           <TabsContent value="description">
-            <p className="text-[#184173]" style={{ whiteSpace: "pre-line" }}>
-              {api?.data.description}
-            </p>
+           <VersionDescription 
+           apiId={apiId}
+           versions={versions}
+           endpoints={endpoints}
+           apiDescription={api.data.description}
+            />
           </TabsContent>
           <TabsContent value="disscussions">
             <DiscussionsSection id={apiId}></DiscussionsSection>
@@ -144,7 +148,7 @@ const ApiDetails = async ({
             className="w-full flex justify-center items-center"
             value="plans"
           >
-            <PlansSection plans={plans} />
+            <PlansSection plans={plans} apiId={apiId} />
           </TabsContent>
         </Tabs>
       </div>

@@ -1,26 +1,67 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
+import Editor from "@monaco-editor/react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../../ui/accordion";
-import { CodeBlock } from "react-code-blocks";
+import { Button } from "@app/components/ui/button";
+import { Input } from "@app/components/ui/input";
+import testApi from "@services/api/apiTest/testApi";
+import getColorByMethod from "@helpers/getColorByMethod";
 function EndpointDetails(props: any) {
+  const [request,setRequest]=useState(props.req);
+  const [response,setResponse]=useState(props.res);
+  const [url,setUrl]=useState(props.name);
+  const [isTesting,setIsTesting]=useState(false);
+  const [isSending,setIsSending]=useState(false);
+
+  const prettify = (data:any) => {
+    return JSON.stringify(data,null,2);
+  };
+  async function handleTest(){
+    setIsSending(true);
+    const result=await testApi(props.apiId,props.version,request,url,props.method);
+    if (result.status=="success") {
+        setResponse(prettify(result.data))  ;
+        setIsSending(false)    
+    }
+  }
+
+  
   return (
+    
     <div className="w-full overflow-x-hidden">
       <Accordion
         type="single"
         collapsible
-        className="w-full border-[2px] border-[#184173] p-2 rounded-[7px] bg-white overflow-x-hidden"
+        className={`w-full bg-[${getColorByMethod(props.method)}] bg-opacity-[10%] border-[2px] border-[#184173] px-2 rounded-[7px]  overflow-x-hidden`}
       >
         <AccordionItem value="item-1">
-          <AccordionTrigger className="text-[#184173] font-bold">{`${props.name}`}</AccordionTrigger>
+          <AccordionTrigger className="text-[#184173] font-bold">
+           
+          <div className="gap-x-5 flex items-center">
+           <div className={`w-24 h-8 bg-[${getColorByMethod(props.method)}]  text-white flex items-center justify-center rounded-[5px]`}>
+           {props.method}
+           </div>
+           {`${props.name}`}
+          </div>
+          </AccordionTrigger>
           <AccordionContent>
-            <div className="w-full flex flex-col gap-y-5 p-2">
+            <div className="w-full flex flex-col gap-y-5 p-2 bg-white">
+              <div className="flex justify-between">
               <h1 className="sm:text-xl text-lg font-medium ">
                 Méthode: <span className="text-[#048B77]">{props.method}</span>
               </h1>
+              <Button className="w-48" onClick={()=>setIsTesting(!isTesting)}>{isTesting ? "Annuler" : "Tester"}</Button>
+
+              </div>
+              <Input disabled={!isTesting} onChange={(e)=>{
+                setUrl(e.target.value)
+              }} value={url}></Input>
+             {isTesting && (<h3>Vous pouvez changer l'url pour introduire des paramètres tout en respectant son format.</h3>)} 
               <h1
                 className="sm:text-xl text-lg font-medium"
                 style={{ whiteSpace: "pre-line" }}
@@ -31,20 +72,45 @@ function EndpointDetails(props: any) {
               <h1 className="sm:text-xl text-lg font-medium">
                 Corps de la requette:
               </h1>
+             
+      <Editor
+      height="250px"
+      language="json"
+      theme="vs-dark"
+      value={request}
+      options={{
+        formatOnType: true,
+        minimap: { scale: 10 },
+        readOnly: !isTesting
+      }}
+      onChange={(value,event)=>{
+         setRequest(value)
+         
+      }}
+    /> 
 
-              <CodeBlock
-                text={props.req ? props.req : "No request body"}
-                language="javascript"
-                showLineNumbers={true}
-              />
+          
               <h1 className="sm:text-xl text-lg font-medium">
                 Corps de la réponse:
               </h1>
-              <CodeBlock
-                text={props.res ? props.res : "No response body"}
-                language="javascript"
-                showLineNumbers={true}
-              />
+             
+               <Editor
+               height="250px"
+               language="json"
+               theme="vs-dark"
+               value={response}
+               options={{
+                 formatOnType: true,
+                 minimap: { scale: 10 },
+                 readOnly:true,
+               }}
+               
+             /> 
+              <div className="flex justify-center">
+              {isTesting && (<Button disabled={isSending} className="w-48" onClick={handleTest}>{isSending ? "En cours ..." : "Exécuter"}</Button>)}
+
+              </div>
+
             </div>
           </AccordionContent>
         </AccordionItem>

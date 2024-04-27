@@ -40,7 +40,7 @@ export default function CreateSupplierForm() {
       confirmPassword: "",
     },
   });
-
+ 
   async function onSubmit(values: createSupplierRequest) {
     setIsLoading(true);
     const result = await createSupplier(values);
@@ -75,13 +75,13 @@ export default function CreateSupplierForm() {
           label: (
             <Link href="/auth/login">
               <Button className="bg-green-500" size={"sm"}>
-                Se connecter
+                Ok
               </Button>{" "}
             </Link>
           ),
           onClick: () => {
-            router.push("/auth/login");
-          },
+            toast.dismiss();
+            router.push("/admin/suppliers");          },
         },
         icon: (
           <MdDone className=" aspect-square hover:bg-opacity-0 p-[0.5px] rounded-full text-white bg-green-500" />
