@@ -21,20 +21,19 @@ import { toast } from "sonner";
 import { Textarea } from "@app/components/ui/textarea";
 import { getLoggedInUser } from "@services/authentication.service";
 import User from "@typings/entities/User";
+
 //todo : get the user from the backend , and update it.
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
+  firstname: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
   email: z.string().email(),
-
-  location: z.string(),
+  lastname: z.string(),
   bio: z.string(),
-  password: z.string().min(8, {
-    message: "Password must be at least 8 characters.",
-  }),
-});
+  phone: z.string()
+  });
+
 
 const ProviderProfile = () => {
   const [image, setImage] = useState<string | undefined>("");
@@ -95,18 +94,24 @@ const ProviderProfile = () => {
                     profile image
                   </AvatarFallback>
                 </Avatar>
+                {!edditing && <p className="text-center text-black font-semibold ">Profile Image</p>}
+
                 <div className="w-full h-6 relative">
+
                   <Input
                     type="file"
-                    className="file:hidden opacity-0 absolute top-0"
+                    className="file:hidden opacity-0 absolute top-0 cursor-pointer"
                     onChange={upload}
                   ></Input>
 
-                  <p className="text-center hover:underline"> upload image </p>
-                  <p className="text-center hover:underline">
-                    {" "}
-                    {user?.avatar}{" "}
-                  </p>
+                  { edditing &&
+              <div className="border rounded-lg bg-current mt-4 py-1 cursor-pointer">
+                   <p className="text-center  text-white"> Upload image </p>
+                   </div>
+                   }
+                  {/* <p className="text-center hover:underline">
+                    {user?.avatar}
+                  </p> */}
                 </div>
 
                 <div className="card flex justify-content-center"></div>
@@ -115,12 +120,38 @@ const ProviderProfile = () => {
                 <div className="lg:flex-row flex-col flex gap-3 w-full">
                   <FormField
                     control={form.control}
-                    name="username"
+                    name="firstname"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{field.name}</FormLabel>
+                        <FormLabel>{"First name"}</FormLabel>
                         <FormControl>
-                          <Input placeholder="username" {...field} />
+
+                          <Input placeholder="first name" {...field}
+                          readOnly={edditing ? false : true} 
+                              defaultValue={user?.firstname}
+                          
+                          />
+
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+
+                <FormField
+                    control={form.control}
+                    name="lastname"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Last name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="last name" {...field} 
+                              defaultValue={user?.lastname}
+                          readOnly={edditing ? false : true} 
+
+                          />
                         </FormControl>
 
                         <FormMessage />
@@ -133,13 +164,13 @@ const ProviderProfile = () => {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{field.name}</FormLabel>
+                        <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="email"
                             {...field}
                             defaultValue={user?.email}
-                            disabled={edditing ? false : true}
+                          readOnly={edditing ? false : true} 
                           />
                         </FormControl>
 
@@ -148,20 +179,7 @@ const ProviderProfile = () => {
                     )}
                   />
 
-                  <FormField
-                    control={form.control}
-                    name="location"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Emplacement</FormLabel>
-                        <FormControl>
-                          <Input placeholder="emplacement" {...field} />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                
                 </div>
 
                 <FormField
@@ -175,7 +193,7 @@ const ProviderProfile = () => {
                           placeholder="bio"
                           {...field}
                           defaultValue={user?.bio}
-                          disabled={edditing ? false : true}
+                          readOnly={edditing ? false : true} 
                         />
                       </FormControl>
                       <FormMessage />
@@ -185,14 +203,15 @@ const ProviderProfile = () => {
 
                 <FormField
                   control={form.control}
-                  name="password"
+                  name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>Phone</FormLabel>
                       <FormControl>
                         <Input
-                          type="password"
-                          placeholder="password"
+                          placeholder="phone number"
+                          defaultValue={user?.phone_number}
+                          readOnly={edditing ? false : true} 
                           {...field}
                         />
                       </FormControl>
@@ -213,13 +232,14 @@ const ProviderProfile = () => {
                     <Button className="max-w-32 px-5 "> Enregistrer </Button>
                   </div>
                 ) : (
-                  <Button
-                    onClick={() => setEdditing(true)}
-                    className="max-w-32 px-5 mx-auto"
-                  >
-                    {" "}
-                    Editer{" "}
-                  </Button>
+                  // <Button
+                  //   onClick={() => setEdditing(true)}
+                  //   className="max-w-32 px-5 mx-auto"
+                  // >
+                  //   {" "}
+                  //   Editer{" "}
+                  // </Button>
+                  <></>
                 )}
               </div>
             </div>
