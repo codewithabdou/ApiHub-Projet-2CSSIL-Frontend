@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 import {
   Accordion,
@@ -17,7 +17,7 @@ function EndpointDetails(props: any) {
   const [url,setUrl]=useState(props.name);
   const [isTesting,setIsTesting]=useState(false);
   const [isSending,setIsSending]=useState(false);
-
+  const [color,setColor]=useState("");
   const prettify = (data:any) => {
     return JSON.stringify(data,null,2);
   };
@@ -29,7 +29,9 @@ function EndpointDetails(props: any) {
         setIsSending(false)    
     }
   }
-
+ useEffect( ()=>{
+   setColor(getColorByMethod(props.method))
+ },[])
   
   return (
     
@@ -37,13 +39,22 @@ function EndpointDetails(props: any) {
       <Accordion
         type="single"
         collapsible
-        className={`w-full bg-[${getColorByMethod(props.method)}] bg-opacity-[10%] border-[2px] border-[#184173] px-2 rounded-[7px]  overflow-x-hidden`}
+        className={props.method==="POST" ?
+        `w-full bg-[#367BC0] bg-opacity-[10%] border-[2px] border-[#184173] px-2 rounded-[7px]  overflow-x-hidden`
+      : props.method==="GET" ?
+      `w-full bg-[#184173] bg-opacity-[10%] border-[2px] border-[#184173] px-2 rounded-[7px]  overflow-x-hidden`
+      : props.method==="PATCH" ?
+      `w-full bg-[#50E3C2] bg-opacity-[10%] border-[2px] border-[#184173] px-2 rounded-[7px]  overflow-x-hidden`
+      : props.method==="DELETE" ?
+      `w-full bg-[#F93E3E] bg-opacity-[10%] border-[2px] border-[#184173] px-2 rounded-[7px]  overflow-x-hidden`
+      : `w-full bg-[#000000] bg-opacity-[10%] border-[2px] border-[#184173] px-2 rounded-[7px]  overflow-x-hidden`
+     }
       >
         <AccordionItem value="item-1">
           <AccordionTrigger className="text-[#184173] font-bold">
            
           <div className="gap-x-5 flex items-center">
-           <div className={`w-24 h-8 bg-[${getColorByMethod(props.method)}]  text-white flex items-center justify-center rounded-[5px]`}>
+           <div className={`w-24 h-8 bg-[${color}]  text-white flex items-center justify-center rounded-[5px]`}>
            {props.method}
            </div>
            {`${props.name}`}
@@ -55,7 +66,12 @@ function EndpointDetails(props: any) {
               <h1 className="sm:text-xl text-lg font-medium ">
                 Méthode: <span className="text-[#048B77]">{props.method}</span>
               </h1>
-              <Button className="w-48" onClick={()=>setIsTesting(!isTesting)}>{isTesting ? "Annuler" : "Tester"}</Button>
+              <Button className="w-48"
+               onClick={()=>{
+                setIsTesting(!isTesting);
+                setIsSending(false)
+
+              }}>{isTesting ? "Annuler" : "Tester"}</Button>
 
               </div>
               <Input disabled={!isTesting} onChange={(e)=>{

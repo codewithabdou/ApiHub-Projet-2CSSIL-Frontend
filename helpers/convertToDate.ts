@@ -1,8 +1,9 @@
 function convertToDate(dateString: string): string {
     // Split the date string into date and time parts
-    const [datePart, timePart] = dateString.split('T');
-
+    const [fullDate, timePart] = dateString.split('T');
+    
     // Split the date part into year, month, and day
+    const [datePart, fractionalSeconds] = fullDate.split('.');
     const [year, month, day] = datePart.split('-').map(Number);
 
     // Split the time part into hour, minute, and second
@@ -22,5 +23,4 @@ function convertToDate(dateString: string): string {
     return formattedDate; // Return the formatted date string
 }
 
-
-export default convertToDate
+export default convertToDate;
