@@ -14,14 +14,14 @@ import {
   errorGetVersionDetailsResponse,
   successGetVersionDetailsResponse,
 } from "@typings/api/getVersionDetailsTypes";
-import PaginationBar from "../../Shared/Pagination";
 import Endpoint from "@typings/entities/Endpoint";
 import { ErrorType } from "@typings/entities/Error";
 
 function EndpointsSection(props: any) {
+  const [versionName,setVersionName]=useState(props.versions[0].version);
   const [endpoints, setEndpoints] = useState<Endpoint[]>(props.endpoints);
   async function handleVersionChange(version: String) {
-    //load current version
+    setEndpoints([]);
     const res:
       | {
           data: successGetVersionDetailsResponse;
@@ -47,10 +47,11 @@ function EndpointsSection(props: any) {
   }
   return (
     <div className="w-full flex flex-col gap-y-5 items-start p-5">
-      <Label>Veuillez choisir une version</Label>
+      <Label className="font-bold">Veuillez choisir une version</Label>
       <Select
         onValueChange={(e) => {
           handleVersionChange(e);
+          setVersionName(e);
         }}
       >
         <SelectTrigger className="sm:w-80 w-48 border-2 border-[#184173] outline-none">
@@ -80,11 +81,14 @@ function EndpointsSection(props: any) {
         endpoints /*.slice(startIndex, endIndex)*/
           .map((endpoint: any, index: number) => (
             <EndpointDetails
+            apiId={props.apiId}
+            version={versionName}
               name={endpoint.url}
               method={endpoint.method}
               description={endpoint.description}
               req={endpoint.request_body}
               res={endpoint.response_body}
+              
             />
           ))
       ) : (

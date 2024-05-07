@@ -7,7 +7,7 @@ import NavbarUserActions from "../Shared/Landing page layout/NavbarUserActions";
 const MainPage = () => {
   return (
     <>
-      <NavbarUserActions />
+      {/*<NavbarUserActions />*/}
       <HubBanner />
       <div className="flex  flex-col items-center justify-center py-8">
         <h1 className="text-primary relative font-extrabold text-4xl after:absolute after:h-4 after:bg-secondary after:bottom-0 after:left-0 after:-z-10 after:w-full ">
