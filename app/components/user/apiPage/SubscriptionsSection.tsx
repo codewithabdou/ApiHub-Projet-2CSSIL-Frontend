@@ -18,7 +18,7 @@ function SubscriptionsSection(props:any) {
   return (
     <div className="w-full flex flex-col gap-y-5 items-start p-5">
             <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
+      <TableCaption>Liste de tout les abonements.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Souscription</TableHead>

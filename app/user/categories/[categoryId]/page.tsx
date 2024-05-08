@@ -146,7 +146,7 @@ const DetailedCategory = async ({
 
           <div className="grid grid-cols-1  gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:px-16  min-h-96">
             {fetchedapis ? (
-              fetchedapis.map((api, index) => (
+              fetchedapis.filter((Api) => Api.status === "active").map((api, index) => (
                 <ApiCard
                   key={index}
                   api={{

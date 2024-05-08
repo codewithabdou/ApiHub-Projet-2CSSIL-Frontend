@@ -11,8 +11,9 @@ import { Button } from "@app/components/ui/button";
 import { Input } from "@app/components/ui/input";
 import testApi from "@services/api/apiTest/testApi";
 import getColorByMethod from "@helpers/getColorByMethod";
+import { CopyIcon } from "lucide-react";
 function EndpointDetails(props: any) {
-  const [request,setRequest]=useState(props.req);
+  const [request,setRequest]=useState(props.method==="GET" ? "" : props.req);
   const [response,setResponse]=useState(props.res);
   const [url,setUrl]=useState(props.name);
   const [isTesting,setIsTesting]=useState(false);
@@ -22,9 +23,10 @@ function EndpointDetails(props: any) {
     return JSON.stringify(data,null,2);
   };
   async function handleTest(){
+
     setIsSending(true);
-    const result=await testApi(props.apiId,props.version,request,url,props.method);
-    if (result.status=="success") {
+        const result = await testApi(props.apiId, props.version, request, url, props.method);   
+     if (result.status=="success") {
         setResponse(prettify(result.data))  ;
         setIsSending(false)    
     }
@@ -74,9 +76,15 @@ function EndpointDetails(props: any) {
               }}>{isTesting ? "Annuler" : "Tester"}</Button>
 
               </div>
-              <Input disabled={!isTesting} onChange={(e)=>{
-                setUrl(e.target.value)
-              }} value={url}></Input>
+              
+              <div className="bg-[#F2F1F1] h-fit p-2 rounded-[5px] flex justify-between px-5  items-center">
+                <div>
+                <span>http://localhost:5000/apis/call/{props.apiId}/{props.version}</span>
+          <input className="outline-none bg-[#F2F1F1] h-fit" disabled={!isTesting} onChange={(e) => { setUrl(e.target.value);}} value={url}/>
+                </div>
+           
+            <CopyIcon className="cursor-pointer hover:text-primary" onClick={()=>{navigator.clipboard.writeText(`http://localhost:5000/apis/call/${props.apiId}/${props.version}${url}`)}}></CopyIcon>
+           </div>
              {isTesting && (<h3>Vous pouvez changer l'url pour introduire des paramètres tout en respectant son format.</h3>)} 
               <h1
                 className="sm:text-xl text-lg font-medium"
@@ -84,11 +92,14 @@ function EndpointDetails(props: any) {
               >
                 Déscription:
               </h1>
-              <div className="bg-[#F2F1F1] h-fit p-2">{props.description}</div>
-              <h1 className="sm:text-xl text-lg font-medium">
-                Corps de la requette:
-              </h1>
+              <div className="bg-[#F2F1F1] h-fit p-2 rounded-[5px]">{props.description}</div>
+              
              
+     { props.method!=="GET" && (
+      <div>
+      <h1 className="sm:text-xl text-lg font-medium">
+      Corps de la requette:
+    </h1>
       <Editor
       height="250px"
       language="json"
@@ -104,7 +115,8 @@ function EndpointDetails(props: any) {
          
       }}
     /> 
-
+    </div>)
+}
           
               <h1 className="sm:text-xl text-lg font-medium">
                 Corps de la réponse:

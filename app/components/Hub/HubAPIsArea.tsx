@@ -38,7 +38,7 @@ const HubAPIsArea =async () => {
           className={Styles.carouselStyle}
         >
           <CarouselContent className={Styles.carouselContentStyle}>
-            {sampleData.map((Api, index) => (
+            {sampleData.filter((Api) => Api.status === "active").map((Api, index) => (
               <CarouselItem
                 key={index}
                 className={`lg:basis-1/2  space-8 xl:basis-1/3 `}
@@ -70,7 +70,7 @@ const HubAPIsArea =async () => {
           className={Styles.carouselStyle}
         >
           <CarouselContent className={Styles.carouselContentStyle}>
-            {sampleData.map((Api, index) => (
+            {sampleData.filter((Api) => Api.status === "active").map((Api, index) => (
               <CarouselItem
                 key={index}
                 className={`lg:basis-1/2   space-8 xl:basis-1/3 `}

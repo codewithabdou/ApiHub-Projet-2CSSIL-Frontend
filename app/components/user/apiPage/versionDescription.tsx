@@ -83,7 +83,17 @@ async function handleVersionChange(version: String) {
         endpoints /*.slice(startIndex, endIndex)*/
           .map((endpoint: Endpoint, index: number) => (
            <div className='w-4/5 min-h-24 h-fit flex flex-col items-start gap-x-2 p-2 border-2 border-grey rounded-[5px]'>
-              <h1 className='font-bold'>Méthode: <span className={`text-[${getColorByMethod(endpoint.method)}] font-medium`}>{endpoint.method}</span></h1>
+              <h1 className='font-bold'>Méthode: <span 
+              className={endpoint.method==="POST" ?
+              ` text-[#367BC0] `
+            : endpoint.method==="GET" ?
+            ` text-[#184173] `
+            : endpoint.method==="PATCH" ?
+            ` text-[#50E3C2] `
+            : endpoint.method==="DELETE" ?
+            ` text-[#F93E3E] `
+            : ` text-[#000000] `
+           }>{endpoint.method}</span></h1>
               <h1 className='font-bold'>Endpoint: <span className={`font-normal`}>{endpoint.url}</span></h1>
               <h1 className='font-bold'>Description: <span className={`font-light`}>{endpoint.description}</span></h1>
            </div>

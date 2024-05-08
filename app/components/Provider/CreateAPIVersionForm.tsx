@@ -32,6 +32,7 @@ import { useParams } from "next/navigation";
 
 import { createApiVersion } from "@services/api/createApiVersion";
 import { MdDone } from "react-icons/md";
+import { Editor } from "@monaco-editor/react";
 
 function CreateApiVersionForm() {
   const params = useParams<{ apiId: string }>();
@@ -238,10 +239,21 @@ function CreateApiVersionForm() {
             <FormItem>
               <FormLabel>Corps de la requête</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Corps de la requête"
-                  {...field}
-                ></Textarea>
+              <Editor
+      height="250px"
+      language="json"
+      theme="vs-dark"
+      value={field.value}
+      options={{
+        formatOnType: true,
+        minimap: { scale: 10 },
+        
+      }
+      }
+      onChange={(value,event)=>{
+        field.onChange(value);        
+     }}
+    /> 
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -255,10 +267,21 @@ function CreateApiVersionForm() {
             <FormItem>
               <FormLabel>Corps de la réponse</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Corps de la réponse"
-                  {...field}
-                ></Textarea>
+              <Editor
+      height="250px"
+      language="json"
+      theme="vs-dark"
+      value={field.value}
+      options={{
+        formatOnType: true,
+        minimap: { scale: 10 },
+        
+      }
+      }
+      onChange={(value,event)=>{
+        field.onChange(value);        
+     }}
+    /> 
               </FormControl>
               <FormMessage />
             </FormItem>

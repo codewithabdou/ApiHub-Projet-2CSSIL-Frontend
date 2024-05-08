@@ -5,11 +5,10 @@ import purchaseApi from '@services/api/apiPage/purchaseApi'
 
 function Plan(props:any) {
  async function purchase(){
-     const result= await purchaseApi(`http://localhost:3000/user`,props.apiId,props.name);
+     const result= await purchaseApi(`http://localhost:3000/user/apis/${props.apiId}`,props.apiId,props.name);
      if (result){
       const url = result as {checkout_url:string};
-      window.open(url.checkout_url, "_blank");
-     }
+      window.location.href = url.checkout_url     }
 
   }
   return (
