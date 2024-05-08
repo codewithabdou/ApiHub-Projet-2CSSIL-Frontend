@@ -1,3 +1,4 @@
+import { Button } from "@app/components/ui/button";
 import {
   Tabs,
   TabsContent,
@@ -7,7 +8,9 @@ import {
 import ApiDetailsSection from "@app/components/user/apiPage/ApiDetailsSection";
 import DiscussionsSection from "@app/components/user/apiPage/DiscussionsSection";
 import EndpointsSection from "@app/components/user/apiPage/EndpointsSection";
+import TicketsSectionForApi from "@app/components/user/apiPage/TicketsSectionForApi";
 import PlansSection from "@app/components/user/PlansSection";
+import AddTicetFormPanel from "@app/components/user/ticketFormSidePanel";
 import getAllVersionsByApi from "@services/api/apiPage/getAllversionsByApi";
 import getApiById from "@services/api/apiPage/getApiById";
 import getVersionDetails from "@services/api/apiPage/getVersionDetails";
@@ -122,7 +125,11 @@ const ApiDetails = async ({
               <TabsTrigger value="description">Description</TabsTrigger>
               <TabsTrigger value="disscussions">Disscussions</TabsTrigger>
               <TabsTrigger value="plans">Plans d'abonement</TabsTrigger>
+              <TabsTrigger value="tickets" className="">Problems</TabsTrigger>
             </TabsList>
+            <AddTicetFormPanel></AddTicetFormPanel>
+
+
           </div>
 
           <TabsContent className="w-full " value="endpoints">
@@ -145,6 +152,9 @@ const ApiDetails = async ({
             value="plans"
           >
             <PlansSection plans={plans} />
+          </TabsContent>
+          <TabsContent value="tickets">
+            <TicketsSectionForApi id={apiId}></TicketsSectionForApi>
           </TabsContent>
         </Tabs>
       </div>

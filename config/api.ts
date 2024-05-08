@@ -29,6 +29,8 @@ const API_INFO = {
     GENERAL: {
       GET_APIS: "/apis",
     },
+    CREATETICKET: "/tickets/create"
+    ,
     CREATEAPIVERSION: ["/apis", "/versions/create"],
   },
 };

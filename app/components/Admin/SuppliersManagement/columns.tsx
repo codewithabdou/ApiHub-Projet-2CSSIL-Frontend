@@ -77,6 +77,7 @@ const AdminSuppliersColumns = (): ColumnDef<User>[] => {
                 <DropdownMenuItem
                   onClick={async () => {
                     await deactivateUser(user.id.toString());
+                    
                   }}
                 >
                   Deactivate
@@ -94,7 +95,9 @@ const AdminSuppliersColumns = (): ColumnDef<User>[] => {
 
               <DropdownMenuItem
                 onClick={() => {
+
                   router.push(`suppliers/${user.id}`);
+                  
                 }}
               >
                 Voir
