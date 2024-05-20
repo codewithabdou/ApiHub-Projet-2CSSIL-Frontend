@@ -122,7 +122,7 @@ const SupplierTicket = ({ title, description, dateCreate, status, solution }: { 
       </div>
 
      
-        <Accordion type="single" collapsible  className="px-6  ml-6 mt-0">
+        { (status != "Closed" ) &&<Accordion type="single" collapsible  className="px-6  ml-6 mt-0">
           <AccordionItem value="item-1">
             <AccordionTrigger  className="text-gray-600 ml-auto">Reply to ticket</AccordionTrigger>
             <AccordionContent>
@@ -143,7 +143,7 @@ const SupplierTicket = ({ title, description, dateCreate, status, solution }: { 
           <FormItem>
             <FormLabel>Description de reponse </FormLabel>
             <FormControl>
-              <Textarea placeholder="description ...." {...field} />
+              <Textarea placeholder="description...." {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -220,6 +220,7 @@ const SupplierTicket = ({ title, description, dateCreate, status, solution }: { 
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+        }
     </div>
   );
 };
