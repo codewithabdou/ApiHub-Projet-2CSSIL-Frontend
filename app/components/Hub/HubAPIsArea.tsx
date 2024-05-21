@@ -13,9 +13,11 @@ import { ErrorGetAPIsResponse, SuccessGetAPIsResponse } from "@typings/api/getAP
 
 const HubAPIsArea =async () => {
   const Styles = {
-    carouselStyle: "w-[85%] flex items-center justify-center mx-auto ",
+    // carouselStyle: "w-[85%] flex items-center  mx-auto ",
+    carouselStyle: " w-[85%] h-[90%] flex items-center justify-center  mx-auto px-10",
     carouselContentStyle: "py-4",
   };
+
   let sampleData :API[] =[];
   await getAPIs().then((res:SuccessGetAPIsResponse | ErrorGetAPIsResponse)=>{
     if (res) {
@@ -25,7 +27,7 @@ const HubAPIsArea =async () => {
     }
   })
   return (
-    <div className="bg-white md:order-2 order-1 md:w-[70%] w-full  md:flex-grow">
+    <div className="bg-white md:order-2 order-1 md:w-[70%] w-full  md:flex-grow border-secondary  border">
       <div className="py-8">
         <h2 className="font-bold text-2xl pl-4 my-2 text-primary">
           TOP 5 APIs
@@ -41,7 +43,7 @@ const HubAPIsArea =async () => {
             {sampleData.filter((Api) => Api.status === "active").map((Api, index) => (
               <CarouselItem
                 key={index}
-                className={`lg:basis-1/2  space-8 xl:basis-1/3 `}
+                className={`lg:basis-1/2  space-8 xl:basis-1/2 `}
               >
                 <ApiCard
                   api={{
@@ -58,6 +60,7 @@ const HubAPIsArea =async () => {
           <CarouselNext className="hidden lg:block" />
         </Carousel>
       </div>
+      
       <div className="py-8">
         <h2 className="font-bold text-2xl pl-4 my-2 text-primary">
           APIs Recommandées
@@ -73,7 +76,7 @@ const HubAPIsArea =async () => {
             {sampleData.filter((Api) => Api.status === "active").map((Api, index) => (
               <CarouselItem
                 key={index}
-                className={`lg:basis-1/2   space-8 xl:basis-1/3 `}
+                className={`lg:basis-1/2   xl:basis-1/2 `}
               >
                 <ApiCard
                   api={{

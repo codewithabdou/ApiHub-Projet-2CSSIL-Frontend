@@ -48,5 +48,8 @@ const IMAGES = {
   },
 
   HUB_BANNER: "/images/HubBanner.png",
+
+  SIGN_UP_STORY_SET: "/images/SIGNUP_YELL.svg",
+  LOGIN_STORY_SET: "/images/LOGIN_YELL.svg",
 };
 export default IMAGES;

@@ -14,6 +14,7 @@ import Pagination from "@typings/api/pagination";
 import React from "react";
 import Category from "@typings/entities/Category";
 import { sucessGetCategoriesResponse } from "@typings/api/createCategoryType";
+import HubSideCategories from "@app/components/Hub/HubSideCategories";
 
 const DetailedCategory = async ({
   params,
@@ -49,31 +50,26 @@ const DetailedCategory = async ({
     );
   }
 
-  const description = `Sports APIs can refer to many different categories of APIs in 
-                    the world of sports. Some of the more popular APIs fall under umbrellas like sports 
-                    odds and betting, top scores, NCAA sports, football, women’s sports, 
-                    and top trending sports news.`;
+  // const description = `Sports APIs can refer to many different categories of APIs in 
+  //                   the world of sports. Some of the more popular APIs fall under umbrellas like sports 
+  //                   odds and betting, top scores, NCAA sports, football, women’s sports, 
+  //                   and top trending sports news.`;
 
-  const cat = {
-    apiCategory: "Sport-API-Worldwide",
-    apiCategoryImage: "https://github.com/shadcn.png",
-    CategoryDescription:
-      "Fournir des donnees en temps reel sur differents sports dans le monde",
-  };
+  // const cat = {
+  //   apiCategory: "Sport-API-Worldwide",
+  //   apiCategoryImage: "https://github.com/shadcn.png",
+  //   CategoryDescription:
+  //     "Fournir des donnees en temps reel sur differents sports dans le monde",
+  // };
 
-  const filters = [
-    { label: "Fournisseur", options: ["Option 1", "Option 2", "Option 3"] },
-    { label: "Catégorie", options: ["Option A", "Option B", "Option C"] },
-    { label: "Trier par", options: ["Option X", "Option Y", "Option Z"] },
-  ];
+  // const filters = [
+  //   { label: "Fournisseur", options: ["Option 1", "Option 2", "Option 3"] },
+  //   { label: "Catégorie", options: ["Option A", "Option B", "Option C"] },
+  //   { label: "Trier par", options: ["Option X", "Option Y", "Option Z"] },
+  // ];
 
-  const page = Number(searchParams?.page) || 1;
-  let pagination: Pagination = {
-    page: Number(page),
-    per_page: 0,
-    total: 0,
-    pages: 0,
-  };
+  // const page = Number(searchParams?.page) || 1;
+
 
   let fetchedapis;
   const data = await getAPIs({
@@ -85,7 +81,7 @@ const DetailedCategory = async ({
   if (data.status === "success") {
     const apiData = data as SuccessGetAPIsResponse;
     fetchedapis = apiData.data;
-    pagination = apiData.pagination;
+    // pagination = apiData.pagination;
   } else {
     const errorData = data as ErrorGetAPIsResponse;
     return (
@@ -97,56 +93,60 @@ const DetailedCategory = async ({
     );
   }
 
+
+
   return (
     <div className="py-12 flex flex-col w-full gap-4 md:px-28 mt-5 px-5">
-      {/* the card of the big screen */}
 
-      <div className="grid w-full grid-cols-4 p-10 border-2 rounded-xl min-h-72 bg-white">
-        <div className="col-span-4 md:col-span-3">
-          <div className="flex flex-row items-center justify-around mb-4 md:block">
-            <p className="my-auto text-lg font-bold text-center md:text-left md:text-4xl text-primary">
-              {cat.apiCategory}
-            </p>
-            <img
-              src={cat.apiCategoryImage}
-              alt="category img"
-              className="block w-10 h-10 rounded-full md:hidden md:m-auto"
-            />
-          </div>
-
-          <p className="md:text-2xl">{description}</p>
-        </div>
+  <div className="grid w-full grid-cols-4 p-10  rounded-xl min-h-12 bg-white border-secondary border">
+    <div className="col-span-4 md:col-span-4">
+      <div className="flex flex-row items-center justify-center  mb-4  gap-6 border-b-[1px] pb-4 border-black">
+        <p className="my-auto text-lg font-semibold text-center md:text-left md:text-3xl text-gray-900">
+          {category.name} Apis
+        </p>
 
         <img
-          src={cat.apiCategoryImage}
+      src={category.image}
+      alt="category img"
+      className="hidden rounded-full  md:max-h-9 md:block"
+    />
+    
+        <img
+          src={category.image}
           alt="category img"
-          className="hidden rounded-full md:m-auto md:max-h-36 md:block"
+          className="block w-10 h-10 rounded-full md:hidden md:m-auto"
         />
       </div>
 
-      <MainTitle title="Rechercher des APIs dans Sports APIs:" />
+      <p className="md:text-2xl">{category.description}</p>
+    </div>
 
-      <section className="flex flex-col gap-4">
-        <div className="flex flex-col items-center gap-2">
+
+  </div>
+<div className="flex flex-col md:flex-row gap-4 items-start w-full py-8 px-[5%] md:px-0 justify-between">
+      <section className="flex flex-col gap-4  order-2 ">
+        {/* <div className="flex flex-col items-center gap-2"> */}
           {/* <label htmlFor="search" className='text-lg'>Rechercher:</label> */}
-          <input
+
+          {/* <input
             type="text"
             id="search"
             className="w-full p-2 border-2 rounded-lg"
             placeholder="Rechercher une API"
           />
-        </div>
+        </div> */}
 
-        <ApiFilters filters={filters} />
+        {/* <ApiFilters filters={filters} /> */}
 
-        <Button className="w-32 lg:mx-auto"> Filtrer </Button>
+        {/* <Button className="w-32 lg:mx-auto"> Filtrer </Button> */}
 
         <section className="flex flex-col justify-center gap-5">
-          <MainTitle title="Résultats de la recherche:" />
+          <MainTitle title="Toutes les Résultats :" />
 
           <div className="grid grid-cols-1  gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:px-16  min-h-96">
             {fetchedapis ? (
               fetchedapis.filter((Api) => Api.status === "active").map((api, index) => (
+                <>
                 <ApiCard
                   key={index}
                   api={{
@@ -156,15 +156,21 @@ const DetailedCategory = async ({
                     apiName: api.name,
                   }}
                 />
+    
+                </>
               ))
             ) : (
               <p className="text-center">Aucun résultat trouvé</p>
             )}
           </div>
-          {/* we can use a reusable general pagination here  */}
-          <UrlPagination pagination={pagination} />
         </section>
       </section>
+      <HubSideCategories />
+
+        </div>
+
+
+
     </div> // end of page
   );
 };

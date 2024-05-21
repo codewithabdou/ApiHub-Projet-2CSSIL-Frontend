@@ -94,14 +94,28 @@ export default function RegisterForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 bg-white px-8 py-12 rounded-lg shadow-md w-full"
+        className="space-y-8 bg-white px-8 py-6 rounded-lg shadow-md lg:w-4/5 border-secondary border-[1px]"
       >
-        <div className="lg:flex-row flex flex-col gap-4">
+        <div className="lg:flex-col flex flex-col gap-4">
+  
           <FormField
+            control={form.control}
+            name="lastname"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Nom</FormLabel>
+                <FormControl>
+                  <Input placeholder="Nom" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+                  <FormField
             control={form.control}
             name="firstname"
             render={({ field }) => (
-              <FormItem className="lg:w-1/3 w-full">
+              <FormItem className=" w-full">
                 <FormLabel>Prénom</FormLabel>
                 <FormControl>
                   <Input placeholder="Prénom" {...field} />
@@ -112,22 +126,9 @@ export default function RegisterForm() {
           />
           <FormField
             control={form.control}
-            name="lastname"
-            render={({ field }) => (
-              <FormItem className="lg:w-1/3 w-full">
-                <FormLabel>Nom</FormLabel>
-                <FormControl>
-                  <Input placeholder="Nom" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="lg:w-1/3 w-full">
+              <FormItem className=" w-full">
                 <FormLabel>Adresse mail</FormLabel>
                 <FormControl>
                   <Input placeholder="Adresse mail" {...field} />
@@ -136,16 +137,14 @@ export default function RegisterForm() {
               </FormItem>
             )}
           />
-        </div>
-        <div className="flex lg:flex-row flex-col gap-4">
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="lg:w-1/2 ">
+              <FormItem className="">
                 <FormLabel>Mot de passe</FormLabel>
                 <FormControl>
-                  <Input placeholder="mot de passe" {...field} />
+                  <Input placeholder="mot de passe" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -155,17 +154,18 @@ export default function RegisterForm() {
             control={form.control}
             name="confirmPassword"
             render={({ field }) => (
-              <FormItem className="lg:w-1/2 ">
+              <FormItem className="">
                 <FormLabel>Confirmer le mot de passe</FormLabel>
                 <FormControl>
-                  <Input placeholder="Confirmer le mot de passe" {...field} />
+                  <Input placeholder="Confirmer le mot de passe" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <Button disabled={isLoading} type="submit">
+
+        <Button disabled={isLoading} variant={"secondary"} type="submit">
           {isLoading ? "Chargement..." : "S'inscrire"}
         </Button>
       </form>

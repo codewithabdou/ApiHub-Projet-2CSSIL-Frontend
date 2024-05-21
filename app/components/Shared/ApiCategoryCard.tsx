@@ -15,7 +15,7 @@ const ApiCategoryCard = ({
   return (
   
 <Link href={`categories/${id}`} >
-    <Card className="shadow-lg  flex flex-col h-full">
+    <Card className="shadow-lg  flex flex-col">
       <CardHeader className="p-3">
         <Avatar className="mx-auto w-16 h-16">
           <AvatarImage src={apiCategoryImage} />
