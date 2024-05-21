@@ -64,7 +64,8 @@ export default function LoginForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 bg-white px-8 py-12 rounded-lg shadow-md w-full md:w-1/2"
+        // className="space-y-8 bg-white px-8 py-12 rounded-lg shadow-md w-full md:w-1/2"
+        className="space-y-8 bg-white px-8 py-6 rounded-lg shadow-md lg:w-4/5 border-secondary border-[1px]"
       >
         <FormField
           control={form.control}
@@ -86,13 +87,13 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Mot de passe</FormLabel>
               <FormControl>
-                <Input placeholder="mot de passe" {...field} />
+                <Input placeholder="mot de passe" {...field} type="password" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button disabled={isLoading} type="submit">
+        <Button disabled={isLoading} type="submit" variant={"secondary"}>
           {isLoading ? "Chargement..." : "Se connecter"}
         </Button>{" "}
       </form>

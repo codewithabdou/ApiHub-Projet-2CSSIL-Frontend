@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { RiMenuFoldLine } from "react-icons/ri";
 import { ImCancelCircle } from "react-icons/im";
 import { Button } from "../../ui/button";
-import ThemeToggle from "../Theme/ThemeToggle";
 
 import { useRouter } from "next/navigation";
 import User from "@typings/entities/User";
@@ -42,7 +41,7 @@ const Navbar = ({ user }: { user: User | null }) => {
 
   const navLinks = [
     {
-      Link: "/",
+      Link: "/user/categories",
       name: "Categories",
     },
     {
@@ -118,7 +117,7 @@ const Navbar = ({ user }: { user: User | null }) => {
                 </>
               )}
 
-              <ThemeToggle />
+              {/* <ThemeToggle /> */}
             </div>
           </div>
 
@@ -131,7 +130,7 @@ const Navbar = ({ user }: { user: User | null }) => {
               </p>
             </Link>
             <div className={`flex  items-center gap-8`}>
-              <ThemeToggle />
+              {/* <ThemeToggle /> */}
               {open ? (
                 <ImCancelCircle
                   onClick={toggleMenu}
