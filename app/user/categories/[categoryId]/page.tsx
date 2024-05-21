@@ -98,7 +98,7 @@ const DetailedCategory = async ({
   }
 
   return (
-    <div className="flex flex-col w-full gap-4 md:px-28 mt-5">
+    <div className="py-12 flex flex-col w-full gap-4 md:px-28 mt-5 px-5">
       {/* the card of the big screen */}
 
       <div className="grid w-full grid-cols-4 p-10 border-2 rounded-xl min-h-72 bg-white">
@@ -146,7 +146,7 @@ const DetailedCategory = async ({
 
           <div className="grid grid-cols-1  gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:px-16  min-h-96">
             {fetchedapis ? (
-              fetchedapis.map((api, index) => (
+              fetchedapis.filter((Api) => Api.status === "active").map((api, index) => (
                 <ApiCard
                   key={index}
                   api={{

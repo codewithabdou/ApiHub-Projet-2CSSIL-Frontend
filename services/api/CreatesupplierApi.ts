@@ -29,7 +29,7 @@ async function createSupplier(
       }
     );
 
-    const data = await response.json();
+    const data = response.status;
     console.log("after creating ",data);
 
 
@@ -37,14 +37,16 @@ async function createSupplier(
  
  
  
-  return { ...data, status: "success" } as successcreateSupplierrResponse;
-
+    return {
+      status: "success",
+      message: "Supplier created succesfully",
+    };
   } catch (error: any) {
     return {
       status: "error",
       message: error.message || "An unexpected server error occurred",
     } as errorcreateSupplierrResponse;
-  }
+  } 
 
   
 }

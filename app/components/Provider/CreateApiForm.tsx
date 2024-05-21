@@ -42,9 +42,9 @@ function CreateApiForm() {
   const router = useRouter();
   const [nbOfPlans, setNbPlans] = useState(1);
   const [durations, setDurations] = useState([
-    { value: "Par semaine", duration: 7 },
-    { value: "Par mois", duration: 30 },
-    { value: "Par an", duration: 365 },
+    { value: "Par semaine", duration: 7*24*3600 },
+    { value: "Par mois", duration: 30*24*3600 },
+    { value: "Par an", duration: 365*24*3600 },
     { value: "Illimitée", duration: 999999 },
   ]);
   const [categories, setCategories] = useState<Category[]>([]);

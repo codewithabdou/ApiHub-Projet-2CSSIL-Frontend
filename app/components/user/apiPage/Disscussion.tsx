@@ -8,7 +8,6 @@ import AddAnswerForm from './AddAnswerForm'
 import AnswerDetails from './AnswerDetails'
 import DeleteDiscussionPopUp from './DeleteDiscussionPopUp'
 import { toast } from 'sonner'
-import PaginationBar from '../../Shared/Pagination'
 import { getLoggedInUser } from '@services/authentication.service'
 import { ErrorType } from '@typings/entities/Error'
 const DisscussionDetails= async(props:any)=> {
