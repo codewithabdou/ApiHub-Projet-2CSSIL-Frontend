@@ -12,7 +12,9 @@ import { Input } from '@app/components/ui/input';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@app/components/ui/select';
 import { Textarea } from '@app/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { TicketForm, ticketFormRequest } from '@typings/api/createTicketType';
+import createTicket from '@services/api/createTicketApi';
+import replyToTicket from '@services/api/replyToTicketApi';
+import { TicketForm, TicketReplyForm, ticketFormRequest, ticketReplyFormRequest } from '@typings/api/createTicketType';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { GiCancel } from 'react-icons/gi';
@@ -20,14 +22,12 @@ import { MdDone } from 'react-icons/md';
 import { toast } from 'sonner';
 
 
-const SupplierTicket = ({ title, description, dateCreate, status, solution }: { title: string; description: string; dateCreate: string; status: string; solution?: string }) => {
+const SupplierTicket = ({ title, description, dateCreate, status, solution , id , apiId , user}: {user:{firstname:string , lastname:string} ,  apiId:number ,  title: string; description: string; dateCreate: string; status: string; solution?: string , id:number }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     
-      const form = useForm<ticketFormRequest>({
-        resolver: zodResolver(TicketForm),
+      const form = useForm<ticketReplyFormRequest>({
+        resolver: zodResolver(TicketReplyForm),
         defaultValues: {
-          sujet: "",
-          description: "",
         },
       });
 
@@ -51,7 +51,6 @@ const SupplierTicket = ({ title, description, dateCreate, status, solution }: { 
       icon: <GiCancel className="text-lg text-red-500" />,
     });
   };
-  const [isUrgent, setIsUrgent] = useState("");
 
   const filter = {
     label: "Status du ticket ",
@@ -60,11 +59,10 @@ const SupplierTicket = ({ title, description, dateCreate, status, solution }: { 
       ]}
 
 
-      async function onSubmit(values: ticketFormRequest) {
+      async function onSubmit(values: ticketReplyFormRequest) {
         console.log(values);
         setIsLoading(true);
-        // const result = await createTicket(values);
-        const result = {status: "success"};
+        const result = await replyToTicket(values , apiId , id );
         if (result.status !== "success") {
           errorToaster(result.status, "error while submitting ticket");
         } else {
@@ -87,9 +85,9 @@ const SupplierTicket = ({ title, description, dateCreate, status, solution }: { 
       }
 
   const statusColor = (status: string) => {
-    if (status === 'Open') {
+    if (status === 'open') {
       return 'bg-green-500';
-    } else if (status === 'Closed') {
+    } else if (status === 'closed') {
       return 'bg-red-500';
     } else if (status === 'In progress') {
       return 'bg-yellow-500';
@@ -102,27 +100,23 @@ const SupplierTicket = ({ title, description, dateCreate, status, solution }: { 
       <div className="flex flex-row gap-4 justify-center items-center px-4">
       <p className="px-6 text-gray-500 text-sm">Created at: {dateCreate}</p>
 
-        <div className="font-semibold text-gray-500">{title}</div>
+        <div className="font-semibold text-gray-500">#{id}</div>
         <div className={`w-20 rounded-lg text-center py-1 h-6 text-white font-semibold text-xs ${statusColor(status)}`}>{status}</div>
         <div className="ml-auto flex flex-row gap-2 justify-center items-center">
-          <Avatar className="rounded-full w-10 h-10">
-            <AvatarImage src={'https://github.com/shadcn.png'} />
-            <AvatarFallback>API</AvatarFallback>
-          </Avatar>
-          <p className="font-bold text-gray-500">Shad Cn </p>
+          <p className="font-normal text-gray-500">{user.firstname} {user.lastname} </p>
         </div>
       </div>
 
       <div className="flex flex-col px-6 border-b-2 border-b-gray-300 mx-2 pb-3">
         <h2 className="font-semibold text-lg">{title}</h2>
-        <p className="text-gray-700">{description}</p>
+        <p className="text-gray-700 break-words">{description}</p>
       </div>
 
       <div className="flex flex-row justify-between px-8 items-center">
       </div>
 
      
-        { (status != "Closed" ) &&<Accordion type="single" collapsible  className="px-6  ml-6 mt-0">
+        { (status != "closed" ) &&<Accordion type="single" collapsible  className="px-6  ml-6 mt-0">
           <AccordionItem value="item-1">
             <AccordionTrigger  className="text-gray-600 ml-auto">Reply to ticket</AccordionTrigger>
             <AccordionContent>
@@ -138,78 +132,19 @@ const SupplierTicket = ({ title, description, dateCreate, status, solution }: { 
 
       <FormField
         control={form.control}
-        name="description"
+        name="response"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Description de reponse </FormLabel>
+            <FormLabel>Reponse </FormLabel>
             <FormControl>
-              <Textarea placeholder="description...." {...field} />
+              <Textarea placeholder="response...." {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
-      <FormField
-        control={form.control}
-        name="typeDuProbleme"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Status du ticket :  </FormLabel>
-            <FormControl>
-            <Select  onValueChange={(e)=>form.setValue("typeDuProbleme" , e)} >
-                    <SelectTrigger className="">
-                        <SelectValue placeholder={filter.label} />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                        <SelectLabel>{filter.label}</SelectLabel>
-                            {filter.options.map(option => (
-                                <SelectItem  key={option} value={option}>
-        <div className={`w-20 rounded-lg text-center py-1 h-6 text-white font-semibold text-xs ${statusColor(option)}`}>{option}</div>
-
-                                
-                                </SelectItem>
-                            ))}
-                            </SelectGroup>
-                        </SelectContent>
-                        </Select>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="prioriteDuTicket"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Priorite du ticket </FormLabel>
-            <FormControl>
-
-                <div className="flex flex-row gap-5">
-                    <Button variant={isUrgent === "urgent" ? 'destructive' : 'outline'} size="sm" onClick={(e) => {
-                        e.preventDefault();
-                        setIsUrgent("urgent")
-                        form.setValue("prioriteDuTicket", "urgent")
-                    }
-                    }
-                    >Urgent</Button>
-                    <Button variant={isUrgent === "normal" ? 'secondary' : 'outline'} size="sm" onClick={(e) => {
-                        e.preventDefault();
-                        setIsUrgent("normal")
-                        form.setValue("prioriteDuTicket", "normal")
-                    }
-                    
-                    
-                    }
-                        >Normal</Button>
-                </div>
-
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+    
+  
       <Button disabled={isLoading} type="submit">
         {isLoading ? "Chargement..." : "Envoyer la reponse "}
       </Button>{" "}

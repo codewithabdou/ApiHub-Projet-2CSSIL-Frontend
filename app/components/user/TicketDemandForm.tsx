@@ -165,38 +165,7 @@ const TicketDemandForm = () => {
           </FormItem>
         )}
       />
-      <FormField
-        control={form.control}
-        name="prioriteDuTicket"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Priorite du ticket </FormLabel>
-            <FormControl>
-
-                <div className="flex flex-row gap-5">
-                    <Button variant={isUrgent === "urgent" ? 'destructive' : 'outline'} size="sm" onClick={(e) => {
-                        e.preventDefault();
-                        setIsUrgent("urgent")
-                        form.setValue("prioriteDuTicket", "urgent")
-                    }
-                    }
-                    >Urgent</Button>
-                    <Button variant={isUrgent === "normal" ? 'secondary' : 'outline'} size="sm" onClick={(e) => {
-                        e.preventDefault();
-                        setIsUrgent("normal")
-                        form.setValue("prioriteDuTicket", "normal")
-                    }
-                    
-                    
-                    }
-                        >Normal</Button>
-                </div>
-
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      
       <Button disabled={isLoading} type="submit">
         {isLoading ? "Chargement..." : "Envoyer le ticket"}
       </Button>{" "}

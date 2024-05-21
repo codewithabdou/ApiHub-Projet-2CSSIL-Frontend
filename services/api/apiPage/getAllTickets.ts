@@ -1,26 +1,35 @@
-export function getAllTickets(apiId: number) {
-  return [
-    {
-      id: 1,
-      title: 'Ticket #00001',
-      description: 'i have a problem with my account , i can not login to my account , please help me to solve this problem , thank you i have a problem with my account , i can not login to my account , please help me to solve this problem , thank you',
-      status: 'Open',
-      dateCreate: '2022-02-24'
-    },
-    {
-        id: 2,
-        title: 'Ticket #00002',
-        description: ' i have a problem with the payment , i can not pay for the subscription , please help me to solve this problem , thank you',
-        status: 'Closed',
-            dateCreate: '2022-02-24', 
-            solution : ' the problem was solved by the support team , the user can now pay for the subscription , and the following steps must be followed to pay for the subscription , in addition to that the user can now pay for the subscription using the credit card or the paypal account'
-        },
+"use server"
+import { API_INFO } from "@config";
+import { ErrorType } from "@typings/entities/Error";
+import Ticket from "@typings/entities/Ticket";
+import { cookies } from "next/headers";
+
+export async function  getAllTickets(apiId: number) :Promise<{data:Ticket[],status:string,message:string} | ErrorType > {
+
+  try{
+        
+    const accessToken = cookies().get("user")?.value;
+    const response = await fetch(
+        `${API_INFO.API_BASE_URL}${API_INFO.API_ENDPOINTS.GENERAL.GET_APIS}/${apiId}/tickets`,
         {
-        id: 3,
-        title: 'Ticket #00003',
-        description: ' Having a problem with the API , i can not get the data from the API , please help me to solve this problem , thank you',
-        status: 'In progress',
-            dateCreate: '2022-02-24'
-    }
-  ]
+          method: "GET",
+         
+          headers: {
+            'Authorization': ` ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          
+          next: {
+            tags: ["getAllTickets"],
+          },
+        }
+      );
+      const data = await response.json();
+      return {data:data.data,status:"success",message:"got all tickets succesfully"} ;
+}catch (error:any){
+    return {
+        status: "server error",
+        message: error.message || "An unexpected server error occurred",
+      } as ErrorType ;
+}
 }

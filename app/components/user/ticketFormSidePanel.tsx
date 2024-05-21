@@ -31,7 +31,7 @@ import { Textarea } from "../ui/textarea";
 import { TicketForm, ticketFormRequest } from "@typings/api/createTicketType";
 import createTicket from "@services/api/createTicketApi";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
-function AddTicketFormPanel(props: any) {
+function AddTicketFormPanel({apiId} : {apiId : number}) {
 
   const filter = {
     label: "type de probleme",
@@ -44,20 +44,20 @@ function AddTicketFormPanel(props: any) {
       "probleme de facturation",
       ]}
 
+
   const form = useForm<ticketFormRequest>({
     resolver: zodResolver(TicketForm),
     defaultValues: {
-      sujet: "",
+      subject: "",
       description: "",
     },
   });
 
-  const [isUrgent, setIsUrgent] = React.useState<string>("normal");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const onSubmit = async (values: ticketFormRequest) => {
     setIsLoading(true);
-    const result = await createTicket(values);
+    const result = await createTicket(values , apiId);
     if (result) {
       form.reset();
       toast("Message", {
@@ -79,29 +79,7 @@ function AddTicketFormPanel(props: any) {
     setIsLoading(false);
   }
 
-  // async function onSubmit(values: createDisscussionRequest) {
-  //   console.log(values);
-
-  //   const result: any = await createDisscussion(values, props.id);
-  //   if (result.data) {
-  //     form.reset();
-  //     toast("Message", {
-  //       description: "Discussion ajoutée",
-  //       action: {
-  //         label: "Ok",
-  //         onClick: () => null,
-  //       },
-  //     });
-  //   } else {
-  //     toast("Message", {
-  //       description: result.message,
-  //       action: {
-  //         label: "Ok",
-  //         onClick: () => null,
-  //       },
-  //     });
-  //   }
-  // }
+ 
 
   return (
     <div className="flex justify-end">
@@ -129,7 +107,7 @@ function AddTicketFormPanel(props: any) {
 
       <FormField
         control={form.control}
-        name="sujet"
+        name="subject"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Sujet du ticket : </FormLabel>
@@ -155,12 +133,12 @@ function AddTicketFormPanel(props: any) {
       />
       <FormField
         control={form.control}
-        name="typeDuProbleme"
+        name="type"
         render={({ field }) => (
           <FormItem>
             <FormLabel>type du probleme </FormLabel>
             <FormControl>
-            <Select  onValueChange={(e)=>form.setValue("typeDuProbleme" , e)} >
+            <Select  onValueChange={(e)=>form.setValue("type" , e)} >
                     <SelectTrigger className="">
                         <SelectValue placeholder={filter.label} />
                     </SelectTrigger>
@@ -180,44 +158,14 @@ function AddTicketFormPanel(props: any) {
           </FormItem>
         )}
       />
-      <FormField
-        control={form.control}
-        name="prioriteDuTicket"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Priorite du ticket </FormLabel>
-            <FormControl>
-
-                <div className="flex flex-row gap-5">
-                    <Button variant={isUrgent === "urgent" ? 'destructive' : 'outline'} size="sm" onClick={(e) => {
-                        e.preventDefault();
-                        setIsUrgent("urgent")
-                        form.setValue("prioriteDuTicket", "urgent")
-                    }
-                    }
-                    >Urgent</Button>
-                    <Button variant={isUrgent === "normal" ? 'secondary' : 'outline'} size="sm" onClick={(e) => {
-                        e.preventDefault();
-                        setIsUrgent("normal")
-                        form.setValue("prioriteDuTicket", "normal")
-                    }
-                    
-                    
-                    }
-                        >Normal</Button>
-                </div>
-
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
 
       <Button disabled={isLoading} type="submit">
-        {isLoading ? "Chargement..." : "Envoyer le ticket"}
+        {isLoading ? "Chargement..." : "Envoyer le ticket "}
       </Button>
     </form>
   </Form>
+
+  
 
 
 

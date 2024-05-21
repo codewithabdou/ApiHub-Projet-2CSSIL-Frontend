@@ -4,13 +4,12 @@ import { errortTicketRes, successtTicketRes, ticketFormRequest } from "@typings/
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
- const createTicket = async (
-  ticket: ticketFormRequest , 
-  apiId : number
+ const replyToTicket = async (
+  reply: {response:string} , 
+  apiId : number , 
+  ticketId : number 
 ): Promise<errortTicketRes | successtTicketRes> => {
   try {
-    console.log('apiId', apiId)
-    console.log('ticket', ticket);
     const userCookie = cookies().get("user")?.value;
 
     if (!userCookie?.length)
@@ -20,14 +19,14 @@ import { cookies } from "next/headers";
       };
 
     const res = await fetch(
-      `${API_INFO.API_BASE_URL}/apis/${apiId}${API_INFO.API_ENDPOINTS.CREATETICKET}`,
+      `${API_INFO.API_BASE_URL}/apis/${apiId}/tickets/${ticketId}`,
       {
-        method: "POST",
+        method: "PATCH",
         headers: {
           Authorization: userCookie,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(ticket),
+        body: JSON.stringify(reply),
       }
     );
     if (res.ok){
@@ -46,4 +45,4 @@ import { cookies } from "next/headers";
   }
 };
 
-export default createTicket;
+export default replyToTicket;

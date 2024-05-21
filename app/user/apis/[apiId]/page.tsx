@@ -36,6 +36,7 @@ import Endpoint from "@typings/entities/Endpoint";
 import { ErrorType } from "@typings/entities/Error";
 import { Version } from "@typings/entities/Versions";
 import React from "react";
+import AddTicketFormPanel from "@app/components/user/ticketFormSidePanel";
 
 const ApiDetails = async ({
   params,
@@ -147,7 +148,7 @@ const ApiDetails = async ({
 
               <TabsTrigger value="subscriptions">Abonements</TabsTrigger>
             </TabsList>
-            <AddTicetFormPanel></AddTicetFormPanel>
+            <AddTicketFormPanel apiId={apiId}></AddTicketFormPanel>
 
 
           </div>

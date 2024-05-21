@@ -2,20 +2,24 @@ import { z } from "zod";
 import Ticket from "@typings/entities/Ticket";
 
 export const TicketForm = z.object({
-    sujet: z.string().min(10, {
-      message: "Please enter a valid category name.",
+  subject: z.string().min(10, {
+      message: "Please enter a valid ticket name.",
     }),
     description: z.string().min(50, {
-      message: "Please enter a valid category description (50 caracters minimum).",
+      message: "Please enter a valid ticket description (50 caracters minimum).",
     }),
-    typeDuProbleme: z.string().min(10, {
+    type: z.string().min(10, {
         message: "Please enter your problem's type ",
         }),
-    prioriteDuTicket: z.string().min(2, {
-        message: "Please enter the priority of your ticket",
-        }),
+  });
+export const TicketReplyForm = z.object({
+
+    response: z.string().min(50, {
+      message: "Please enter a valid ticket response (50 caracters minimum).",
+    }),
   });
 export type ticketFormRequest = z.infer<typeof TicketForm>;
+export type ticketReplyFormRequest = z.infer<typeof TicketReplyForm>;
 
 
 export type successtTicketRes = {

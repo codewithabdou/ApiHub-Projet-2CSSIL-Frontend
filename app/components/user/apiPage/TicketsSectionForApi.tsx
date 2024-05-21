@@ -7,32 +7,36 @@ import { toast } from "sonner";
 import { ErrorType } from "@typings/entities/Error";
 import { getAllTickets } from "@services/api/apiPage/getAllTickets";
 import Ticket from "../Ticket";
+import TicketType from "@typings/entities/Ticket";
+// import Ticket from "../Ticket";
+// import Ticket from "@typings/entities/Ticket";
+// import Ticket from "@typings/entities/Ticket";
 
 const TicketsSectionForApi = async (props: any) => {
-//   let data: Disscussion[] = [];
+  let data: TicketType[] = [];
 
-//   const result:
-//     | { data: Disscussion[]; status: string; message: string }
-//     | ErrorType =  getAllTickets(props.id);
-    const data =   getAllTickets(props.id);
-//   if (result.status === "success") {
-//     console.log(result);
+const result:
+| { data: TicketType[]; status: string; message: string }
+| ErrorType = await getAllTickets(props.id);
 
-//     const res = result as {
-//       data: Disscussion[];
-//       status: string;
-//       message: string;
-//     };
-//     data = res.data;
-//   } else {
-//     toast("Message", {
-//       description: result.message,
-//       action: {
-//         label: "Ok",
-//         onClick: () => null,
-//       },
-//     });
-//   }
+if (result.status === "success") {
+const res = result as {
+  data: TicketType[];
+  status: string;
+  message: string;
+};
+data = res.data;
+
+} else {
+
+toast("Message", {
+  description: result.message,
+  action: {
+    label: "Ok",
+    onClick: () => null,
+  },
+});
+}
 
   return (
     <div className="flex flex-col gap-1">
@@ -40,11 +44,13 @@ const TicketsSectionForApi = async (props: any) => {
         ? data /*slice(startIndex, endIndex)*/
             .map((ticket, key) => (
               <Ticket key={key}
+              user={ticket.user}
+              id={ticket.id}
+              response={ticket.response}
+              title={ticket.subject}
+              description={ticket.description}
               status= {ticket.status}
-              dateCreate= {ticket.dateCreate}
-                title={ticket.title}
-                description={ticket.description}
-                solution={ticket.solution}
+              dateCreate= {ticket.created_at}
               />
             ))
         : null}
@@ -54,8 +60,3 @@ const TicketsSectionForApi = async (props: any) => {
 
 export default TicketsSectionForApi;
 
-
-//! supplier ticket 
-//! it has the response button to it , on click it will open a modal with the response form
-//! button of changing the status of the ticket , an select to change its status to open , closed , in progress . 
-//! the ticket of the supplier has who wrote the shit down ,  the priority , and that' is
