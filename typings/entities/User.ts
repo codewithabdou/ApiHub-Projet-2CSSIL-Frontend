@@ -20,4 +20,6 @@ export type Category = {
   created_by: number;
   updated_at: string;
 };
+
+
 export default User;

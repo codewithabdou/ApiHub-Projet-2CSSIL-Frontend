@@ -1,4 +1,4 @@
-import { MdDashboard, MdSettings } from "react-icons/md";
+import { MdDashboard, MdReportProblem, MdSettings } from "react-icons/md";
 import { FaBox, FaFolder, FaUser } from "react-icons/fa";
 import { ImStatsDots } from "react-icons/im";
 
@@ -43,6 +43,11 @@ export const SUPPLIER_SIDENAV_ITEMS: SideNavItem[] = [
     title: "Dashboard",
     path: "/supplier",
     icon: React.createElement(MdDashboard),
+  },
+  {
+    title: "Probelms",
+    path: "/supplier/tickets",
+    icon: React.createElement(MdReportProblem),
   },
   {
     title: "APIs",

@@ -1,8 +1,21 @@
 "use client";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-
+import React from "react";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
+import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
+import {
+  createDiscussionSchema,
+  createDisscussionRequest,
+} from "@typings/api/disscussionTypes";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -11,58 +24,14 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { toast } from "sonner";
-import {
-  categoryRequest,
-  createCategorySchema,
-  errorCreateCategoryResponse,
-} from "@typings/api/createCategoryType";
-import { Textarea } from "@app/components/ui/textarea";
-import { MdDone } from "react-icons/md";
-import createCategory from "@services/api/createCategory";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { GiCancel } from "react-icons/gi";
 import { Input } from "../ui/input";
-import { z } from "zod";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
-import createTicket from "@services/api/createTicketApi";
+import createDisscussion from "@services/api/apiPage/createDisscussion";
+import { toast } from "sonner";
+import { Textarea } from "../ui/textarea";
 import { TicketForm, ticketFormRequest } from "@typings/api/createTicketType";
-
-
-
-const TicketDemandForm = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    
-      const form = useForm<ticketFormRequest>({
-        resolver: zodResolver(TicketForm),
-        defaultValues: {
-          sujet: "",
-          description: "",
-        },
-      });
-
-  // this can be exporte0d and reused later ! .
-  const errorToaster = (status?: String, message?: String) => {
-    toast.error(status, {
-      description: message,
-      position: "top-right",
-      dismissible: true,
-      duration: 5000,
-      cancel: {
-        label: (
-          <Button variant={"destructive"} size={"sm"}>
-            OK
-          </Button>
-        ),
-        onClick: () => {
-          toast.dismiss();
-        },
-      },
-      icon: <GiCancel className="text-lg text-red-500" />,
-    });
-  };
-  const [isUrgent, setIsUrgent] = useState("");
+import createTicket from "@services/api/createTicketApi";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
+function AddTicketFormPanel(props: any) {
 
   const filter = {
     label: "type de probleme",
@@ -75,43 +44,89 @@ const TicketDemandForm = () => {
       "probleme de facturation",
       ]}
 
+  const form = useForm<ticketFormRequest>({
+    resolver: zodResolver(TicketForm),
+    defaultValues: {
+      sujet: "",
+      description: "",
+    },
+  });
 
-      async function onSubmit(values: ticketFormRequest) {
-        console.log(values);
-        setIsLoading(true);
-        // const result = await createTicket(values);
-        const result = {status: "success"};
-        if (result.status !== "success") {
-          errorToaster(result.status, "error while submitting ticket");
-        } else {
-          if (result.status === "success") {
-            toast.success(result.status, {
-              description: "ticket succesfully submitted. ",
-              position: "top-right",
-              dismissible: true,
-      
-              icon: (
-                <MdDone className=" aspect-square hover:bg-opacity-0 p-[0.5px] rounded-full text-white bg-green-500" />
-              ),
-            });
-            form.reset();
-          }
-          setIsLoading(false);
-          form.reset();
-        }
-        setIsLoading(false);
-      }
+  const [isUrgent, setIsUrgent] = React.useState<string>("normal");
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  return (<>
+  const onSubmit = async (values: ticketFormRequest) => {
+    setIsLoading(true);
+    const result = await createTicket(values);
+    if (result) {
+      form.reset();
+      toast("Message", {
+        description: "Ticket ajoutée",
+        action: {
+          label: "Ok",
+          onClick: () => null,
+        },
+      });
+    } else {
+      toast("Message", {
+        description: result,
+        action: {
+          label: "Ok",
+          onClick: () => null,
+        },
+      });
+    }
+    setIsLoading(false);
+  }
+
+  // async function onSubmit(values: createDisscussionRequest) {
+  //   console.log(values);
+
+  //   const result: any = await createDisscussion(values, props.id);
+  //   if (result.data) {
+  //     form.reset();
+  //     toast("Message", {
+  //       description: "Discussion ajoutée",
+  //       action: {
+  //         label: "Ok",
+  //         onClick: () => null,
+  //       },
+  //     });
+  //   } else {
+  //     toast("Message", {
+  //       description: result.message,
+  //       action: {
+  //         label: "Ok",
+  //         onClick: () => null,
+  //       },
+  //     });
+  //   }
+  // }
+
+  return (
+    <div className="flex justify-end">
+      <Sheet>
+        <SheetTrigger>
+          <Button className="sm:w-64 w-48 text-sm bg-red-500 text-white">
+            Signaler un probleme
+          </Button>
+        </SheetTrigger>
+        <SheetContent side={"left"} className="w-[200px] sm:w-[540px]">
+          <SheetHeader>
+            <SheetTitle>Demander un ticket</SheetTitle>
+
+            <SheetDescription>
+
     <Form  {...form}>
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      className="bg-white  space-y-4 px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 mx-auto my-10"
+      className="bg-white  space-y-4 px-2 py-12 rounded-lg "
       >
         <div>
         <h2 className="font-semibold">Créer un ticket</h2>
         <p className="font-light">Rédigez et adressez de nouvelles requêtes et problèmes</p>
         </div>
+
       <FormField
         control={form.control}
         name="sujet"
@@ -197,13 +212,23 @@ const TicketDemandForm = () => {
           </FormItem>
         )}
       />
+
       <Button disabled={isLoading} type="submit">
         {isLoading ? "Chargement..." : "Envoyer le ticket"}
-      </Button>{" "}
+      </Button>
     </form>
   </Form>
-  </>
-  )
+
+
+
+
+            </SheetDescription>
+
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>{" "}
+    </div>
+  );
 }
 
-export default TicketDemandForm
+export default AddTicketFormPanel;

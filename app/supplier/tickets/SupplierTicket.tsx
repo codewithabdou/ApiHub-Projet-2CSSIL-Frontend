@@ -1,37 +1,26 @@
-"use client";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { toast } from "sonner";
-import {
-  categoryRequest,
-  createCategorySchema,
-  errorCreateCategoryResponse,
-} from "@typings/api/createCategoryType";
-import { Textarea } from "@app/components/ui/textarea";
-import { MdDone } from "react-icons/md";
-import createCategory from "@services/api/createCategory";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { GiCancel } from "react-icons/gi";
-import { Input } from "../ui/input";
-import { z } from "zod";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
-import createTicket from "@services/api/createTicketApi";
-import { TicketForm, ticketFormRequest } from "@typings/api/createTicketType";
+'use client';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@app/components/ui/accordion';
+import { Avatar, AvatarFallback, AvatarImage } from '@app/components/ui/avatar';
+import { Button } from '@app/components/ui/button';
+import { 
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage, Form } from '@app/components/ui/form';
+import { Input } from '@app/components/ui/input';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@app/components/ui/select';
+import { Textarea } from '@app/components/ui/textarea';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TicketForm, ticketFormRequest } from '@typings/api/createTicketType';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { GiCancel } from 'react-icons/gi';
+import { MdDone } from 'react-icons/md';
+import { toast } from 'sonner';
 
 
-
-const TicketDemandForm = () => {
+const SupplierTicket = ({ title, description, dateCreate, status, solution }: { title: string; description: string; dateCreate: string; status: string; solution?: string }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     
       const form = useForm<ticketFormRequest>({
@@ -65,14 +54,9 @@ const TicketDemandForm = () => {
   const [isUrgent, setIsUrgent] = useState("");
 
   const filter = {
-    label: "type de probleme",
+    label: "Status du ticket ",
     options: [
-      "probleme de retour",
-      "probleme de service",
-      "probleme de qualité",
-      "probleme de connexion",
-      "probleme de  livraison",
-      "probleme de facturation",
+      "Open", "Closed", "In progress"
       ]}
 
 
@@ -102,37 +86,64 @@ const TicketDemandForm = () => {
         setIsLoading(false);
       }
 
-  return (<>
-    <Form  {...form}>
+  const statusColor = (status: string) => {
+    if (status === 'Open') {
+      return 'bg-green-500';
+    } else if (status === 'Closed') {
+      return 'bg-red-500';
+    } else if (status === 'In progress') {
+      return 'bg-yellow-500';
+    }
+  };
+
+  return (
+    <div className="rounded-sm flex flex-col border-2 h-fit py-4 gap-2 mx-10 relative bg-white">
+        
+      <div className="flex flex-row gap-4 justify-center items-center px-4">
+      <p className="px-6 text-gray-500 text-sm">Created at: {dateCreate}</p>
+
+        <div className="font-semibold text-gray-500">{title}</div>
+        <div className={`w-20 rounded-lg text-center py-1 h-6 text-white font-semibold text-xs ${statusColor(status)}`}>{status}</div>
+        <div className="ml-auto flex flex-row gap-2 justify-center items-center">
+          <Avatar className="rounded-full w-10 h-10">
+            <AvatarImage src={'https://github.com/shadcn.png'} />
+            <AvatarFallback>API</AvatarFallback>
+          </Avatar>
+          <p className="font-bold text-gray-500">Shad Cn </p>
+        </div>
+      </div>
+
+      <div className="flex flex-col px-6 border-b-2 border-b-gray-300 mx-2 pb-3">
+        <h2 className="font-semibold text-lg">{title}</h2>
+        <p className="text-gray-700">{description}</p>
+      </div>
+
+      <div className="flex flex-row justify-between px-8 items-center">
+      </div>
+
+     
+        { (status != "Closed" ) &&<Accordion type="single" collapsible  className="px-6  ml-6 mt-0">
+          <AccordionItem value="item-1">
+            <AccordionTrigger  className="text-gray-600 ml-auto">Reply to ticket</AccordionTrigger>
+            <AccordionContent>
+
+
+            <Form  {...form}>
     <form
       onSubmit={form.handleSubmit(onSubmit)}
-      className="bg-white  space-y-4 px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 mx-auto my-10"
+      className="bg-white flex flex-col gap-2 "
       >
         <div>
-        <h2 className="font-semibold">Créer un ticket</h2>
-        <p className="font-light">Rédigez et adressez de nouvelles requêtes et problèmes</p>
         </div>
-      <FormField
-        control={form.control}
-        name="sujet"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Sujet du ticket : </FormLabel>
-            <FormControl>
-              <Input placeholder="sujet du ticket"  {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+
       <FormField
         control={form.control}
         name="description"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>description du probleme </FormLabel>
+            <FormLabel>Description de reponse </FormLabel>
             <FormControl>
-              <Textarea placeholder="description ...." {...field} />
+              <Textarea placeholder="description...." {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -143,7 +154,7 @@ const TicketDemandForm = () => {
         name="typeDuProbleme"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>type du probleme </FormLabel>
+            <FormLabel>Status du ticket :  </FormLabel>
             <FormControl>
             <Select  onValueChange={(e)=>form.setValue("typeDuProbleme" , e)} >
                     <SelectTrigger className="">
@@ -153,8 +164,10 @@ const TicketDemandForm = () => {
                         <SelectGroup>
                         <SelectLabel>{filter.label}</SelectLabel>
                             {filter.options.map(option => (
-                                <SelectItem key={option} value={option}>
-                                {option}
+                                <SelectItem  key={option} value={option}>
+        <div className={`w-20 rounded-lg text-center py-1 h-6 text-white font-semibold text-xs ${statusColor(option)}`}>{option}</div>
+
+                                
                                 </SelectItem>
                             ))}
                             </SelectGroup>
@@ -198,12 +211,18 @@ const TicketDemandForm = () => {
         )}
       />
       <Button disabled={isLoading} type="submit">
-        {isLoading ? "Chargement..." : "Envoyer le ticket"}
+        {isLoading ? "Chargement..." : "Envoyer la reponse "}
       </Button>{" "}
     </form>
   </Form>
-  </>
-  )
-}
 
-export default TicketDemandForm
+
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        }
+    </div>
+  );
+};
+
+export default SupplierTicket;

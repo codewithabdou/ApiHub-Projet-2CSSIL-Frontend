@@ -1,3 +1,4 @@
+import { Button } from "@app/components/ui/button";
 import {
   Tabs,
   TabsContent,
@@ -7,10 +8,13 @@ import {
 import ApiDetailsSection from "@app/components/user/apiPage/ApiDetailsSection";
 import DiscussionsSection from "@app/components/user/apiPage/DiscussionsSection";
 import EndpointsSection from "@app/components/user/apiPage/EndpointsSection";
+
+import TicketsSectionForApi from "@app/components/user/apiPage/TicketsSectionForApi";
 import SubscriptionDetails from "@app/components/user/apiPage/SubscriptionDetails";
 import SubscriptionsSection from "@app/components/user/apiPage/SubscriptionsSection";
 import VersionDescription from "@app/components/user/apiPage/versionDescription";
 import PlansSection from "@app/components/user/PlansSection";
+import AddTicetFormPanel from "@app/components/user/ticketFormSidePanel";
 import getAllVersionsByApi from "@services/api/apiPage/getAllversionsByApi";
 import getApiById from "@services/api/apiPage/getApiById";
 import getSubs from "@services/api/apiPage/getSubscriptions";
@@ -138,8 +142,14 @@ const ApiDetails = async ({
               <TabsTrigger value="description">Description</TabsTrigger>
               <TabsTrigger value="disscussions">Disscussions</TabsTrigger>
               <TabsTrigger value="plans">Plans d'abonement</TabsTrigger>
+
+              <TabsTrigger value="tickets" className="">Problems</TabsTrigger>
+
               <TabsTrigger value="subscriptions">Abonements</TabsTrigger>
             </TabsList>
+            <AddTicetFormPanel></AddTicetFormPanel>
+
+
           </div>
 
           <TabsContent className="w-full " value="endpoints">
@@ -173,7 +183,13 @@ const ApiDetails = async ({
             <SubscriptionDetails subs={subscriptions}/>
             
           </TabsContent>
+
+          <TabsContent value="tickets">
+            <TicketsSectionForApi id={apiId}></TicketsSectionForApi>
+          </TabsContent>
+
         
+
         </Tabs>
       </div>
     </div>

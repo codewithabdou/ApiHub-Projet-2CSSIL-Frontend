@@ -71,6 +71,7 @@ function AddDisscussionForm(props: any) {
           <SheetHeader>
             <SheetTitle>Nouvelle disscussion</SheetTitle>
             <SheetDescription>
+
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -113,6 +114,7 @@ function AddDisscussionForm(props: any) {
                   </SheetClose>
                 </form>
               </Form>
+              
             </SheetDescription>
           </SheetHeader>
         </SheetContent>
