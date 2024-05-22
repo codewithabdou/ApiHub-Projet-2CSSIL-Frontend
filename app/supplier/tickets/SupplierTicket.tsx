@@ -63,6 +63,7 @@ const SupplierTicket = ({ title, description, dateCreate, status, solution , id 
         console.log(values);
         setIsLoading(true);
         const result = await replyToTicket(values , apiId , id );
+        console.log('result', result)
         if (result.status !== "success") {
           errorToaster(result.status, "error while submitting ticket");
         } else {

@@ -30,21 +30,27 @@ import { toast } from "sonner";
 import { Textarea } from "../ui/textarea";
 import { TicketForm, ticketFormRequest } from "@typings/api/createTicketType";
 import createTicket from "@services/api/createTicketApi";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
-function AddTicketFormPanel({apiId} : {apiId : number}) {
-
-  const filter = {
-    label: "type de probleme",
-    options: [
-      "probleme de retour",
-      "probleme de service",
-      "probleme de qualité",
-      "probleme de connexion",
-      "probleme de  livraison",
-      "probleme de facturation",
-      ]}
-
-
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+const filter = {
+  label: "type de probleme",
+  options: [
+    "probleme de retour",
+    "probleme de service",
+    "probleme de qualité",
+    "probleme de connexion",
+    "probleme de  livraison",
+    "probleme de facturation",
+  ],
+};
+function AddTicketFormPanel({ apiId }: { apiId: number }) {
   const form = useForm<ticketFormRequest>({
     resolver: zodResolver(TicketForm),
     defaultValues: {
@@ -57,7 +63,7 @@ function AddTicketFormPanel({apiId} : {apiId : number}) {
 
   const onSubmit = async (values: ticketFormRequest) => {
     setIsLoading(true);
-    const result = await createTicket(values , apiId);
+    const result = await createTicket(values, apiId);
     if (result) {
       form.reset();
       toast("Message", {
@@ -77,16 +83,14 @@ function AddTicketFormPanel({apiId} : {apiId : number}) {
       });
     }
     setIsLoading(false);
-  }
-
- 
+  };
 
   return (
     <div className="flex justify-end">
       <Sheet>
         <SheetTrigger>
           <Button className="sm:w-64 w-48 text-sm bg-red-500 text-white">
-            Signaler un probleme
+            Signaler un probleme !
           </Button>
         </SheetTrigger>
         <SheetContent side={"left"} className="w-[200px] sm:w-[540px]">
@@ -94,87 +98,83 @@ function AddTicketFormPanel({apiId} : {apiId : number}) {
             <SheetTitle>Demander un ticket</SheetTitle>
 
             <SheetDescription>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="bg-white  space-y-4 px-2 py-12 rounded-lg "
+                >
+                  <div>
+                    <h2 className="font-semibold">Créer un ticket</h2>
+                    <p className="font-light">
+                      Rédigez et adressez de nouvelles requêtes et problèmes
+                    </p>
+                  </div>
 
-    <Form  {...form}>
-    <form
-      onSubmit={form.handleSubmit(onSubmit)}
-      className="bg-white  space-y-4 px-2 py-12 rounded-lg "
-      >
-        <div>
-        <h2 className="font-semibold">Créer un ticket</h2>
-        <p className="font-light">Rédigez et adressez de nouvelles requêtes et problèmes</p>
-        </div>
+                  <FormField
+                    control={form.control}
+                    name="subject"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Sujet du ticket : </FormLabel>
+                        <FormControl>
+                          <Input placeholder="sujet du ticket" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>description du probleme </FormLabel>
+                        <FormControl>
+                          <Textarea placeholder="description ...." {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="type"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>type du probleme </FormLabel>
+                        <FormControl>
+                          <Select
+                            onValueChange={(e) => form.setValue("type", e)}
+                          >
+                            <SelectTrigger className="">
+                              <SelectValue placeholder={filter.label} />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup>
+                                <SelectLabel>{filter.label}</SelectLabel>
+                                {filter.options.map((option) => (
+                                  <SelectItem key={option} value={option}>
+                                    {option}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-      <FormField
-        control={form.control}
-        name="subject"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Sujet du ticket : </FormLabel>
-            <FormControl>
-              <Input placeholder="sujet du ticket"  {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="description"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>description du probleme </FormLabel>
-            <FormControl>
-              <Textarea placeholder="description ...." {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="type"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>type du probleme </FormLabel>
-            <FormControl>
-            <Select  onValueChange={(e)=>form.setValue("type" , e)} >
-                    <SelectTrigger className="">
-                        <SelectValue placeholder={filter.label} />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                        <SelectLabel>{filter.label}</SelectLabel>
-                            {filter.options.map(option => (
-                                <SelectItem key={option} value={option}>
-                                {option}
-                                </SelectItem>
-                            ))}
-                            </SelectGroup>
-                        </SelectContent>
-                        </Select>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-
-      <Button disabled={isLoading} type="submit">
-        {isLoading ? "Chargement..." : "Envoyer le ticket "}
-      </Button>
-    </form>
-  </Form>
-
-  
-
-
-
-
+                  <Button disabled={isLoading} type="submit">
+                    {isLoading ? "Chargement..." : "Envoyer le ticket "}
+                  </Button>
+                </form>
+              </Form>
             </SheetDescription>
-
           </SheetHeader>
         </SheetContent>
-      </Sheet>{" "}
+      </Sheet>
     </div>
   );
 }

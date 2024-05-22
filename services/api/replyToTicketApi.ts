@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
   reply: {response:string} , 
   apiId : number , 
   ticketId : number 
-): Promise<errortTicketRes | successtTicketRes> => {
+): Promise<errortTicketRes | {status : string}> => {
   try {
     const userCookie = cookies().get("user")?.value;
 
@@ -29,9 +29,11 @@ import { cookies } from "next/headers";
         body: JSON.stringify(reply),
       }
     );
+    console.log('res from the server call :  ', res )
     if (res.ok){
+
       revalidateTag("getAllTickets");
-      return {status : "success" , data : await res.json()} as successtTicketRes;
+      return {status : "success" };
     }
     else {
       let error =await  res.json();
@@ -40,7 +42,7 @@ import { cookies } from "next/headers";
   } catch (error) {
     return {
       status: "error",
-      message: "An error occurred while creating category",
+      message: "An error occurred while replying to the ticket ",
     };
   }
 };

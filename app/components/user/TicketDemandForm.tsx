@@ -25,22 +25,28 @@ import { Button } from "../ui/button";
 import { GiCancel } from "react-icons/gi";
 import { Input } from "../ui/input";
 import { z } from "zod";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import createTicket from "@services/api/createTicketApi";
 import { TicketForm, ticketFormRequest } from "@typings/api/createTicketType";
 
-
-
 const TicketDemandForm = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    
-      const form = useForm<ticketFormRequest>({
-        resolver: zodResolver(TicketForm),
-        defaultValues: {
-          sujet: "",
-          description: "",
-        },
-      });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const form = useForm<ticketFormRequest>({
+    resolver: zodResolver(TicketForm),
+    defaultValues: {
+      subject: "",
+      description: "",
+    },
+  });
 
   // this can be exporte0d and reused later ! .
   const errorToaster = (status?: String, message?: String) => {
@@ -73,106 +79,108 @@ const TicketDemandForm = () => {
       "probleme de connexion",
       "probleme de  livraison",
       "probleme de facturation",
-      ]}
+    ],
+  };
 
+  async function onSubmit(values: ticketFormRequest) {
+    console.log(values);
+    setIsLoading(true);
+    // const result = await createTicket(values);
+    const result = { status: "success" };
+    if (result.status !== "success") {
+      errorToaster(result.status, "error while submitting ticket");
+    } else {
+      if (result.status === "success") {
+        toast.success(result.status, {
+          description: "ticket succesfully submitted. ",
+          position: "top-right",
+          dismissible: true,
 
-      async function onSubmit(values: ticketFormRequest) {
-        console.log(values);
-        setIsLoading(true);
-        // const result = await createTicket(values);
-        const result = {status: "success"};
-        if (result.status !== "success") {
-          errorToaster(result.status, "error while submitting ticket");
-        } else {
-          if (result.status === "success") {
-            toast.success(result.status, {
-              description: "ticket succesfully submitted. ",
-              position: "top-right",
-              dismissible: true,
-      
-              icon: (
-                <MdDone className=" aspect-square hover:bg-opacity-0 p-[0.5px] rounded-full text-white bg-green-500" />
-              ),
-            });
-            form.reset();
-          }
-          setIsLoading(false);
-          form.reset();
-        }
-        setIsLoading(false);
+          icon: (
+            <MdDone className=" aspect-square hover:bg-opacity-0 p-[0.5px] rounded-full text-white bg-green-500" />
+          ),
+        });
+        form.reset();
       }
+      setIsLoading(false);
+      form.reset();
+    }
+    setIsLoading(false);
+  }
 
-  return (<>
-    <Form  {...form}>
-    <form
-      onSubmit={form.handleSubmit(onSubmit)}
-      className="bg-white  space-y-4 px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 mx-auto my-10"
-      >
-        <div>
-        <h2 className="font-semibold">Créer un ticket</h2>
-        <p className="font-light">Rédigez et adressez de nouvelles requêtes et problèmes</p>
-        </div>
-      <FormField
-        control={form.control}
-        name="sujet"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Sujet du ticket : </FormLabel>
-            <FormControl>
-              <Input placeholder="sujet du ticket"  {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="description"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>description du probleme </FormLabel>
-            <FormControl>
-              <Textarea placeholder="description ...." {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="typeDuProbleme"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>type du probleme </FormLabel>
-            <FormControl>
-            <Select  onValueChange={(e)=>form.setValue("typeDuProbleme" , e)} >
+  return (
+    <>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="bg-white  space-y-4 px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 mx-auto my-10"
+        >
+          <div>
+            <h2 className="font-semibold">Créer un ticket</h2>
+            <p className="font-light">
+              Rédigez et adressez de nouvelles requêtes et problèmes
+            </p>
+          </div>
+          <FormField
+            control={form.control}
+            name="subject"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Sujet du ticket : </FormLabel>
+                <FormControl>
+                  <Input placeholder="sujet du ticket" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>description du probleme </FormLabel>
+                <FormControl>
+                  <Textarea placeholder="description ...." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>type du probleme </FormLabel>
+                <FormControl>
+                  <Select onValueChange={(e) => form.setValue("type", e)}>
                     <SelectTrigger className="">
-                        <SelectValue placeholder={filter.label} />
+                      <SelectValue placeholder={filter.label} />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectGroup>
+                      <SelectGroup>
                         <SelectLabel>{filter.label}</SelectLabel>
-                            {filter.options.map(option => (
-                                <SelectItem key={option} value={option}>
-                                {option}
-                                </SelectItem>
-                            ))}
-                            </SelectGroup>
-                        </SelectContent>
-                        </Select>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      
-      <Button disabled={isLoading} type="submit">
-        {isLoading ? "Chargement..." : "Envoyer le ticket"}
-      </Button>{" "}
-    </form>
-  </Form>
-  </>
-  )
-}
+                        {filter.options.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button disabled={isLoading} type="submit">
+            {isLoading ? "Chargement..." : "Envoyer le ticket"}
+          </Button>{" "}
+        </form>
+      </Form>
+    </>
+  );
+};
 
-export default TicketDemandForm
+export default TicketDemandForm;

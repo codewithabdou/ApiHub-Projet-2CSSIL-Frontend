@@ -19,7 +19,7 @@ import { MdAssignment, MdDateRange } from "react-icons/md";
 
 // this is a test page to test the components you are working on
 const TestPage = () => {
-  return <Ticket  dateCreate="NOT RESOLVED"  description="sports api problem" title="0000001475"/>;
+  return <></>;
 };
 
 export default TestPage;
