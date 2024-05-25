@@ -12,7 +12,7 @@ import {
 } from "../../ui/form";
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { GiCancel } from "react-icons/gi";
 import { useRouter } from "next/navigation";
@@ -20,13 +20,21 @@ import {
   categoryRequest,
   createCategorySchema,
   errorCreateCategoryResponse,
+  sucessGetCategoriesResponse,
 } from "@typings/api/createCategoryType";
 import { Textarea } from "@app/components/ui/textarea";
 import { MdDone } from "react-icons/md";
 import createCategory from "@services/api/createCategory";
+import { updateCategory } from "@services/api/updateCategory";
+import getCategories from "@services/api/getCategoriesByParams";
 
-export default function CreateCategoryForm({isEditing = false}) {
+export default function UpdateCategoryForm({
+  categoryId,
+}: {
+  categoryId: string;
+}) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [thisCategory, setthisCategory] = useState<{name:string , description:string} >({name:"", description:""});
   const router = useRouter();
   // this can be exporte0d and reused later ! .
   const errorToaster = (status?: String, message?: String) => {
@@ -52,48 +60,65 @@ export default function CreateCategoryForm({isEditing = false}) {
   const form = useForm<categoryRequest>({
     resolver: zodResolver(createCategorySchema),
     defaultValues: {
-      name: "",
-      description: "",
+      name: thisCategory.name,
+      description: thisCategory.description,
     },
   });
+
+  useEffect(() => {
+    (async () => {
+      const result = await getCategories({
+        category_ids: parseInt(categoryId),
+      });
+      if (result.status !== "success") {
+        errorToaster(result.status, "error while fetching category");
+      }
+      const category = (result as sucessGetCategoriesResponse).data[0];
+      form.setValue("name", category.name);
+      form.setValue("description", category.description);
+      setthisCategory(category);
+    })();
+  }, []);
+
   async function onSubmit(values: categoryRequest) {
     setIsLoading(true);
-    const result = await createCategory(values);
+    const result = await updateCategory(values, categoryId);
     if (result.status !== "success") {
-      errorToaster(result.status, ( result as errorCreateCategoryResponse).message);
+      errorToaster(result.status, "update failed.");
     } else {
       if (result.status === "success") {
         toast.success(result.status, {
-          description: "Category succesfully added. ",
+          description: "Category succesfully modified. ",
           position: "top-right",
           dismissible: true,
-  
+
           icon: (
             <MdDone className=" aspect-square hover:bg-opacity-0 p-[0.5px] rounded-full text-white bg-green-500" />
           ),
         });
-        form.reset();
       }
       setIsLoading(false);
-      form.reset();
     }
     setIsLoading(false);
   }
 
   return (
-    <Form {...form} >
+    <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-8 bg-white px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 border border-secondary"
       >
         <FormField
           control={form.control}
+
           name="name"
           render={({ field }) => (
-            <FormItem>
+            <FormItem >
               <FormLabel>Nom du categorie : </FormLabel>
-              <FormControl>
-                <Input placeholder="ex. Apis de Sport" {...field} />
+              <FormControl >
+                <Input  
+                 placeholder="ex. Apis de Sport" {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -102,19 +127,24 @@ export default function CreateCategoryForm({isEditing = false}) {
         <FormField
           control={form.control}
           name="description"
+        //   defaultValue={"test"}
           render={({ field }) => (
             <FormItem>
               <FormLabel>description</FormLabel>
               <FormControl>
-                <Input placeholder="ex. Cette catégorie d'APIs permet de gérer les informations des sports..." {...field}></Input>
+                <Input
+                // defaultValue={thisCategory?.description}
 
-              </FormControl> 
+                  placeholder="ex. Cette catégorie d'APIs permet de gérer les informations des sports..."
+                  {...field}
+                ></Input>
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <Button disabled={isLoading} type="submit">
-          {isLoading ? "Chargement..." : "ajouter"}
+          {isLoading ? "Chargement..." : "enregistrer"}
         </Button>{" "}
       </form>
     </Form>

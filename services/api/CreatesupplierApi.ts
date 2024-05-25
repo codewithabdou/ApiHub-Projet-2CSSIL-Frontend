@@ -8,6 +8,7 @@ import {
   errorcreateSupplierrResponse,
   successcreateSupplierrResponse,
 } from "@typings/api/addSupplierForm";
+import { revalidateTag } from "next/cache";
 
 async function createSupplier(
   formData: createSupplierRequest
@@ -30,13 +31,8 @@ async function createSupplier(
     );
 
     const data = response.status;
-    console.log("after creating ",data);
 
-
-
- 
- 
- 
+    revalidateTag("UsersListManagement");
     return {
       status: "success",
       message: "Supplier created succesfully",

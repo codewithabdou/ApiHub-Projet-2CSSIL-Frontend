@@ -12,14 +12,14 @@ export const ADMIN_SIDENAV_ITEMS: SideNavItem[] = [
     icon: React.createElement(MdDashboard),
   },
   {
+    title: "Statistiques",
+    path: "/admin/statistics",
+    icon: React.createElement(ImStatsDots),
+  },
+  {
     title: "Fournisseurs",
     path: "/admin/suppliers",
     icon: React.createElement(FaBox),
-  },
-  {
-    title: "Categories",
-    path: "/admin/categories",
-    icon: React.createElement(FaFolder),
   },
   {
     title: "Utilisateurs",
@@ -27,9 +27,9 @@ export const ADMIN_SIDENAV_ITEMS: SideNavItem[] = [
     icon: React.createElement(FaUser),
   },
   {
-    title: "Statistiques",
-    path: "/admin/statistics",
-    icon: React.createElement(ImStatsDots),
+    title: "Categories",
+    path: "/admin/categories",
+    icon: React.createElement(FaFolder),
   },
   {
     title: "Mon profile",

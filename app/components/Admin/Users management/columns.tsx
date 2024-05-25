@@ -89,7 +89,14 @@ const AdminUsersColumns = (): ColumnDef<User>[] => {
                 >
                   Activate
                 </DropdownMenuItem>
+                
               )}
+
+
+                   <DropdownMenuItem
+                onClick={() => {router.push(`users/${user.id}`);}}>
+                      Voir
+                      </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );

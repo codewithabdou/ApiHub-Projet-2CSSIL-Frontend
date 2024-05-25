@@ -99,17 +99,18 @@ export default function CreateSupplierForm() {
   
 
     <main className="
-    flex min-h-screen flex-col items-center justify-evenly p-4 lg:p-[10%]">
+    
+    flex  flex-col items-center justify-evenly p-4 lg:px-[10%]">
 
 
-<div className="w-full">
+<div className="w-full ">
 
-<h1  className=" text-2xl md:text-4xl font-bold mb-6">Ajouter fournisseur</h1>
+<h1  className=" text-2xl md:text-4xl font-bold mb-6">Ajouter un fournisseur</h1>
 </div>
     <Form {...form} >
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 bg-white px-8 py-12 rounded-lg shadow-md w-full"
+        className="space-y-8 border border-secondary bg-white px-8 py-12 rounded-lg shadow-md w-full"
       >
         <div className="lg:flex-row flex flex-col gap-4">
           <FormField
@@ -173,7 +174,7 @@ export default function CreateSupplierForm() {
               <FormItem className="lg:w-1/2 ">
                 <FormLabel>Confirmer le mot de passe</FormLabel>
                 <FormControl>
-                  <Input placeholder="Confirmer le mot de passe" {...field} />
+                  <Input placeholder="Confirmer le mot de passe" {...field} type="password" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

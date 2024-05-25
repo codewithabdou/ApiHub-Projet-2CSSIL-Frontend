@@ -55,7 +55,7 @@ const page = async ({
       {" "}
       <div className="flex p-4 justify-between">
         <h1 className="font-bold lg:text-3xl text-2xl">
-          Fournisseurs Management
+        Gestion des Fournisseurs
         </h1>
         <Link href="/admin/suppliers/addsupplier">
           <Button>
@@ -64,7 +64,7 @@ const page = async ({
           </Button>
         </Link>
       </div>{" "}
-      <AdminSuppliersDataTable data={users} pagination={pagination} />;
+      <AdminSuppliersDataTable data={users} pagination={pagination} />
     </div>
   );
 };

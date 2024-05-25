@@ -54,10 +54,10 @@ const page = async ({
     <div>
       <div className="flex p-4 justify-start">
         <h1 className="font-bold lg:text-3xl text-2xl">
-          Utilisateurs Management
+          Gestion des utilisateurs
         </h1>
       </div>{" "}
-      <AdminUsersDataTable data={users} pagination={pagination} />;
+      <AdminUsersDataTable data={users} pagination={pagination} />
     </div>
   );
 };

@@ -40,6 +40,7 @@ import AdminCategoriesColumns from "./columns";
 import MainTitle from "@app/components/Shared/MainTitle";
 import Link  from "next/link";
 import UrlPagination from "@app/components/Shared/UrlPagination";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 export default function AdminCategoriesDataTable({
   data,
@@ -79,9 +80,15 @@ export default function AdminCategoriesDataTable({
   return (
     <div className="flex gap-3 flex-col">
       <div className="flex flex-row justify-between px-8">
-      <MainTitle title="Categories management :"></MainTitle>
+      <h1 className="font-bold lg:text-3xl text-2xl">
+        Gestion des categories d'api
+        </h1>
       <Link href={"categories/create"}>
-      <Button>Ajouter Categorie</Button>
+
+      <Button>
+            <IoMdAddCircleOutline size={20} className="mr-2" /> Ajouter Categorie
+          </Button>
+
       </Link>
       </div>
     <div className="w-full space-y-4  bg-white p-4 ">
@@ -176,5 +183,5 @@ export default function AdminCategoriesDataTable({
       <UrlPagination pagination={pagination} />
     </div>
     </div>
-  );
+  )
 }

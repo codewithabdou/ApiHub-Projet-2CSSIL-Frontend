@@ -5,18 +5,6 @@ import { MdAssignment, MdDateRange } from "react-icons/md";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 // this is a test page to test the components you are working on
 const TestPage = () => {
   return <></>;

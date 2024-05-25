@@ -28,7 +28,6 @@ const page = async ({
   if (data.status === "success") {
     const categoriesData = data as sucessGetCategoriesResponse;
     Categories = categoriesData.data as Category[];
-    //todo : get the pagination from the backend .
   } else {
     const errorData = data as ErrorGetUsersResponse;
     return (

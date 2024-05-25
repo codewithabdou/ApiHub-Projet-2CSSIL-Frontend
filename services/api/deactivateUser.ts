@@ -20,10 +20,10 @@ async function deactivateUser(userId: string): Promise<boolean> {
       }
     );
     const data = await response.json();
-    revalidateTag("UsersListManagement");
     if (data.user_status !== "suspended") {
       return false;
     }
+    revalidateTag("UsersListManagement");
     return true;
   } catch (error) {
     console.error(error);

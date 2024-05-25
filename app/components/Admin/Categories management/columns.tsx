@@ -14,10 +14,14 @@ import deactivateUser from "@services/api/deactivateUser";
 import { ColumnDef } from "@tanstack/react-table";
 
 import User, { Category } from "@typings/entities/User";
+import { useRouter } from "next/navigation";
+
 import { HiMiniEllipsisHorizontal } from "react-icons/hi2";
 import { RxCaretSort } from "react-icons/rx";
 
 const AdminCategoriesColumns = (): ColumnDef<Category>[] => {
+  const router = useRouter();
+
   const columns: ColumnDef<Category>[] = [
     {
       accessorKey: "title",
@@ -35,35 +39,34 @@ const AdminCategoriesColumns = (): ColumnDef<Category>[] => {
       ),
     },
 
-    // {
-    //   id: "actions",
-    //   header: "Actions",
-    //   enableHiding: false,
-    //   cell: ({ row }) => {
-    //     const category = row.original;
+    {
+      id: "actions",
+      header: "Actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const category = row.original;
 
-    //     return (
-    //       <DropdownMenu>
-    //         <DropdownMenuTrigger asChild>
-    //           <Button variant="ghost" className="h-8 w-8 p-0">
-    //             <span className="sr-only">Open menu</span>
-    //             <HiMiniEllipsisHorizontal />
-    //           </Button>
-    //         </DropdownMenuTrigger>
-    //         <DropdownMenuContent align="end">
-    //           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-    //           <DropdownMenuItem
-    //             onClick={() => {
-    //               console.log("Edit category", category);
-    //             }}
-    //           >
-    //             Edit
-    //           </DropdownMenuItem>
-    //         </DropdownMenuContent>
-    //       </DropdownMenu>
-    //     );
-    //   },
-    // },
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <HiMiniEllipsisHorizontal />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+               onClick={() => {router.push(`categories/${category.id}/edit`);}}>
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuSeparator/>
+              
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
   ];
 
   return columns;
