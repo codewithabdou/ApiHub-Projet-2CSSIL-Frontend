@@ -59,7 +59,6 @@ const ProviderProfile = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      //   username: "",
     },
   });
 
@@ -81,7 +80,7 @@ const ProviderProfile = () => {
 
   return (
     <div className="flex flex-col h-full p-8 gap-8">
-      <h1 className="text-3xl font-bold">Mon Profile</h1>
+      <h1 className="text-3xl font-bold">Mon Profil</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col bg-white xl:px-40 xl:py-10 rounded-xl">
@@ -91,74 +90,64 @@ const ProviderProfile = () => {
                 <Avatar className="size-full border-[3px] border-primary">
                   <AvatarImage src={image} />
                   <AvatarFallback className="size-full">
-                    profile image
+                    {/* image de profil */}
                   </AvatarFallback>
                 </Avatar>
-                {!edditing && <p className="text-center text-black font-semibold ">Profile Image</p>}
-
+                {/* {!edditing && <p className="text-center text-black font-semibold ">Image de Profil</p>} */}
+  
                 <div className="w-full h-6 relative">
-
+  
                   <Input
                     type="file"
                     className="file:hidden opacity-0 absolute top-0 cursor-pointer"
                     onChange={upload}
                   ></Input>
-
+  
                   { edditing &&
-              <div className="border rounded-lg bg-current mt-4 py-1 cursor-pointer">
-                   <p className="text-center  text-white"> Upload image </p>
-                   </div>
-                   }
-                  {/* <p className="text-center hover:underline">
-                    {user?.avatar}
-                  </p> */}
+                <div className="border rounded-lg bg-current mt-4 py-1 cursor-pointer">
+                     <p className="text-center  text-white"> Télécharger image </p>
+                     </div>
+                     }
                 </div>
-
+  
                 <div className="card flex justify-content-center"></div>
               </div>
               <div className="flex-auto flex-col flex p-5 gap-4">
                 <div className="lg:flex-row flex-col flex gap-3 w-full">
                   <FormField
                     control={form.control}
-                    name="firstname"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>{"First name"}</FormLabel>
-                        <FormControl>
-
-                          <Input placeholder="first name" {...field}
-                          readOnly={edditing ? false : true} 
-                              defaultValue={user?.firstname}
-                          
-                          />
-
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-
-                <FormField
-                    control={form.control}
                     name="lastname"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Last name</FormLabel>
+                        <FormLabel>{"Prénom"}</FormLabel>
                         <FormControl>
-                          <Input placeholder="last name" {...field} 
-                              defaultValue={user?.lastname}
-                          readOnly={edditing ? false : true} 
-
+                          <Input placeholder="prénom" {...field}
+                            readOnly={edditing ? false : true} 
+                            defaultValue={user?.firstname}
                           />
                         </FormControl>
-
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-
+  
+                  <FormField
+                    control={form.control}
+                    name="firstname"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nom</FormLabel>
+                        <FormControl>
+                          <Input placeholder="nom" {...field} 
+                              defaultValue={user?.lastname}
+                              readOnly={edditing ? false : true} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+  
                   <FormField
                     control={form.control}
                     name="email"
@@ -170,18 +159,15 @@ const ProviderProfile = () => {
                             placeholder="email"
                             {...field}
                             defaultValue={user?.email}
-                          readOnly={edditing ? false : true} 
+                            readOnly={edditing ? false : true} 
                           />
                         </FormControl>
-
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-
-                
                 </div>
-
+  
                 <FormField
                   control={form.control}
                   name="bio"
@@ -200,16 +186,16 @@ const ProviderProfile = () => {
                     </FormItem>
                   )}
                 />
-
+  
                 <FormField
                   control={form.control}
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone</FormLabel>
+                      <FormLabel>Téléphone</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="phone number"
+                          placeholder="numéro de téléphone"
                           defaultValue={user?.phone_number}
                           readOnly={edditing ? false : true} 
                           {...field}
@@ -232,13 +218,6 @@ const ProviderProfile = () => {
                     <Button className="max-w-32 px-5 "> Enregistrer </Button>
                   </div>
                 ) : (
-                  // <Button
-                  //   onClick={() => setEdditing(true)}
-                  //   className="max-w-32 px-5 mx-auto"
-                  // >
-                  //   {" "}
-                  //   Editer{" "}
-                  // </Button>
                   <></>
                 )}
               </div>
@@ -248,6 +227,7 @@ const ProviderProfile = () => {
       </Form>
     </div>
   );
+  
 };
 
 export default ProviderProfile;

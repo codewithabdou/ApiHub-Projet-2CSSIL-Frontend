@@ -73,11 +73,7 @@ const SupplierAPIsColumns = (): ColumnDef<API>[] => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(api.id.toString())}
-              >
-                Copy User ID
-              </DropdownMenuItem>
+
 
               <DropdownMenuSeparator />
 

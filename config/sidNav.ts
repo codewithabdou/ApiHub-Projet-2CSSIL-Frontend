@@ -32,7 +32,7 @@ export const ADMIN_SIDENAV_ITEMS: SideNavItem[] = [
     icon: React.createElement(ImStatsDots),
   },
   {
-    title: "Paramètres",
+    title: "Mon profile",
     path: "/admin/settings",
     icon: React.createElement(MdSettings),
   },
@@ -45,17 +45,12 @@ export const SUPPLIER_SIDENAV_ITEMS: SideNavItem[] = [
     icon: React.createElement(MdDashboard),
   },
   {
-    title: "Probelms",
-    path: "/supplier/tickets",
-    icon: React.createElement(MdReportProblem),
-  },
-  {
     title: "APIs",
     path: "/supplier/apis",
     icon: React.createElement(FaBox),
   },
   {
-    title: "My profile",
+    title: "Mon profile",
     path: "/supplier/profile",
     icon: React.createElement(FaUser),
   },

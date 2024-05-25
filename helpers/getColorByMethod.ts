@@ -1,6 +1,8 @@
 function getColorByMethod(method: String): string {
     let color: string;
-
+if (method === undefined) {
+        return '#000000';
+    }
     switch (method.toUpperCase()) {
         case 'POST':
             color = '#367BC0';
