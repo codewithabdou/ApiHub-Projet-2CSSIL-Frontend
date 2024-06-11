@@ -61,7 +61,7 @@ const HubAPIsArea =async () => {
         </Carousel>
       </div>
       
-      <div className="py-8">
+      {/* <div className="py-8">
         <h2 className="font-bold text-2xl pl-4 my-2 text-primary">
           APIs Recommandées
         </h2>
@@ -92,7 +92,7 @@ const HubAPIsArea =async () => {
           <CarouselPrevious className="hidden lg:block" />
           <CarouselNext className="hidden lg:block" />
         </Carousel>
-      </div>
+      </div> */}
     </div>
   );
 };

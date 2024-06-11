@@ -119,7 +119,7 @@ const SupplierTicket = ({ title, description, dateCreate, status, solution , id 
      
         { (status != "closed" ) &&<Accordion type="single" collapsible  className="px-6  ml-6 mt-0">
           <AccordionItem value="item-1">
-            <AccordionTrigger  className="text-gray-600 ml-auto">Reply to ticket</AccordionTrigger>
+            <AccordionTrigger  className="text-gray-600 ml-auto">Répondre au ticket</AccordionTrigger>
             <AccordionContent>
 
 
@@ -136,9 +136,9 @@ const SupplierTicket = ({ title, description, dateCreate, status, solution , id 
         name="response"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Reponse </FormLabel>
+            <FormLabel>Réponse</FormLabel>
             <FormControl>
-              <Textarea placeholder="response...." {...field} />
+              <Textarea placeholder="Réponse...." {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

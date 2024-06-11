@@ -50,25 +50,6 @@ const DetailedCategory = async ({
     );
   }
 
-  // const description = `Sports APIs can refer to many different categories of APIs in 
-  //                   the world of sports. Some of the more popular APIs fall under umbrellas like sports 
-  //                   odds and betting, top scores, NCAA sports, football, women’s sports, 
-  //                   and top trending sports news.`;
-
-  // const cat = {
-  //   apiCategory: "Sport-API-Worldwide",
-  //   apiCategoryImage: "https://github.com/shadcn.png",
-  //   CategoryDescription:
-  //     "Fournir des donnees en temps reel sur differents sports dans le monde",
-  // };
-
-  // const filters = [
-  //   { label: "Fournisseur", options: ["Option 1", "Option 2", "Option 3"] },
-  //   { label: "Catégorie", options: ["Option A", "Option B", "Option C"] },
-  //   { label: "Trier par", options: ["Option X", "Option Y", "Option Z"] },
-  // ];
-
-  // const page = Number(searchParams?.page) || 1;
 
 
   let fetchedapis;
@@ -94,14 +75,13 @@ const DetailedCategory = async ({
   }
 
 
-
   return (
     <div className="py-12 flex flex-col w-full gap-4 md:px-28 mt-5 px-5">
 
   <div className="grid w-full grid-cols-4 p-10  rounded-xl min-h-12 bg-white border-secondary border">
     <div className="col-span-4 md:col-span-4">
       <div className="flex flex-row items-center justify-center  mb-4  gap-6 border-b-[1px] pb-4 border-black">
-        <p className="my-auto text-lg font-semibold text-center md:text-left md:text-3xl text-gray-900">
+        <p className="my-auto text-lg font-semibold text-center md:text-left md:text-3xl text-primary">
           {category.name} Apis
         </p>
 
@@ -118,30 +98,28 @@ const DetailedCategory = async ({
         />
       </div>
 
-      <p className="md:text-2xl">{category.description}</p>
+      <p className="md:text-lg md:font-normal text-gray-600">{category.description}</p>
     </div>
 
 
   </div>
 <div className="flex flex-col md:flex-row gap-4 items-start w-full py-8 px-[5%] md:px-0 justify-between">
       <section className="flex flex-col gap-4  order-2 ">
-        {/* <div className="flex flex-col items-center gap-2"> */}
-          {/* <label htmlFor="search" className='text-lg'>Rechercher:</label> */}
 
-          {/* <input
-            type="text"
-            id="search"
-            className="w-full p-2 border-2 rounded-lg"
-            placeholder="Rechercher une API"
-          />
-        </div> */}
-
-        {/* <ApiFilters filters={filters} /> */}
-
-        {/* <Button className="w-32 lg:mx-auto"> Filtrer </Button> */}
 
         <section className="flex flex-col justify-center gap-5">
-          <MainTitle title="Toutes les Résultats :" />
+          
+
+          <div className="flex mx-auto">
+      <div className="flex flex-col mx-auto">
+        <h1 className="md:text-3xl text-2xl text-primary font-bold z-10">
+        Toutes les Résultats 
+        </h1>
+        <div className="w-full h-[7px] bg-secondary mt-[-7px]"></div>
+      </div>
+    </div>
+
+
 
           <div className="grid grid-cols-1  gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:px-16  min-h-96">
             {fetchedapis ? (

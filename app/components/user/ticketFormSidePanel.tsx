@@ -42,12 +42,8 @@ import {
 const filter = {
   label: "type de probleme",
   options: [
-    "probleme de retour",
-    "probleme de service",
-    "probleme de qualité",
-    "probleme de connexion",
-    "probleme de  livraison",
-    "probleme de facturation",
+    "probleme technique",
+    "probleme de paiement",
   ],
 };
 function AddTicketFormPanel({ apiId }: { apiId: number }) {
@@ -90,7 +86,7 @@ function AddTicketFormPanel({ apiId }: { apiId: number }) {
       <Sheet>
         <SheetTrigger>
           <Button className="sm:w-64 w-48 text-sm bg-red-500 text-white">
-            Signaler un probleme !
+            Signaler un probleme
           </Button>
         </SheetTrigger>
         <SheetContent side={"left"} className="w-[200px] sm:w-[540px]">
@@ -101,10 +97,10 @@ function AddTicketFormPanel({ apiId }: { apiId: number }) {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="bg-white  space-y-4 px-2 py-12 rounded-lg "
+                  className="bg-white  space-y-4 px-2 py-12 rounded-lg border border-secondary"
                 >
                   <div>
-                    <h2 className="font-semibold">Créer un ticket</h2>
+                    <h2 className="font-semibold text-black">Créer un ticket</h2>
                     <p className="font-light">
                       Rédigez et adressez de nouvelles requêtes et problèmes
                     </p>
@@ -115,7 +111,7 @@ function AddTicketFormPanel({ apiId }: { apiId: number }) {
                     name="subject"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Sujet du ticket : </FormLabel>
+                        <FormLabel className="text-black">Sujet du ticket : </FormLabel>
                         <FormControl>
                           <Input placeholder="sujet du ticket" {...field} />
                         </FormControl>
@@ -128,7 +124,7 @@ function AddTicketFormPanel({ apiId }: { apiId: number }) {
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>description du probleme </FormLabel>
+                        <FormLabel className="text-black">description du probleme </FormLabel>
                         <FormControl>
                           <Textarea placeholder="description ...." {...field} />
                         </FormControl>
@@ -141,7 +137,7 @@ function AddTicketFormPanel({ apiId }: { apiId: number }) {
                     name="type"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>type du probleme </FormLabel>
+                        <FormLabel className="text-black">type du probleme </FormLabel>
                         <FormControl>
                           <Select
                             onValueChange={(e) => form.setValue("type", e)}

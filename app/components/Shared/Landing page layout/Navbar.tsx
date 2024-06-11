@@ -38,21 +38,14 @@ const Navbar = ({ user }: { user: User | null }) => {
     setOpen((prev) => !prev);
     document.body.style.overflow = open ? "auto" : "hidden";
   };
-
   const navLinks = [
     {
-      Link: "/user/categories",
-      name: "Categories",
+        name: "API Categories",
+        // Check if user is authenticated and set the link accordingly
+        Link: user ? "/user/categories" : "auth/login",
     },
-    {
-      Link: "/",
-      name: "Services",
-    },
-    {
-      Link: "/",
-      name: "APIs",
-    },
-  ];
+    // Add more navigation links as needed
+];
 
   return (
     <>

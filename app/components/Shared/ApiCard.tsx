@@ -22,7 +22,7 @@ const ApiCard = ({
       onClick={() => {
         router.push(`/user/apis/${api.apiId}`);
       }}
-      className="shadow-lg cursor-pointer hover:scale-105 hover:-translate-y-1 hover:translate-x-1 transition-all duration-300 flex flex-col max-h-60 min-h-52 "
+      className="shadow-lg cursor-pointer hover:scale-105 hover:-translate-y-1 hover:translate-x-1 transition-all duration-300 flex flex-col max-h-60 self-stretch min-h-60 "
     >
       <CardHeader className="p-3 flex flex-row items-center px-5 gap-2 w-full">
         <Avatar className=" rounded-full w-12 h-12">

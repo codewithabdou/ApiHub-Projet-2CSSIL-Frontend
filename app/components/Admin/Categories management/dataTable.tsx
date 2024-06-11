@@ -125,7 +125,7 @@ export default function AdminCategoriesDataTable({
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
-                );
+                )
               })}
           </DropdownMenuContent>
         </DropdownMenu>

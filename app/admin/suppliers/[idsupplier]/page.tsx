@@ -78,15 +78,15 @@ const page = ({
 
   return (
     <div>
-      <main className="  flex min-h-screen flex-col items-center justify-evenly p-4 lg:p-[10%]">
+      <main className="  flex min-h-screen flex-col items-start mt-5 px-4 lg:px-[5%]">
         <div className="w-full ">
-          <h1 className=" text-2xl md:text-4xl mb-6 font-bold">
+          {/* <h1 className=" text-2xl md:text-4xl mb-6 font-bold"> 
             {" "}
             <span className="text-primary"> Fournisseur : </span>{" "}
             {user?.lastname} {user?.lastname}
-          </h1>
+          </h1> */}
         </div>
-        <div className="bg-white  lg:px-20 px-8 py-12 rounded-lg shadow-md max-w-full   gap-16   align-top ">
+        <div className="bg-white  lg:px-20 px-8 py-4 rounded-lg shadow-md max-w-full   gap-16   align-top ">
           <div>
             <h1 className="text-primary text-xl lg:text-4xl font-bold align-top mb-9">
               Information personnels :

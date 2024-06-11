@@ -103,10 +103,10 @@ export default function UpdateCategoryForm({
   }
 
   return (
-    <Form {...form}>
+    <Form {...form} >
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 bg-white px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 border border-secondary"
+        className="space-y-8 mx-auto bg-white px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 border border-secondary"
       >
         <FormField
           control={form.control}

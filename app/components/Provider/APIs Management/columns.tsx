@@ -82,7 +82,7 @@ const SupplierAPIsColumns = (): ColumnDef<API>[] => {
                   router.push(`/supplier/apis/${api.id}/createNewVersion`);
                 }}
               >
-                Create new version
+                Creer nouvelle version
               </DropdownMenuItem>
 
 
@@ -91,14 +91,14 @@ const SupplierAPIsColumns = (): ColumnDef<API>[] => {
                   router.push(`/supplier/apis/${api.id}/versions`);
                 }}
               >
-                Versions management
+                Gestion des versions
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={async () => {
                   router.push(`/supplier/apis/${api.id}/tickets`);
                 }}
               >
-                Tickets management
+                Gestion des tickets
               </DropdownMenuItem>
 
 
@@ -108,7 +108,7 @@ const SupplierAPIsColumns = (): ColumnDef<API>[] => {
                     await deactivateApi(api.id.toString());
                   }}
                 >
-                  Deactivate
+                  Desactiver
                 </DropdownMenuItem>
               ) : (
                 <DropdownMenuItem
@@ -116,7 +116,7 @@ const SupplierAPIsColumns = (): ColumnDef<API>[] => {
                     await activateApi(api.id.toString());
                   }}
                 >
-                  Activate
+                  Activer
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>

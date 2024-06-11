@@ -58,7 +58,7 @@ const AdminCategoriesColumns = (): ColumnDef<Category>[] => {
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
                onClick={() => {router.push(`categories/${category.id}/edit`);}}>
-                Edit
+                Modifier
               </DropdownMenuItem>
               <DropdownMenuSeparator/>
               

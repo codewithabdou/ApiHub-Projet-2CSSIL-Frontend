@@ -49,7 +49,7 @@ const page = async ({
   }
   return (
     <div>
-      <AdminCategoriesDataTable data={Categories} pagination={pagination} />;
+      <AdminCategoriesDataTable data={Categories} pagination={pagination} />
     </div>
   );
 };

@@ -8,7 +8,7 @@ export default function LoginPage() {
       <NavbarUserActions />
       <main className=" min-h-screen py-[20%]  px-4 lg:py-[6%] lg:px-[10%]  flex flex-row justify-center  gap-10 ">
         <div className="flex-1 lg:flex-col lg:flex  items-center pt-12">
-          <p className="font-bold mb-4 text-3xl  text-center  lg:w-4/5">Bienvenue sur 1001 API ! </p>
+          <p className="font-bold mb-4 text-3xl  text-center text-primary  lg:w-4/5">Bienvenue sur 1001 API ! </p>
         <p className="mb-4">Veuillez entrer vos identifiants pour accéder à votre compte.</p>
         <LoginForm />
         </div>

@@ -58,7 +58,7 @@ const page = async ({
         <h1 className="font-bold lg:text-3xl text-2xl">Mes APIs</h1>
         <Link href="/supplier/apis/create">
           <Button>
-            <IoMdAddCircleOutline size={20} className="mr-2" /> Créer un nouveau
+            <IoMdAddCircleOutline size={20} className="mr-2" /> Créer une nouvelle
             API
           </Button>
         </Link>

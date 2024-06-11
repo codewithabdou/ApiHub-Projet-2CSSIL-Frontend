@@ -7,6 +7,7 @@ import {
   Nosservices,
 } from "./components/home";
 import NavbarUserActions from "./components/Shared/Landing page layout/NavbarUserActions";
+import AboutUs from "./components/home/AboutUs";
 
 export default function Home() {
   return (
@@ -14,8 +15,8 @@ export default function Home() {
       <NavbarUserActions />
       <main>
         <Banner />
+        <AboutUs/>
         <Nosservices />
-        <OurApis />
         <Testemonies />
         <Footer />
       </main>

@@ -48,6 +48,7 @@ const IMAGES = {
   },
 
   HUB_BANNER: "/images/HubBanner.png",
+  ABOUT_US : "/images/Cloud hosting-amico.svg",
 
   SIGN_UP_STORY_SET: "/images/SIGNUP_YELL.svg",
   LOGIN_STORY_SET: "/images/LOGIN_YELL.svg",

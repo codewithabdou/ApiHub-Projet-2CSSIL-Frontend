@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { IMAGES } from "@config";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const Banner = () => {
   return (
@@ -20,9 +21,9 @@ const Banner = () => {
           Commencez à enrichir vos projets :
         </p>
         <p className="text-white font-normal">Découvrez dès maintenant les puissantes API de 1001 API et ouvrez la porte à un monde de possibilités infinies pour transformer vos projets et maximiser votre potentiel ! Boostez votre productivité et livrez vos projets plus rapidement !</p>
-        <Button className="bg-secondary  hover:border-white hover:border-[1px] hover:bg-secondary hover:scale-105 text-base my-8 md:my-6 w-56 md:w-44 font-bold">
-          Commencez
-        </Button>
+        <Link href={"/auth/login"}>
+    <Button className='w-36 mx-auto font-extrabold text-xl text-white rounded-tr-3xl rounded-bl-3xl mt-4 py-4' variant={'secondary'}>Commencez</Button>
+    </Link>
       </div>
       <div className="flex  order-1 md:order-2  justify-center ">
         <Image

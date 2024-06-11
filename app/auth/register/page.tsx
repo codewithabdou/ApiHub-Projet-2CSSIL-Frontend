@@ -8,7 +8,7 @@ export default function LoginPage() {
       <NavbarUserActions />
       <main className=" min-h-screen py-[20%]  px-4 lg:py-[6%] lg:px-[10%] border-4  flex flex-row justify-center  gap-10 ">
         <div className="flex-1 ">
-          <p className="font-bold mb-4 text-3xl  text-center  lg:w-4/5">Rejoignez Notre Platforme :  </p>
+          <p className="font-bold mb-4 text-3xl  text-center  text-primary lg:w-4/5">Rejoignez Notre Platforme :  </p>
         <RegisterForm />
         </div>
         <img
