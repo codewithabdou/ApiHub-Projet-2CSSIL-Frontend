@@ -102,7 +102,8 @@ const Navbar = ({ user }: { user: User | null }) => {
                   </Link>
                   <Link href="/auth/register">
                     <Button
-                      className={`transition-all font-medium duration-300 bg-primary bg-opacity-0 hover:bg-opacity-100 hover:text-white border-primary border-[1px]     rounded-md px-6 py-2`}
+                    variant={"outline"}
+                      className={`transition-all text-white font-medium duration-300 bg-primary bg-opacity-0 hover:bg-opacity-100 hover:text-primary border-primary border-[1px]     rounded-md px-6 py-2`}
                     >
                       S'inscrire
                     </Button>

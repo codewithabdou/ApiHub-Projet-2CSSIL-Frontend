@@ -12,11 +12,6 @@ export const ADMIN_SIDENAV_ITEMS: SideNavItem[] = [
     icon: React.createElement(MdDashboard),
   },
   {
-    title: "Statistiques",
-    path: "/admin/statistics",
-    icon: React.createElement(ImStatsDots),
-  },
-  {
     title: "Fournisseurs",
     path: "/admin/suppliers",
     icon: React.createElement(FaBox),

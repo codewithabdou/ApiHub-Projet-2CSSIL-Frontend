@@ -42,6 +42,12 @@ const IMAGES = {
     time: "/images/time.svg",
     service: "/images/service.svg",
   },
+  STATS:{
+     users:"/images/users.svg",
+     admin:"/images/admin.svg",
+     purchase:"/images/purchase.svg",
+     money:"/images/money.svg",
+  },
   ANSWER_VOTE: {
     upVote: "/images/upVote.svg",
     downVote: "/images/downVote.svg",

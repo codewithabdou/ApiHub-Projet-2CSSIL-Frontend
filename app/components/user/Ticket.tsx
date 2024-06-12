@@ -21,7 +21,7 @@ const Ticket = ({ title, description, dateCreate, status, response , id , user}:
         <div className="font-semibold text-gray-500">#{id}</div>
         <div className="ml-auto flex flex-row gap-2 justify-center items-center">
        
-          <p className="font-normal text-gray-500">signaled by : {user.firstname} {user.lastname} </p>
+          <p className="font-normal text-gray-500">signalé par : {user.firstname} {user.lastname} </p>
         </div>
       </div>
 
@@ -31,13 +31,13 @@ const Ticket = ({ title, description, dateCreate, status, response , id , user}:
       </div>
 
       <div className="flex flex-row justify-between px-8 items-center">
-        <p className="px-6 text-gray-500 text-sm">Created at: {dateCreate}</p>
+        <p className="px-6 text-gray-500 text-sm">Creé à : {dateCreate}</p>
       </div>
 
       {status === 'closed' && (
         <Accordion type="single" collapsible className="px-6  ml-6 mt-0">
           <AccordionItem value="item-1">
-            <AccordionTrigger className="text-gray-600">Show Support Response</AccordionTrigger>
+            <AccordionTrigger className="text-gray-600">Afficher la réponse du support</AccordionTrigger>
             <AccordionContent>
               <p className="text-gray-700 py-6">{response}</p>
             </AccordionContent>

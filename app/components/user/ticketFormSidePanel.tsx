@@ -40,7 +40,7 @@ import {
   SelectValue,
 } from "../ui/select";
 const filter = {
-  label: "type de probleme",
+  label: "Type de problème",
   options: [
     "probleme technique",
     "probleme de paiement",
@@ -63,7 +63,7 @@ function AddTicketFormPanel({ apiId }: { apiId: number }) {
     if (result) {
       form.reset();
       toast("Message", {
-        description: "Ticket ajoutée",
+        description: "Problème signalé",
         action: {
           label: "Ok",
           onClick: () => null,
@@ -86,23 +86,23 @@ function AddTicketFormPanel({ apiId }: { apiId: number }) {
       <Sheet>
         <SheetTrigger>
           <Button className="sm:w-64 w-48 text-sm bg-red-500 text-white">
-            Signaler un probleme
+            Signaler un problème
           </Button>
         </SheetTrigger>
-        <SheetContent side={"left"} className="w-[200px] sm:w-[540px]">
+        <SheetContent side={"left"} className="w-[200px] p-5 sm:w-[540px]">
           <SheetHeader>
-            <SheetTitle>Demander un ticket</SheetTitle>
+            <SheetTitle>Signaler un problème</SheetTitle>
 
             <SheetDescription>
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="bg-white  space-y-4 px-2 py-12 rounded-lg border border-secondary"
+                  className="bg-white  space-y-4 p-5 rounded-lg border border-secondary"
                 >
                   <div>
-                    <h2 className="font-semibold text-black">Créer un ticket</h2>
+                    <h2 className="font-semibold text-black">Remarque:</h2>
                     <p className="font-light">
-                      Rédigez et adressez de nouvelles requêtes et problèmes
+                    Veuillez expliquer bien votre problème, votre signalement va etre traité par le fournisseur consérné.
                     </p>
                   </div>
 
@@ -111,9 +111,9 @@ function AddTicketFormPanel({ apiId }: { apiId: number }) {
                     name="subject"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-black">Sujet du ticket : </FormLabel>
+                        <FormLabel className="text-black">Thème du problème : </FormLabel>
                         <FormControl>
-                          <Input placeholder="sujet du ticket" {...field} />
+                          <Input placeholder="Thème du problème" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -124,9 +124,9 @@ function AddTicketFormPanel({ apiId }: { apiId: number }) {
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-black">description du probleme </FormLabel>
+                        <FormLabel className="text-black">Description du problème </FormLabel>
                         <FormControl>
-                          <Textarea placeholder="description ...." {...field} />
+                          <Textarea placeholder="Description ...." {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -137,7 +137,7 @@ function AddTicketFormPanel({ apiId }: { apiId: number }) {
                     name="type"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-black">type du probleme </FormLabel>
+                        <FormLabel className="text-black">Type du problème </FormLabel>
                         <FormControl>
                           <Select
                             onValueChange={(e) => form.setValue("type", e)}

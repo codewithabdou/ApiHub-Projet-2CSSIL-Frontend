@@ -37,6 +37,9 @@ import { ErrorType } from "@typings/entities/Error";
 import { Version } from "@typings/entities/Versions";
 import React from "react";
 import AddTicketFormPanel from "@app/components/user/ticketFormSidePanel";
+import getPopularity from "@services/api/statistics/sharedPopularity";
+import avgResponseTime from "@services/api/statistics/sharedApiAvg";
+import getServiceLevel from "@services/api/statistics/serviceLevel";
 
 const ApiDetails = async ({
   params,
@@ -54,6 +57,7 @@ const ApiDetails = async ({
     max_requests: Number;
     duration: Number;
   }[];
+
   let versions: Version[];
   let endpoints: Endpoint[];
   let subscriptions: { id: number; api_id: number; api: { id: number; name: string; supplier_id: number; }; api_plan: string; user_id: number; user: { id: number; firstname: string; lastname: string; }; start_date: string; end_date: string; remaining_requests: number; status: string; expired: boolean; price: number; }[]=[];
@@ -119,7 +123,12 @@ const ApiDetails = async ({
         console.log("error subs");
         
       }
-  
+  let popularity;
+  let latency;
+  let service;
+  popularity= await getPopularity(apiId);
+  latency=await avgResponseTime(apiId);
+  service=await getServiceLevel(apiId);
   return (
     <div className="py-8 flex  items-center flex-col  bg-white min-h-[900px] ">
       {api ? (
@@ -129,6 +138,9 @@ const ApiDetails = async ({
           supplier={`${api?.data.supplier.firstname} ${api?.data.supplier.lastname}`}
           updateDate={`${api?.data.updated_at}`}
           category={api?.data.category.name}
+          popularity={popularity}
+          latency={latency}
+          service={service}
         ></ApiDetailsSection>
       ) : null}
 
@@ -143,10 +155,9 @@ const ApiDetails = async ({
               <TabsTrigger value="description">Description</TabsTrigger>
               <TabsTrigger value="disscussions">Disscussions</TabsTrigger>
               <TabsTrigger value="plans">Plans d'abonement</TabsTrigger>
-
-              <TabsTrigger value="tickets" className="">Problems</TabsTrigger>
-
               <TabsTrigger value="subscriptions">Abonements</TabsTrigger>
+              <TabsTrigger value="tickets" className="">Problèmes</TabsTrigger>
+
             </TabsList>
             <AddTicketFormPanel apiId={apiId}></AddTicketFormPanel>
 

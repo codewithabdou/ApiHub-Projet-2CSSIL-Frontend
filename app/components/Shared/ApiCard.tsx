@@ -1,10 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { FaChartLine, FaCheckCircle, FaClock } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import avgResponseTime from "@services/api/statistics/sharedApiAvg";
+import getServiceLevel from "@services/api/statistics/serviceLevel";
+import getPopularity from "@services/api/statistics/sharedPopularity";
 
 const ApiCard = ({
   api,
@@ -17,6 +20,23 @@ const ApiCard = ({
   };
 }) => {
   const router = useRouter();
+  
+  const [popularity,setPopularity]=useState(0);
+  const [latency,setLatency]=useState(0)
+  const [service,setService]=useState(0)
+
+  useEffect(()=>{
+    const stats=async ()=>{
+     const pop= await getPopularity(parseInt(api.apiId));
+     const lat=await avgResponseTime(parseInt(api.apiId));
+     const serv=await getServiceLevel(parseInt(api.apiId));
+     setPopularity(pop);
+     setLatency(lat);
+     setService(serv)
+    }
+    stats()
+  },[])
+ 
   return (
     <Card
       onClick={() => {
@@ -40,15 +60,15 @@ const ApiCard = ({
         <div className="flex flex-row justify-center gap-4">
           <div className="flex flex-col items-center justify-center gap-1">
             <FaChartLine className="text-primary size-4" />
-            <p className="text-xs text-center">1.2k</p>
+            <p className="text-xs text-center">{`${popularity}/10`}</p>
           </div>
           <div className="flex flex-col items-center justify-center  gap-1">
             <FaClock className="text-primary size-4" />
-            <p className="text-xs text-center">325ms</p>
+            <p className="text-xs text-center">{`${latency}ms`}</p>
           </div>
           <div className="flex flex-col items-center justify-center  gap-1">
             <FaCheckCircle className="text-primary size-4" />
-            <p className="text-xs text-center">99%</p>
+            <p className="text-xs text-center">{`${service}%`}</p>
           </div>
         </div>
       </CardFooter>

@@ -6,13 +6,13 @@ function ApiDetailsSection(props:any) {
     const stats=[
         {name:"popularity",
          image:IMAGES.API_STATS.popularity,
-        value:"9/10"},
+        value:`${props.popularity}/10`},
         {name:"Latence",
          image:IMAGES.API_STATS.time,
-        value:"392ms"},
+        value:`${props.latency}ms`},
         {name:"Service",
          image:IMAGES.API_STATS.service,
-        value:"100%"}
+        value:`${props.service}%`}
     ]
    
   

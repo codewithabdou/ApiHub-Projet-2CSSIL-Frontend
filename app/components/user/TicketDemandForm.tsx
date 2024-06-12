@@ -116,9 +116,9 @@ const TicketDemandForm = () => {
           className="bg-white  space-y-4 px-8 py-12 rounded-lg shadow-md w-full md:w-1/2 mx-auto my-10"
         >
           <div>
-            <h2 className="font-semibold">Créer un ticket</h2>
+            <h2 className="font-semibold">Signaler un problème</h2>
             <p className="font-light">
-              Rédigez et adressez de nouvelles requêtes et problèmes
+              Veuillez expliquer bien votre problème, votre signalement va etre traité par le fournisseur consérné.
             </p>
           </div>
           <FormField
@@ -139,7 +139,7 @@ const TicketDemandForm = () => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>description du probleme </FormLabel>
+                <FormLabel>description du problème </FormLabel>
                 <FormControl>
                   <Textarea placeholder="description ...." {...field} />
                 </FormControl>
@@ -175,7 +175,7 @@ const TicketDemandForm = () => {
             )}
           />
           <Button disabled={isLoading} type="submit">
-            {isLoading ? "Chargement..." : "Envoyer le ticket"}
+            {isLoading ? "Chargement..." : "Signaler"}
           </Button>{" "}
         </form>
       </Form>
