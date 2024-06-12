@@ -14,6 +14,7 @@ import Pagination from "@typings/api/pagination";
 import React from "react";
 import Category from "@typings/entities/Category";
 import { sucessGetCategoriesResponse } from "@typings/api/createCategoryType";
+import getCategoryById from "@services/api/getCategoryById";
 import HubSideCategories from "@app/components/Hub/HubSideCategories";
 
 const DetailedCategory = async ({
@@ -29,16 +30,14 @@ const DetailedCategory = async ({
 }) => {
   const categoryId = params.categoryId;
   const ITEMS_PER_PAGE = 12;
-  let category: Category;
+  let successData: Category;
 
   //? call the api to get the category informations.
-  const categoryData = await getCategories({
-    category_ids: categoryId,
-  });
+  const categoryData = await getCategoryById(categoryId);
 
   if (categoryData.status === "success") {
-    const successData = categoryData as sucessGetCategoriesResponse;
-    category = successData.data[0];
+    successData = categoryData.data;
+    console.log('successData', successData)
   } else {
     const errorData = categoryData as ErrorGetAPIsResponse;
     return (
@@ -96,23 +95,28 @@ const DetailedCategory = async ({
 
 
   return (
-    <div className="py-12 flex flex-col w-full gap-4 md:px-28 mt-5 px-5">
+    <div className="flex flex-col w-full gap-4 md:px-28 mt-5">
+      {/* the card of the big screen */}
 
-  <div className="grid w-full grid-cols-4 p-10  rounded-xl min-h-12 bg-white border-secondary border">
-    <div className="col-span-4 md:col-span-4">
-      <div className="flex flex-row items-center justify-center  mb-4  gap-6 border-b-[1px] pb-4 border-black">
-        <p className="my-auto text-lg font-semibold text-center md:text-left md:text-3xl text-gray-900">
-          {category.name} Apis
-        </p>
+      <div className="grid w-full grid-cols-4 p-10 border-2 rounded-xl min-h-72 bg-white">
+        <div className="col-span-4 md:col-span-3">
+          <div className="flex flex-row items-center justify-around mb-4 md:block">
+            <p className="my-auto text-lg font-bold text-center md:text-left md:text-4xl text-primary">
+              {successData.name}
+            </p>
+            <img
+              src={successData.image}
+              alt="category img"
+              className="block w-10 h-10 rounded-full md:hidden md:m-auto"
+            />
+          </div>
+
+          <p className="md:text-2xl">{successData.description}</p>
+        </div>
 
         <img
-      src={category.image}
-      alt="category img"
-      className="hidden rounded-full  md:max-h-9 md:block"
-    />
-    
-        <img
-          src={category.image}
+          src={successData.image}
+
           alt="category img"
           className="block w-10 h-10 rounded-full md:hidden md:m-auto"
         />

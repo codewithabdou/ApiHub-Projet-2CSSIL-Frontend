@@ -20,6 +20,7 @@ interface GetCategoriesOptions {
 > => {
   try {
 
+    
     const url = buildUrl(
       API_INFO.API_BASE_URL,
       API_INFO.API_ENDPOINTS.CATEGORIES.GET_CATEGORIES,
