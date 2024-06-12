@@ -4,11 +4,11 @@ import Plan from './Plan';
 function PlansSection(props:any) {
     function duration(duration: Number) { //function to display plan duration
         switch (duration) {
-            case 7:
+            case 7*24*3600:
                 return "Semaine";
-            case 30:
+            case 30*24*3600:
                 return "Mois";
-            case 365:
+            case 365*24*3600:
                 return "An";
             case 999999:
                 return "Ilimitée";
@@ -30,7 +30,8 @@ function PlansSection(props:any) {
                     <Plan name={plan.name}
                         price={plan.price}
                         duration={duration(plan.duration)}
-                        nbrRequests={plan.max_requests} />
+                        nbrRequests={plan.max_requests}
+                        apiId={props.apiId} />
                        
                 </div>
             </CarouselItem>
