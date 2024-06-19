@@ -10,14 +10,14 @@ import { cookies } from "next/headers";
 
 interface GetAPIsOptions {
   page?: number;
-  category_ids?: number;
+  categoryIds?: number;
   status?: string;
   per_page?: number;
   supplierId?: number;
 }
 
 const getAPIs = async (options: GetAPIsOptions = {}) => {
-  const { page, category_ids, status, per_page, supplierId } = options;
+  const { page, categoryIds, status, per_page, supplierId } = options;
 
   const userCookie = cookies().get("user")?.value;
   if (!userCookie?.length)

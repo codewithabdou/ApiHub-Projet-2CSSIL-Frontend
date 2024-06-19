@@ -54,9 +54,9 @@ const DetailedCategory = async ({
 
   let fetchedapis;
   const data = await getAPIs({
-    category_ids: categoryId,
-    page: 1,
-    per_page: ITEMS_PER_PAGE,
+    categoryIds: categoryId,
+   // page: 1,
+   // per_page: ITEMS_PER_PAGE,
   });
 
   if (data.status === "success") {
